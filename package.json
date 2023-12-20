@@ -43,6 +43,7 @@
     "redux-devtools-extension": "^2.13.9",
     "redux-persist": "^6.0.0",
     "redux-thunk": "^2.4.2",
+    "serv": "^0.2.4",
     "serve": "^14.2.1",
     "signature_pad": "^4.1.6",
     "styled-components": "^5.3.11"
