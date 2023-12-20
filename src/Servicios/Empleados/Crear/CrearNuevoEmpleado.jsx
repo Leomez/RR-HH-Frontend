@@ -2,7 +2,7 @@ import { useState} from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Box, Button, Alert, AlertTitle, Snackbar } from "@mui/material";
 import DatosEmpleadoForm from "./DatosEmpleadoForm";
-import DatosPuestoForm from "./datosPuesto";
+import DatosPuestoForm from "/datosPuesto";
 import DireccionForm from "./DomicilioForm";
 import validateForm from "./ValidarDatosCargaDeEmpleado";
 import { nuevoEmpleado } from "../../../Redux/Features/Empleado/empleadoSlice";
