@@ -5,7 +5,7 @@ import { Link } from "react-router-dom"
 import { Box, Toolbar, Typography, Button, IconButton, Avatar, Card, Modal } from "@mui/material"
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import MenuIcon from '@mui/icons-material/Menu'
-import personal from '../assets/personal.png'
+// import personal from '../assets/personal.png'
 // import { logout } from "../Redux/Features/Login/loginSlice"
 import { AppBarWrapper } from "./SideBar/SideBarController"
 // import ModalCustom from "./Containers/Modal";
@@ -45,10 +45,13 @@ export function NavBar({ open, handleOpenMenu, drawerWidth }) {
                     </IconButton>}
                     <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
                         <Link to={'/'}>
-                            <img
+                            <Typography sx={{width: '7rem', color: '#fff'}}>
+                                Portal Recursos Humanos COQ
+                            </Typography>
+                            {/* <img
                                 style={{ width: '7rem' }}
                                 src={personal}
-                                alt="'Centro de Ojos Quilmes - Departamento de Personal" />
+                                alt="'Centro de Ojos Quilmes - Departamento de Personal" /> */}
                         </Link>
                     </Typography>
                     {auth
