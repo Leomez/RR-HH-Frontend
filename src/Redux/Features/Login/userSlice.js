@@ -8,7 +8,7 @@ const { VITE_API_URL } = import.meta.env
 
 const URL = VITE_API_URL || 'http://localhost:3001'
 
-// console.log(VITE_API_URL);
+console.log(VITE_API_URL);
 
 const initialState = {
     conexion: true,
