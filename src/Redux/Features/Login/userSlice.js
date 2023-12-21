@@ -32,7 +32,7 @@ export const loginUser = createAsyncThunk('user/loginUser', async (user) => {
         store.dispatch(empleadoActual(response.data.data.EmpleadoId))
         return response.data
     } catch (error) {
-        console.log('error en el login...');
+        console.log('error en el login...', URL);
         throw error;
     } finally {
         store.dispatch(setLoading(false))
