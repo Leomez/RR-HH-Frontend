@@ -18,6 +18,7 @@ const initialState = {
 
 export const nuevoEmpleado = createAsyncThunk('empleado/nuevoEmpleado', async (data) => {
     try {
+        console.log(URL);
         const response = await axios.post(`${URL}/empleado`, data);
         // console.log(`Respuesta de accion: ${response.data}`);
         return response.data

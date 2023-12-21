@@ -23,6 +23,7 @@ export const loginUser = createAsyncThunk('user/loginUser', async (user) => {
     const token = user.token    
     try {
         store.dispatch(setLoading(true))
+        console.log(URL);
         const response = await axios({
             url: `${URL}/login`,
             method: "post",
@@ -98,6 +99,7 @@ const userSlice = createSlice({
             })
             .addCase(loginUser.rejected, (state, action) => {                
                 console.log(action);
+                console.log(URL);
                 state.conexion = false
             })
             .addCase(registrarUser.fulfilled, (state, action) => {
