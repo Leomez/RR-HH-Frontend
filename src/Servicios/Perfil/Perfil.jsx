@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
 // import { UseSelector } from "react-redux/es/hooks/useSelector";
 import { useDispatch, useSelector } from "react-redux";
-import { Avatar, Box, Card, CardHeader, Typography } from "@mui/material";
+import { Avatar, Box, Card, CardHeader, Typography, Skeleton } from "@mui/material";
 import obtenerFechaHoy from "../../Utils/FechaDeHoy";
 import { fetchSectorXId } from "../../Redux/Features/Sectores/sectoresSlice";
+// import { fetchEmpleados } from "../../Redux/Features/Empleado/empleadoSlice"
 
 // const empleado = {
 //     nombre: "Juan Perez",
@@ -15,11 +16,13 @@ export default function Perfil() {
   const dispatch = useDispatch();
 
   const usuarioActual = useSelector((state) => state.user);
+  // console.log(usuarioActual.token);
   const empleado = useSelector((state) => state.empleado.empleadoActual);
   const [fechaHoy, setFechaHoy] = useState("");
   // const [sector, setSector] = useState("")
   useEffect(() => {
-    dispatch(fetchSectorXId(empleado.sector_id));
+    dispatch(fetchSectorXId({id: empleado.sector_id, token: usuarioActual.token}));
+    // dispatch(fetchEmpleados(usuarioActual.token))
   }, [dispatch, empleado.sector_id]);
   const sector = useSelector((state) => state.sectores.sector.nombre_sector); 
   
@@ -49,7 +52,7 @@ export default function Perfil() {
         </Box>
         <CardHeader
           title={usuarioActual.user}
-          subheader={sector && sector || "sector"}
+          subheader={sector ? sector : <Skeleton variant="rectangular" width={100} height={18} />}
           sx={{ textAlign: "center" }}
         />
       </Card>

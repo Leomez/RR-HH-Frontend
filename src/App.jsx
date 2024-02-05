@@ -1,16 +1,16 @@
 import './App.css'
-import { Container } from '@mui/material'
+import { Box } from '@mui/material'
 import { Layout } from './Componentes/Layout/Layout'
 import { AppRouter } from './Routes/AppRouter'
 
 
 function App() {
   return (
-    <Container>
+    <Box>
       <Layout>
         <AppRouter />
       </Layout>      
-    </Container>
+    </Box>
   )
 }
 

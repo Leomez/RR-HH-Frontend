@@ -7,6 +7,7 @@ import loadingReducer from "../Features/Loading/loadingSlice";
 import alertaReducer from "../Features/Alerta/alertaSlice";
 import firmaReducer from "../Features/Firma/firmaSilce";
 import notificacionesReducer from "../Features/Notificaciones/notificacionesSlice";
+import supervisorReducer from "../Features/Supervisor/supervisorSlice"
 
 const rootReducer =  combineReducers({
     empleado: empleadoReducer,
@@ -16,7 +17,8 @@ const rootReducer =  combineReducers({
     loading: loadingReducer,
     alerta: alertaReducer,
     notificaciones: notificacionesReducer,
-    firma: firmaReducer
+    firma: firmaReducer,
+    supervisor: supervisorReducer
 })
 
 

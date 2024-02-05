@@ -2,10 +2,9 @@ import axios from "axios";
 import store from "../../Store/store";
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { setLoading } from "../Loading/loadingSlice";
+import { URL_API } from "../constantes";
+const URL = URL_API
 
-const { VITE_API_URL } = import.meta.env
-
-const URL = VITE_API_URL || 'http://localhost:3001'
 
 const initialState = {
   notificaciones: [],
@@ -14,10 +13,14 @@ const initialState = {
 
 export const obtenerNotificaciones = createAsyncThunk(
   "notificaciones/obtenerNotificaciones",
-  async (id) => {
+  async ({id, token}) => {
     try {
       store.dispatch(setLoading(true));
-      const resp = await axios.get(`${URL}/notificaciones/${id}`);
+      const resp = await axios({
+        method: 'get',
+        url: `${URL}/notificaciones/${id}`,
+        headers: {"Authorization": "Bearer " + token}
+      });
       store.dispatch(setLoading(false));
       return resp.data;
     } catch (error) {

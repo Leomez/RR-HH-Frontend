@@ -3,23 +3,30 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import axios from 'axios'
 import store from '../../Store/store';
 import { setLoading } from "../Loading/loadingSlice";
+import { URL_API } from "../constantes";
 
-// console.log(import.meta.env.API_URL);
-const { VITE_API_URL } = import.meta.env
+const URL = URL_API
 
-const URL = VITE_API_URL || 'http://localhost:3001'
+// const token = ''
+// console.log(store.getState().user);
 
+// const { VITE_API_URL } = import.meta.env
 
 const initialState = {
     nuevoEmpleadoCreado: {},
     empleados: [],
+    domicilios:[],
     empleadoActual: null,
 };
 
 export const nuevoEmpleado = createAsyncThunk('empleado/nuevoEmpleado', async (data) => {
-    try {
-        console.log(URL);
-        const response = await axios.post(`${URL}/empleado`, data);
+    try {        
+        const response = await axios({
+            method: 'post',
+            url: `${URL}/empleado`,
+            data: data,
+            headers: { "Authorization": "Bearer " + store.getState().user.token }
+        });
         // console.log(`Respuesta de accion: ${response.data}`);
         return response.data
     } catch (error) {
@@ -28,18 +35,38 @@ export const nuevoEmpleado = createAsyncThunk('empleado/nuevoEmpleado', async (d
 })
 
 export const fetchEmpleados = createAsyncThunk('empleado/fetchEmpleados', async () => {
-    try {
-        const response = await axios.get(`${URL}/empleado`);
-        // console.log(response.data);
+    try {       
+        const response = await axios({
+            url: `${URL}/empleado`,
+            method: 'get',
+            headers: { "Authorization": "Bearer " + store.getState().user.token }
+        });        
         return response.data.data;
-    } catch (error) {
+    } catch (error) {        
         throw new Error(error)
+    }
+})
+
+export const fetchDomicilios = createAsyncThunk('empleado/fetchDomicilios', async () => {
+    try {
+        const response = await axios({
+            url: `${URL}/domicilio`,
+            method: 'get',
+            headers: { "Authorization": "Bearer " + store.getState().user.token }
+        });
+        return response.data.data
+    } catch (error) {
+        throw new Error(error)        
     }
 })
 
 export const fetchEmpleadoById = createAsyncThunk('empleado/fetchEmpleadoById', async(id) => {
     try {
-        const response = await axios.get(`${URL}/empleado/${id}`);
+        const response = await axios({
+            url:`${URL}/empleado/${id}`,
+            method: 'get',
+            headers: { "Authorization": "Bearer " + store.getState().user.token }
+        });
         return response.data
     } catch (error) {
         throw new Error(error)        
@@ -51,7 +78,11 @@ export const empleadoActual = createAsyncThunk('empleado/empleadoActual', async(
         store.dispatch(setLoading(true))
         cont++
         console.log(cont);
-        const response = await axios.get(`${URL}/empleado?id=${id}`);
+        const response = await axios({
+            url: `${URL}/empleado?id=${id}`,
+            method: 'get',
+            headers: { "Authorization": "Bearer " + store.getState().user.token }
+        });
         console.log(response.data);
         return response.data.data[0]
     } catch (error) {
@@ -80,6 +111,13 @@ const empleadoSlice = createSlice({
         .addCase(fetchEmpleados.rejected, (state, action) => {
             console.error("Error al obtener los empleados:", action.error.message);
             state.empleados = { error: action.error.message };
+        })
+        .addCase(fetchDomicilios.fulfilled, (state, action) => {
+            state.domicilios = action.payload
+        })
+        .addCase(fetchDomicilios.rejected, (state, action) => {
+            console.error("Error al obtener los domicilios: ", action.error.message);
+            state.domicilios = {error: action.error.message}
         })
         .addCase(fetchEmpleadoById.fulfilled, (state, action) => {
             state.empleadoActual = action.payload;

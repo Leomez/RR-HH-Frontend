@@ -19,6 +19,7 @@ export default function CargarRecibo() {
   const dispatch = useDispatch();
   const empleados = useSelector((state) => state.empleado.empleados);
   const respuesta = useSelector((state) => state.recibos.reciboCargado);
+  const userToken = useSelector((state) => state.user.token)
   const inputsVacios = {
     unSoloRecibo: true,
     periodo: "",
@@ -79,7 +80,7 @@ export default function CargarRecibo() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      dispatch(cargarRecibo(data));
+      dispatch(cargarRecibo({datos: data, token: userToken}));
       setData(inputsVacios);
       e.target.reset();
     } catch (error) {

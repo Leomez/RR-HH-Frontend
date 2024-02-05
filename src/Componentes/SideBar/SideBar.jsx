@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
-import { React } from "react";
-import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
+import { Link, useLocation } from "react-router-dom";
 import {
   IconButton,
   ListItemIcon,
@@ -14,21 +15,20 @@ import {
 } from "@mui/material";
 import { DrawerHeader, DrawerWrapper } from "./SideBarController";
 // ICONOS
-import HomeIcon from "@mui/icons-material/Home";
-import EmojiPeopleTwoToneIcon from "@mui/icons-material/EmojiPeopleTwoTone";
-import PunchClockTwoToneIcon from "@mui/icons-material/PunchClockTwoTone";
+
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
-import InboxIcon from "@mui/icons-material/MoveToInbox";
-import MailIcon from "@mui/icons-material/Mail";
-import PersonAddIcon from "@mui/icons-material/PersonAdd";
+
 // RUTAS
 import rutas from "./Links";
-import { useSelector } from "react-redux";
 
 export function SideBar({ open, handleDrawerClose, drawerWidth }) {
   const permisos = useSelector((state) => state.user.rol);
-  // console.log(permisos);
+  const [seccionActiva, setSeccionActiva] = useState("/");
+  const location = useLocation()
+  useEffect(() => {
+    setSeccionActiva(location.pathname);
+  },[location]) 
 
   const theme = useTheme();
   return (
@@ -46,18 +46,21 @@ export function SideBar({ open, handleDrawerClose, drawerWidth }) {
         <Divider />
         <Box id="ListCotainer">
           <List>
-            {rutas().rutasComunes.map((ruta, index) => (
+            {rutas().rutasComunes.map((ruta) => (
               <ListItem
+
                 key={ruta.nombreSeccion}
                 disablePadding
                 sx={{ display: "block" }}
-              >
+              >                
                 <Link to={ruta.ruta}>
-                  <ListItemButton
+                  <ListItemButton      
+                    selected={ seccionActiva === (`/${ruta.ruta}`) || seccionActiva === (ruta.ruta) }
                     sx={{
                       minHeight: 48,
                       justifyContent: open ? "initial" : "center",
                       px: 2.5,
+                      borderLeft: (seccionActiva === (`/${ruta.ruta}`) || seccionActiva === (ruta.ruta)) ? '2px solid #1976d2' : 'none'
                     }}
                   >
                     <ListItemIcon
@@ -88,15 +91,19 @@ export function SideBar({ open, handleDrawerClose, drawerWidth }) {
                 <ListItem
                   key={ruta.nombreSeccion}
                   disablePadding
-                  sx={{ display: "block" }}
+                  sx={{ display: "block"}}
                 >
                   <Link to={ruta.ruta}>
                     <ListItemButton
+                      selected={ seccionActiva === (`/${ruta.ruta}`) || seccionActiva === (ruta.ruta) }
                       sx={{
                         minHeight: 48,
                         justifyContent: open ? "initial" : "center",
-                        px: 2.5,
-                      }}
+                        px: 2.5, 
+                        borderLeft: (seccionActiva === (`/${ruta.ruta}`) || seccionActiva === (ruta.ruta)) ? '2px solid #1976d2' : 'none' 
+
+                        // ":focus": {backgroundColor: 'rgba(0, 0, 0, 0.06)'}                        
+                      }}                      
                     >
                       <ListItemIcon
                         sx={{

@@ -17,6 +17,7 @@ export default function ListadoParaCargar() {
   const [selectedPeriodos, setSelectedPeriodos] = useState({}); // Estado para almacenar los periodos seleccionados
   const [selectedFiles, setSelectedFiles] = useState({});
 
+  const userToken =useSelector((state) => state.user.token)
   const empleados = useSelector((state) => state.empleado.empleados); // Estado global para almacenar los empleados
   const respuesta = useSelector((state) => state.recibos.reciboCargado);
   // const [res, setRes] = useState("");
@@ -124,7 +125,7 @@ export default function ListadoParaCargar() {
   }
 
   async function handlerSubmit() {
-    dispatch(cargarRecibos(datos));
+    dispatch(cargarRecibos({arrayFormData: datos, token: userToken}));
     handleLimpiarTodasLasSelecciones()
     // setSelectedPeriodos({});
     // setSelectedFiles({});

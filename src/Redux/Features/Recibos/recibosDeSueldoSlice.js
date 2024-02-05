@@ -3,11 +3,10 @@ import { setFirma, clearFirma } from "../Firma/firmaSilce";
 import store from "../../Store/store";
 import axios from "axios";
 import { setLoading } from "../Loading/loadingSlice";
+import { URL_API } from "../constantes";
 
-const { VITE_API_URL } = import.meta.env
 
-const URL = VITE_API_URL || 'http://localhost:3001'
-
+const URL = URL_API
 
 const initialState = {
   reciboCargado: null,
@@ -16,7 +15,7 @@ const initialState = {
 
 export const cargarRecibo = createAsyncThunk(
   "recibos/cargarRecibo",
-  async (datos) => {
+  async ({datos, token}) => {
     if (datos) {
       try {
         store.dispatch(setLoading(true));
@@ -26,6 +25,7 @@ export const cargarRecibo = createAsyncThunk(
           method: "POST",
           data: datos,
           headers: {
+            "Authorization": "Bearer " + token,
             "Content-Type": "multipart/form-data",
           },
         });
@@ -43,7 +43,7 @@ export const cargarRecibo = createAsyncThunk(
 
 export const cargarRecibos = createAsyncThunk(
   "recibos/cargarRecibos",
-  async (arrayFormData) => {
+  async ({arrayFormData, token}) => {
     if (arrayFormData) {
       console.log(arrayFormData);
       try {
@@ -54,6 +54,7 @@ export const cargarRecibos = createAsyncThunk(
           method: "POST",
           data: arrayFormData,
           headers: {
+            "Authorization": "Bearer " + token,
             "Content-Type": "multipart/form-data",
           },
         });
@@ -69,12 +70,13 @@ export const cargarRecibos = createAsyncThunk(
   }
 );
 
-export const getRecibos = createAsyncThunk("recibos/getRecibos", async (id) => {
+export const getRecibos = createAsyncThunk("recibos/getRecibos", async ({id, token}) => {
   try {
     store.dispatch(setLoading(true));
     const res = await axios({
       url: `${URL}/recibos/obtenerRecibos/${id}`,
       method: "GET",
+      headers: {"Authorization": "Bearer " + token}
     });
     console.log(res.data.recibos.data);
     return res.data.recibos.data;
@@ -86,7 +88,7 @@ export const getRecibos = createAsyncThunk("recibos/getRecibos", async (id) => {
   }
 });
 
-export const actualizarReciboFirmado = createAsyncThunk("recibos/actualizarRecibosfirmados", async (recibo) => {
+export const actualizarReciboFirmado = createAsyncThunk("recibos/actualizarRecibosfirmados", async ({recibo, token}) => {
   try {
     store.dispatch(setLoading(true));
       console.log(recibo);
@@ -96,6 +98,7 @@ export const actualizarReciboFirmado = createAsyncThunk("recibos/actualizarRecib
       data: recibo,
       headers: {
         "Content-Type": "multipart/form-data",
+        "Authorization": "Bearer " + token
       }
     })
      .then(console.log('¡recibo enviado exitosamente!'))

@@ -2,10 +2,12 @@
 import HomeIcon from "@mui/icons-material/Home";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import EmojiPeopleTwoToneIcon from "@mui/icons-material/EmojiPeopleTwoTone";
+import ApartmentIcon from '@mui/icons-material/Apartment';
 import PunchClockTwoToneIcon from "@mui/icons-material/PunchClockTwoTone";
 import ReceiptLongIcon from "@mui/icons-material/ReceiptLong";
 import RequestPageIcon from '@mui/icons-material/RequestPage';
 import FaceRetouchingNaturalIcon from '@mui/icons-material/FaceRetouchingNatural';
+import BadgeIcon from '@mui/icons-material/Badge';
 import { useTheme } from "@mui/material";
 
 const rutas = () => {
@@ -37,16 +39,16 @@ const rutas = () => {
     ],
     rutasAdmin: [
       {
-        nombreSeccion: "Dashboard",
+        nombreSeccion: "Panel de Empleados",
         icono: (
-          <EmojiPeopleTwoToneIcon sx={{ color: theme.palette.primary.light }} />
+          <BadgeIcon sx={{ color: theme.palette.primary.light }} />
         ),
-        ruta: "dashboard",
+        ruta: "empleados",
       },
       {
-        nombreSeccion: "Cargar Empleados",
-        icono: <PersonAddIcon sx={{ color: theme.palette.primary.light }} />,
-        ruta: "crear-empleado",
+        nombreSeccion: "Sectores",
+        icono: <ApartmentIcon sx={{ color: theme.palette.primary.light }} />,
+        ruta: "sectores",
       },
       {
         nombreSeccion: "Cargar Recibos",

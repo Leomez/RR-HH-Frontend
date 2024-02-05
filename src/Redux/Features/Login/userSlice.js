@@ -3,12 +3,13 @@ import { setLoading } from "../Loading/loadingSlice";
 import { empleadoActual } from "../Empleado/empleadoSlice";
 import axios from "axios";
 import store from "../../Store/store";
+import { URL_API } from "../constantes";
+const URL = URL_API
 
-const { VITE_API_URL } = import.meta.env
+// const { VITE_API_URL } = import.meta.env
 
-const URL = VITE_API_URL || 'http://localhost:3001'
 
-console.log(VITE_API_URL);
+// console.log(VITE_API_URL);
 
 const initialState = {
     conexion: true,
@@ -17,6 +18,7 @@ const initialState = {
     foto: null,
     rol: null,
     isAuth: false,
+    token: null,
     nuevoUsuario: null
 }
 export const loginUser = createAsyncThunk('user/loginUser', async (user) => {
@@ -96,6 +98,7 @@ const userSlice = createSlice({
                 state.user = action.payload.data.usuario;
                 state.rol = action.payload.data.rol;
                 state.foto = action.payload.data.foto
+                state.token = action.payload.data.token
             })
             .addCase(loginUser.rejected, (state, action) => {                
                 console.log(action);

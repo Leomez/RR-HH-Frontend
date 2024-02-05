@@ -1,46 +1,62 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import axios from 'axios'
+import { URL_API } from "../constantes";
 
-const { VITE_API_URL } = import.meta.env
-
-const URL = VITE_API_URL || 'http://localhost:3001'
-
+const URL = URL_API
 
 const initialState = {
     sectores: [],
     sector: {}
 }
 
-export const crearSector = createAsyncThunk('sectores/crearSector', async (nombre) => {
+export const crearSector = createAsyncThunk('sectores/crearSector', async ({nombre, token}) => {
     try {
-        const res = await axios.post(`${URL}/sector`, nombre)
+        const res = await axios({
+            url:`${URL}/sector`,
+            method: 'post', 
+            data: nombre,
+            headers: {"Authorization": "Bearer " + token}
+        })
         return res
     } catch (error) {
         throw new Error(error.response?.data?.message || "Error desconocido al crear el sector")
     }
 })
 
-export const fetchSectores = createAsyncThunk('sectores/fetchSectores', async () => {
+export const fetchSectores = createAsyncThunk('sectores/fetchSectores', async (token) => {
+    
     try {
-        const res = await axios.get(`${URL}/sector`)
+        const res = await axios({
+            url: `${URL}/sector`,
+            method: 'get',
+            headers: {"Authorization": "Bearer " + token}
+        })
         return res.data
     } catch (error) {
         throw new Error(error.response?.data?.message || "Error desconocido al traer los sectores");
     }
 })
 
-export const fetchSector = createAsyncThunk('sectores/fetchSector', async (nombre) => {
+export const fetchSector = createAsyncThunk('sectores/fetchSector', async ({nombre, token}) => {
     try {
-        const res = await axios.get(`${URL}/sector`, nombre)
+        const res = await axios.get(`${URL}/sector`,{
+            data: nombre,
+            headers: {"Authorization": "Bearer " + token}
+        })
         return res.data
     } catch (error) {
         throw new Error(error.response?.data?.message || "Error desconocido al traer el sector");
     }
 })
 
-export const fetchSectorXId = createAsyncThunk('sectores/fetchSectorXId', async (id) => {
+export const fetchSectorXId = createAsyncThunk('sectores/fetchSectorXId', async ({id, token}) => {
+    
     try {
-        const res = await axios.get(`${URL}/sector/${id}`)
+        const res = await axios({
+            url:`${URL}/sector/${id}`,
+            method: 'get',
+            headers: {"authorization": "Bearer " + token}
+        })
         return res.data
     }
     catch (error) {

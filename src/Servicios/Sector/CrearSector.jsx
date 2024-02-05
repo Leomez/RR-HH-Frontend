@@ -8,6 +8,8 @@ export default function CrearSector({ open, setOpen }) {
     const [inputs, setInputs] = useState({
         nombre_sector: ''        
     })
+
+    const userToken = useSelector((state) => state.user.token)
    
     const dispatch = useDispatch()
     function capitalizeFirstLetter(str) {
@@ -35,9 +37,9 @@ export default function CrearSector({ open, setOpen }) {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        dispatch(crearSector(inputs))
+        dispatch(crearSector({inputs, userToken}))
         .then(() => {
-            dispatch(fetchSectores())
+            dispatch(fetchSectores(userToken))
         })
         // Aquí puedes realizar la lógica para guardar los datos del sector
 

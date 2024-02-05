@@ -12,9 +12,10 @@ import { fetchSectores } from "../../../Redux/Features/Sectores/sectoresSlice";
 export default function DatosPuestoForm({ inputs, handleChange }) {
   const [open, setOpen] = useState(false)
   const dispatch = useDispatch()
+  const userToken = useSelector((state) => state.user.token)
 
   useEffect(() => {
-    dispatch(fetchSectores())
+    dispatch(fetchSectores(userToken))
   }, [dispatch])
   const sectores = useSelector(state => state.sectores.sectores)
   

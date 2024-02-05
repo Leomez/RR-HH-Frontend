@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import { useState, useRef, useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { actualizarReciboFirmado } from "../../../Redux/Features/Recibos/recibosDeSueldoSlice";
 import {
   Box,
@@ -25,6 +25,7 @@ const PanelDeFirma = ({ pdfBase64, handleClose }) => {
   const [recibo, setRecibo] = useState(null);
   const [mostrarCanvaFirma, setMostrarCanvaFirma] = useState(null);
   const [habilitarEnvio, setHabilitarEnvio] = useState(false);
+  const userToken = useSelector((state) => state.user.token)
   const firmaRef = useRef();
   const dispatch = useDispatch();
   const defaultLayoutPluginInstance = defaultLayoutPlugin();
@@ -77,7 +78,7 @@ const PanelDeFirma = ({ pdfBase64, handleClose }) => {
 
   const handlerEnviar = () => {
     // console.log(recibo);
-    dispatch(actualizarReciboFirmado(recibo));
+    dispatch(actualizarReciboFirmado({recibo, token: userToken}));
     handleClose()
   };
 

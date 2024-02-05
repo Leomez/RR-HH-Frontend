@@ -13,7 +13,7 @@ import { RutasSuper } from "./RutasSuper";
 export const AppRouter = () => {
   // const loading = useSelector(state => state.loading)
   const user = useSelector((state) => state.user);
-  // console.log(user.conexion);
+  console.log(user.conexion);
 
   return (
     <Routes>
@@ -23,11 +23,13 @@ export const AppRouter = () => {
         <Route path="/*" element={<RutasAdmin />} />
       ) : user.isAuth && user.rol === "SUPER" ? (
         <Route path="=/*" element={<RutasSuper />} />          
-      ) : user.isAuth && user.rol === "USER" ? (
+      ) :  (
         <Route path="/*" element={<RutasComunes />} />
-      ) : (
-        <Route path="login" element={<LoginPage />} />
-      )}
+      ) 
+      // : (
+      //   <Route path="login" element={<LoginPage />} />
+      // )
+      }
       <Route path="/registrarse" element={<Registrarse />} />
       <Route path="/notFound-404" element={<NotFound />} />
       <Route path="*" element={<Navigate to="/login" replace />} />

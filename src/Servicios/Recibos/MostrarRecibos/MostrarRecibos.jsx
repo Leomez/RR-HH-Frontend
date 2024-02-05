@@ -9,13 +9,14 @@ import FirmaModal from "../../../Componentes/Containers/FirmaModal";
 
 export default function MostrarRecibos() {
   const dispatch = useDispatch();
+  const userToken = useSelector((state) => state.user.token)
   const empleadoActual = useSelector((state) => state.empleado.empleadoActual);
   const recibos = useSelector((state) => state.recibos.recibos);
   const [open, setOpen] = useState(false);
   const [recibo, setRecibo] = useState({});
 
   useEffect(() => {
-    empleadoActual && dispatch(getRecibos(empleadoActual.id));
+    empleadoActual && dispatch(getRecibos({id: empleadoActual.id, token: userToken}));
   }, [dispatch, empleadoActual]);
 
   const handleOpen = () => {

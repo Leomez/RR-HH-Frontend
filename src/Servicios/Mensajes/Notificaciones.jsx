@@ -8,13 +8,14 @@ import CustomNoRowsOverlay from "../../Utils/NoRows";
 const Notificaciones = () => {
   const dispatch = useDispatch();
   const idEmpleado = useSelector((state) => state.empleado.empleadoActual.id);
+  const userToken = useSelector((state) => state.user.token)
   const notificaciones = useSelector(
     (state) => state.notificaciones.notificaciones.data
   );
   notificaciones &&
     notificaciones.map((notificacion) => console.log(notificacion.contenido));
   useEffect(() => {
-    dispatch(obtenerNotificaciones(idEmpleado));
+    dispatch(obtenerNotificaciones({id: idEmpleado, token: userToken}));
   }, []);
   
 
