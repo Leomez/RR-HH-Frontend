@@ -43,7 +43,11 @@ export const fetchEmpleados = createAsyncThunk('empleado/fetchEmpleados', async 
         });        
         return response.data.data;
     } catch (error) {        
-        throw new Error(error)
+        // throw new Error(error)
+        return{
+            success: false,
+            error: error
+        }
     }
 })
 
@@ -110,7 +114,7 @@ const empleadoSlice = createSlice({
         })
         .addCase(fetchEmpleados.rejected, (state, action) => {
             console.error("Error al obtener los empleados:", action.error.message);
-            state.empleados = { error: action.error.message };
+            state.empleados = [action.error]
         })
         .addCase(fetchDomicilios.fulfilled, (state, action) => {
             state.domicilios = action.payload

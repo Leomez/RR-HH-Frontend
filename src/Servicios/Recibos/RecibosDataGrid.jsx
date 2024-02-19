@@ -13,7 +13,7 @@ export default function RecibosDataGrid({
   selectedFiles,
   handleLimpiarSeleccion,
 }) {
-
+     
   // console.log( selectedFiles );
   const columns = [
     { field: "id", headerName: "ID", width: 150 },
@@ -101,7 +101,7 @@ export default function RecibosDataGrid({
         col1: empleado.legajo,
         col2: `${empleado.apellido_empleado} ${empleado.nombre_empleado}`,        
       };
-    });
+    });  
 
   return (
     <DataGrid

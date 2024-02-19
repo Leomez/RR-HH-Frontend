@@ -15,6 +15,7 @@ import { mesesDelAnio } from "../../Utils/meses";
 import { useDispatch } from "react-redux";
 import { cargarRecibo } from "../../Redux/Features/Recibos/recibosDeSueldoSlice";
 import { showAlert } from "../../Redux/Features/Alerta/alertaSlice";
+import { Error } from "../../Componentes/Error";
 export default function CargarRecibo() {
   const dispatch = useDispatch();
   const empleados = useSelector((state) => state.empleado.empleados);
@@ -29,6 +30,10 @@ export default function CargarRecibo() {
     recibo: null, // Este campo se manejará como un archivo
   };
   const [data, setData] = useState(inputsVacios);
+  const error = empleados.error ? empleados.error : null  
+  if (error) {
+    return <Error error={error}/>
+  }
 
   useEffect(() => {
     if (respuesta) {

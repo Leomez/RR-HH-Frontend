@@ -5,6 +5,8 @@ import Notificaciones from "../../Servicios/Mensajes/Notificaciones";
 import AsistenciaPersonal from "../../Servicios/Asistencia/AsistenciaPersonal";
 
 export function Home() {
+
+    
     return (
         <div id="homeContainer">
             <Box component={"main"} sx={{ flexGrow: 1 }}>

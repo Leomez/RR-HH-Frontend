@@ -1,28 +1,34 @@
 import {React, useEffect} from 'react' 
 import { useSelector, useDispatch } from "react-redux"
-import { Box } from '@mui/material'
+import { Box, Typography } from '@mui/material'
 import { DataGrid, esES } from '@mui/x-data-grid'
 import { fetchSectores } from '../../../Redux/Features/Sectores/sectoresSlice'
 import { sector } from './sector'
+import { Error } from '../../../Componentes/Error'
 import { fetchEmpleados } from "../../../Redux/Features/Empleado/empleadoSlice"
 
 
 export default function ListadoEmpleados() {
-  const dispatch = useDispatch()
-  
+  const dispatch = useDispatch()  
   const token = useSelector((state) => state.user.token)
+  const empleados = useSelector(state => state.empleado.empleados)
+  const sectores = useSelector(state => state.sectores.sectores)
+  const error = useSelector((state) => state.empleado.empleados.error);
   
   useEffect(() => {
     dispatch(fetchEmpleados())
-  },[dispatch])
-  useEffect(() => {
     dispatch(fetchSectores(token))
-  }, [dispatch])
-
-  const empleados = useSelector(state => state.empleado.empleados)
-  const sectores = useSelector(state => state.sectores.sectores)  
-  
+  },[dispatch, token])
+  // useEffect(() => {
+  // }, [dispatch])  
+  // const empleadosOk = empleados ? empleados : null  
   // console.log(sector('f3095ec8-7a38-432f-b7e1-8d64c9713f72'))
+  if (error) {
+    // console.log(error);
+    return <Error error={error}/>
+    
+  }
+
   const columns = [
     { field: 'id', headerName: 'ID', width: 150 },
     { field: 'col1', headerName: 'Nombre', width: 300 },
@@ -31,6 +37,7 @@ export default function ListadoEmpleados() {
     { field: 'col4', headerName: 'Sector', width: 150 },
     { field: 'col5', headerName: 'Encargado', width: 150 }
   ]
+  // console.log(empleados);
   const rows = empleados && empleados.map(e => {
     
     return {

@@ -9,6 +9,7 @@ import { Mensajes } from '../Pages/Mensajes/Mensajes';
 export const RutasComunes = () => {
     return (
         <Routes>
+            {console.log('estoy en rutas comunes..')}
             <Route path='/' element={<Home />} />            
             <Route path='mensajes' element={<Mensajes />} />
             <Route path='recibos' element={<MisRecibos/>}/>  

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux'
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Navigate } from 'react-router-dom';
 import { Box, Button, TextField, Divider, Typography } from '@mui/material';
 import { FcGoogle } from 'react-icons/fc'
 import { loginUser } from '../../Redux/Features/Login/userSlice';
@@ -54,8 +54,10 @@ function LoginForm(props) {
   const handleLoginConGoogle = async () => {
     const usuario = await loginConGoogle()
     dispatch(loginUser(usuario))
-    handleModal()
     navigate('/', { replace: true })
+    handleModal()
+    console.log('deberia navegar a ":/"');    
+    // {<Navigate to="/" replace />}
   };
 
   const handleRegistrarse = (e) => {

@@ -60,7 +60,7 @@ const rutas = () => {
       {
         nombreSeccion: "Home",
         icono: <HomeIcon sx={{ color: theme.palette.primary.main }} />,
-        ruta: "/",
+        ruta: "/home",
       },
       {
         nombreSeccion: "Mi Asistencia",

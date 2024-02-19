@@ -5,6 +5,7 @@ import { fetchEmpleados } from "../../Redux/Features/Empleado/empleadoSlice";
 import { mesesDelAnio } from "../../Utils/meses";
 import { cargarRecibos } from "../../Redux/Features/Recibos/recibosDeSueldoSlice";
 import { showAlert } from "../../Redux/Features/Alerta/alertaSlice";
+import { Error } from "../../Componentes/Error";
 import RecibosDataGrid from "./RecibosDataGrid";
 
 export default function ListadoParaCargar() {
@@ -20,7 +21,10 @@ export default function ListadoParaCargar() {
   const userToken =useSelector((state) => state.user.token)
   const empleados = useSelector((state) => state.empleado.empleados); // Estado global para almacenar los empleados
   const respuesta = useSelector((state) => state.recibos.reciboCargado);
-  // const [res, setRes] = useState("");
+  const error = empleados.error ? empleados.error : null  
+  if (error) {
+    return <Error error={error}/>
+  }
 
   useEffect(() => {
     // console.log(respuesta);

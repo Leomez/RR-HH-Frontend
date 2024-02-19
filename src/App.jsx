@@ -4,7 +4,7 @@ import { Layout } from './Componentes/Layout/Layout'
 import { AppRouter } from './Routes/AppRouter'
 
 
-function App() {
+function App() {  
   return (
     <Box>
       <Layout>

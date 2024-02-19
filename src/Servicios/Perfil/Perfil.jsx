@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-// import { UseSelector } from "react-redux/es/hooks/useSelector";
 import { useDispatch, useSelector } from "react-redux";
 import { Avatar, Box, Card, CardHeader, Typography, Skeleton } from "@mui/material";
 import obtenerFechaHoy from "../../Utils/FechaDeHoy";
@@ -22,11 +21,12 @@ export default function Perfil() {
   // const [sector, setSector] = useState("")
   useEffect(() => {
     dispatch(fetchSectorXId({id: empleado.sector_id, token: usuarioActual.token}));
-    // dispatch(fetchEmpleados(usuarioActual.token))
-  }, [dispatch, empleado.sector_id]);
-  const sector = useSelector((state) => state.sectores.sector.nombre_sector); 
+    // dispatch(fetchEmpleados(usuarioActual.token))    
+  }, [dispatch, empleado.sector_id, empleado]);
   
-
+    const sector = useSelector((state) => state.sectores.sector);
+    const nombreSector = sector ? sector.nombre_sector : null     
+  
   useEffect(() => {
     const fechaActual = obtenerFechaHoy();
     setFechaHoy(fechaActual);
@@ -52,7 +52,7 @@ export default function Perfil() {
         </Box>
         <CardHeader
           title={usuarioActual.user}
-          subheader={sector ? sector : <Skeleton variant="rectangular" width={100} height={18} />}
+          subheader={nombreSector || <Skeleton variant="rectangular" width={100} height={18} />}
           sx={{ textAlign: "center" }}
         />
       </Card>

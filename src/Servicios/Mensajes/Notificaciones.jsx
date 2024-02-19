@@ -12,8 +12,8 @@ const Notificaciones = () => {
   const notificaciones = useSelector(
     (state) => state.notificaciones.notificaciones.data
   );
-  notificaciones &&
-    notificaciones.map((notificacion) => console.log(notificacion.contenido));
+  // notificaciones &&
+  //   notificaciones.map((notificacion) => console.log(notificacion.contenido));
   useEffect(() => {
     dispatch(obtenerNotificaciones({id: idEmpleado, token: userToken}));
   }, []);

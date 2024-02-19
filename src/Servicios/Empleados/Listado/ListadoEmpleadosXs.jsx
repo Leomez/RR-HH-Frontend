@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux"
 import { Box, Button, Divider, List, Typography } from '@mui/material'
 import { fetchSectores } from '../../../Redux/Features/Sectores/sectoresSlice'
 import { sector } from './sector'
+import { Error } from '../../../Componentes/Error'
 import InfoBox from '../../../Utils/InfoBox'
 import PushPinIcon from '@mui/icons-material/PushPin';
 import ForwardIcon from '@mui/icons-material/Forward';
@@ -10,13 +11,19 @@ import ForwardIcon from '@mui/icons-material/Forward';
 
 export default function ListadoEmpleadosXs() {
     const dispatch = useDispatch()
-
-    useEffect(() => {
-        dispatch(fetchSectores())
-    }, [dispatch])
-
+    const token = useSelector((state) => state.user.token)
     const empleados = useSelector(state => state.empleado.empleados)
     const sectores = useSelector(state => state.sectores.sectores)
+
+    useEffect(() => {
+        dispatch(fetchSectores(token))
+    }, [dispatch])
+
+    const error = empleados.error ? empleados.error : null;
+    if (error) {
+        // console.log(error);
+        return <Error error={error}/>        
+      }
     // const InfoBox = ({ label, value }) => (
     //     <Box sx={{ display: 'flex', padding: 1 }}>
     //         <Typography color="text.primary">

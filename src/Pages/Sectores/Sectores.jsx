@@ -6,6 +6,7 @@ import { fetchSectores } from '../../Redux/Features/Sectores/sectoresSlice'
 import InfoBox from '../../Utils/InfoBox'
 import { Info } from '@mui/icons-material'
 import SelectEncargados from './selectEncargados'
+import { Error } from '../../Componentes/Error'
 
 
 
@@ -21,6 +22,8 @@ export default function Sectores() {
     }, [dispatch])
     const empleados = useSelector(state => state.empleado.empleados)
     const sectores = useSelector(state => state.sectores.sectores);
+    const error = sectores.error ? sectores.error : null
+    console.log(sectores);
     useEffect(() => {
         const widths = Array.from(document.querySelectorAll('.custom-card')).map(
             card => card.clientWidth
@@ -37,6 +40,9 @@ export default function Sectores() {
         if (nuevoValor) {
             setEncargadoValue(nuevoEncargado)
         }
+    }
+    if (error) {
+        return <Error error={error}/>
     }
 
     return (
