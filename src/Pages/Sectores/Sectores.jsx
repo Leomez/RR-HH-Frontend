@@ -5,7 +5,7 @@ import CardSkeleton from './skeleton/cardSkeleton'
 import { fetchSectores } from '../../Redux/Features/Sectores/sectoresSlice'
 import InfoBox from '../../Utils/InfoBox'
 import { Info } from '@mui/icons-material'
-import SelectEncargados from './selectEncargados'
+import SelectEncargados from './SelectEncargados'
 import { Error } from '../../Componentes/Error'
 
 
