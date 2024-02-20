@@ -2,7 +2,7 @@ import { Navigate, Route, Routes } from 'react-router-dom';
 import { Empleados } from '../Pages/PanelDeEmpleados/PanelDeEmpleados';
 import CargarRecibos from '../Pages/CargarRecibos/CargarRecibos';
 import NuevoEmpleado from '../Pages/CrearEmpleadoNuevo/CraerEmpleadoNuevo';
-import Sectores from '../Pages/Sectores/sectores';
+import  Sectores from '../Pages/Sectores/sectores';
 import { RutasComunes } from './RutasComunes';
 
 export const RutasAdmin = () => {
