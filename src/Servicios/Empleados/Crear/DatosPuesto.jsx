@@ -64,7 +64,7 @@ export default function DatosPuestoForm({ inputs, handleChange }) {
               <MenuItem value="1°">1°</MenuItem>
               <MenuItem value="2°">2°</MenuItem>
               <MenuItem value="3°">3°</MenuItem>
-              <MenuItem value="fuera de convenio">Fuera de convenio</MenuItem>
+              <MenuItem value="Fuera de Convenio">Fuera de convenio</MenuItem>
             </Select>
           </FormControl>
 
@@ -124,8 +124,8 @@ export default function DatosPuestoForm({ inputs, handleChange }) {
               name="estado"
               onChange={handleChange}
             >
-              <MenuItem value="activo">Activo</MenuItem>
-              <MenuItem value="inactivo">Inactivo</MenuItem>
+              <MenuItem value="Activo">Activo</MenuItem>
+              <MenuItem value="Inactivo">Inactivo</MenuItem>
             </Select>
           </FormControl>
         </Stack>

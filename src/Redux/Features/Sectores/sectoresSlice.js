@@ -9,13 +9,14 @@ const initialState = {
     sector: {}
 }
 
-export const crearSector = createAsyncThunk('sectores/crearSector', async ({nombre, token}) => {
+export const crearSector = createAsyncThunk('sectores/crearSector', async ({inputs, userToken}) => {
     try {
+        // console.log(inputs + ' - ' + userToken);
         const res = await axios({
             url:`${URL}/sector`,
             method: 'post', 
-            data: nombre,
-            headers: {"Authorization": "Bearer " + token}
+            data: inputs,
+            headers: {"Authorization": "Bearer " + userToken}
         })
         return res
     } catch (error) {

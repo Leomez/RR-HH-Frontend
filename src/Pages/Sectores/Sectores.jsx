@@ -36,10 +36,10 @@ export default function Sectores() {
     }
 
     function handleClose(nuevoEncargado) {
-        setOpen(false)
-        if (nuevoValor) {
+        if (nuevoEncargado) {
             setEncargadoValue(nuevoEncargado)
-        }
+        } 
+        setOpen(false)
     }
     if (error) {
         return <Error error={error}/>
