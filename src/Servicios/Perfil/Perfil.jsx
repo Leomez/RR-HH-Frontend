@@ -20,7 +20,7 @@ export default function Perfil() {
   const [fechaHoy, setFechaHoy] = useState("");
   // const [sector, setSector] = useState("")
   useEffect(() => {
-    dispatch(fetchSectorXId({id: empleado.sector_id, token: usuarioActual.token}));
+    dispatch(empleado && fetchSectorXId({id: empleado.sector_id, token: usuarioActual.token}));
     // dispatch(fetchEmpleados(usuarioActual.token))    
   }, [dispatch, empleado.sector_id, empleado]);
   
