@@ -3,13 +3,14 @@ import { Box, Grid } from "@mui/material";
 import Perfil from "../../Servicios/Perfil/Perfil";
 import Notificaciones from "../../Servicios/Mensajes/Notificaciones";
 import AsistenciaPersonal from "../../Servicios/Asistencia/AsistenciaPersonal";
+import LoadingPage from "../../Componentes/Containers/Loading";
 
 export function Home() {
 
     
     return (
         <div id="homeContainer">
-            <Box component={"main"} sx={{ flexGrow: 1 }}>
+            <Box component={"main"} sx={{ flexGrow: 1 }}>                
                 <Box>
                     <Grid container spacing={2}>
                         <Grid item xs={12} md={3}>

@@ -5,6 +5,7 @@ import { resetConexion } from "../../Redux/Features/Login/userSlice";
 // import logoPersonalTransp from "../../assets/logoPersonalTransp.png";
 import logoPortal from "../../assets/PortalCOQlogo-trans.png";
 import EquipoTrabajo from "../../assets/EquipoTrabajo.jpeg";
+import LoadingPage from "../../Componentes/Containers/Loading";
 
 // import empresaImage from '../../../assets/logoTransp.png';
 
@@ -15,6 +16,7 @@ function LoginPage() {
   //
   return (
     <div id="loginPage">
+      <LoadingPage/>
       <Box
         sx={{
           display: "flex",

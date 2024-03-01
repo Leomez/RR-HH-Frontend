@@ -4,6 +4,7 @@ import axios from 'axios'
 import store from '../../Store/store';
 import { setLoading } from "../Loading/loadingSlice";
 import { URL_API } from "../constantes";
+import { showError } from '../Error/errorSlice';
 
 const URL = URL_API
 
@@ -30,6 +31,8 @@ export const nuevoEmpleado = createAsyncThunk('empleado/nuevoEmpleado', async (d
         // console.log(`Respuesta de accion: ${response.data}`);
         return response.data
     } catch (error) {
+        const { data } = error.response;
+        store.dispatch(showError(data.errorMessage))
         throw new Error(error.response?.data?.message || "Error desconocido al crear un nuevo empleado");
     }
 })
