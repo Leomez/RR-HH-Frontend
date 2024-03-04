@@ -3,8 +3,8 @@ import { Box, Grid } from "@mui/material";
 import Perfil from "../../Servicios/Perfil/Perfil";
 import Notificaciones from "../../Servicios/Mensajes/Notificaciones";
 import AsistenciaPersonal from "../../Servicios/Asistencia/AsistenciaPersonal";
-import LoadingPage from "../../Componentes/Containers/Loading";
-import Registrarse from "../../Servicios/Login/RegistroForm";
+// import LoadingPage from "../../Componentes/Containers/Loading";
+// import Registrarse from "../../Servicios/Login/RegistroForm";
 
 export function Home() {
 
@@ -16,8 +16,7 @@ export function Home() {
                     <Grid container spacing={2}>
                         <Grid item xs={12} md={3}>
                             <Box boxShadow={3} sx={{ height: '100%' }}>
-                                <Registrarse/>
-                                {/* <Perfil /> */}
+                                <Perfil />
                             </Box>
                         </Grid>
                         <Grid item xs={12} md={9}>
