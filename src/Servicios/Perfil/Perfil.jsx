@@ -21,14 +21,14 @@ export default function Perfil() {
   const [fechaHoy, setFechaHoy] = useState("");
   // const [sector, setSector] = useState("")
   console.log(empleado);
-  useEffect(() => {  
-    console.log('Destrabo el usuario...');     
-    dispatch(empleado && fetchSectorXId({id: empleado.sector_id, token: usuarioActual.token}));
-    // dispatch(fetchEmpleados(usuarioActual.token))    
-  }, [dispatch, empleado.sector_id, empleado]);
+  // useEffect(() => {  
+  //   console.log('Destrabo el usuario...');     
+  //   dispatch(empleado && fetchSectorXId({id: empleado.sector_id, token: usuarioActual.token}));
+  //   // dispatch(fetchEmpleados(usuarioActual.token))    
+  // }, [dispatch, empleado.sector_id, empleado]);
   
     const sector = useSelector((state) => state.sectores.sector);
-    const nombreSector = sector ? sector.nombre_sector : null     
+    const nombreSector = sector ? sector.nombre_sector : 'sector'     
   
   useEffect(() => {
     const fechaActual = obtenerFechaHoy();
