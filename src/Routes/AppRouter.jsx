@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { RutasAdmin } from "./RutasAdmin";
@@ -7,10 +8,12 @@ import NotFound from "../Pages/NotFound/NotFoun";
 import { RutasComunes } from "./RutasComunes";
 import { RutasSuper } from "./RutasSuper";
 
+
 export const AppRouter = () => {
   const usuario = useSelector((state) => state.user);
   const autenticado = usuario ? usuario.isAuth : false
   console.log(autenticado);
+  
 
   let elementToRender;
   if (autenticado) {
@@ -26,7 +29,7 @@ export const AppRouter = () => {
   else {
     elementToRender = <Navigate to="/login" replace />;
   }
-
+  
   return (
     <Routes>
       <Route path="/*" element={elementToRender} />

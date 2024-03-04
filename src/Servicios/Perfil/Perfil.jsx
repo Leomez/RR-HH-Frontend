@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Avatar, Box, Card, CardHeader, Typography, Skeleton } from "@mui/material";
 import obtenerFechaHoy from "../../Utils/FechaDeHoy";
 import { fetchSectorXId } from "../../Redux/Features/Sectores/sectoresSlice";
+import { logoutUser } from "../../Redux/Features/Login/userSlice";
 // import { fetchEmpleados } from "../../Redux/Features/Empleado/empleadoSlice"
 
 // const empleado = {
@@ -19,7 +20,9 @@ export default function Perfil() {
   const empleado = useSelector((state) => state.empleado.empleadoActual);
   const [fechaHoy, setFechaHoy] = useState("");
   // const [sector, setSector] = useState("")
-  useEffect(() => {
+  console.log(empleado);
+  useEffect(() => {   
+    dispatch(logoutUser()) 
     dispatch(empleado && fetchSectorXId({id: empleado.sector_id, token: usuarioActual.token}));
     // dispatch(fetchEmpleados(usuarioActual.token))    
   }, [dispatch, empleado.sector_id, empleado]);
