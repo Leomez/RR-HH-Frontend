@@ -8,16 +8,16 @@ import { RutasComunes } from "./RutasComunes";
 import { RutasSuper } from "./RutasSuper";
 
 export const AppRouter = () => {
-  const user = useSelector((state) => state.user);
-  const auth = user? user.isAuth : null
-  console.log(auth);
+  const usuario = useSelector((state) => state.user);
+  const autenticado = usuario ? usuario.isAuth : false
+  console.log(autenticado);
 
   let elementToRender;
-  if (auth) {
+  if (autenticado) {
     console.log('autorizado...');
-    if (user.rol === "ADMIN") {
+    if (usuario.rol === "ADMIN") {
       elementToRender = <RutasAdmin />;
-    } else if (user.rol === "SUPER") {
+    } else if (usuario.rol === "SUPER") {
       elementToRender = <RutasSuper />;
     } else {
       elementToRender = <RutasComunes />;
@@ -30,7 +30,7 @@ export const AppRouter = () => {
   return (
     <Routes>
       <Route path="/*" element={elementToRender} />
-      {!auth && <Route path="/login" element={<LoginPage />} />}
+      {!autenticado && <Route path="/login" element={<LoginPage />} />}
       <Route path="/registrarse" element={<Registrarse />} />
       <Route path="/*" element={<NotFound />} />
     </Routes>
