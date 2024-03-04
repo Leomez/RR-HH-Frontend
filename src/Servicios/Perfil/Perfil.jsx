@@ -21,7 +21,8 @@ export default function Perfil() {
   const [fechaHoy, setFechaHoy] = useState("");
   // const [sector, setSector] = useState("")
   console.log(empleado);
-  useEffect(() => {   
+  useEffect(() => {  
+    console.log('Destrabo el usuario...'); 
     dispatch(logoutUser()) 
     dispatch(empleado && fetchSectorXId({id: empleado.sector_id, token: usuarioActual.token}));
     // dispatch(fetchEmpleados(usuarioActual.token))    
