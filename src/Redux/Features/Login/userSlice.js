@@ -6,10 +6,7 @@ import store from "../../Store/store";
 import { URL_API } from "../constantes";
 const URL = URL_API
 
-// const { VITE_API_URL } = import.meta.env
 
-
-// console.log(VITE_API_URL);
 
 const initialState = {
     conexion: true,
@@ -69,10 +66,6 @@ export const registrarUser = createAsyncThunk('user/registrarUser', async (user)
         store.dispatch(setLoading(false))
     }
 })
-
-// export const logoutUser = createAsyncThunk('login/logoutUser', async ( user ) => {
-
-// })
 
 const userSlice = createSlice({
     name: 'user',

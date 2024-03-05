@@ -1,7 +1,7 @@
 import { React, useState } from "react";
 import { Box, Grid } from "@mui/material";
 import Perfil from "../../Servicios/Perfil/Perfil";
-// import Notificaciones from "../../Servicios/Mensajes/Notificaciones";
+import Notificaciones from "../../Servicios/Mensajes/Notificaciones";
 import AsistenciaPersonal from "../../Servicios/Asistencia/AsistenciaPersonal";
 // import LoadingPage from "../../Componentes/Containers/Loading";
 // import Registrarse from "../../Servicios/Login/RegistroForm";
@@ -19,11 +19,11 @@ export function Home() {
                                 <Perfil />
                             </Box>
                         </Grid>
-                        {/* <Grid item xs={12} md={9}>
+                        <Grid item xs={12} md={9}>
                             <Box boxShadow={3} sx={{ height: '100%' }}>
                                 <Notificaciones />
                             </Box>
-                        </Grid> */}
+                        </Grid>
                         <Grid item xs={12} sm={4} md={4}>
                             <Box boxShadow={3} sx={{ height: '100%' }}>
                                 <AsistenciaPersonal />
