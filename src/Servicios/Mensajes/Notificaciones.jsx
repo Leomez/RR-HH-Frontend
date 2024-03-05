@@ -14,9 +14,9 @@ const Notificaciones = () => {
   );
   // notificaciones &&
   //   notificaciones.map((notificacion) => console.log(notificacion.contenido));
-  useEffect(() => {
-    dispatch(obtenerNotificaciones({id: idEmpleado, token: userToken}));
-  }, []);
+  // useEffect(() => {
+  //   dispatch(obtenerNotificaciones({id: idEmpleado, token: userToken}));
+  // }, []);
   
 
   return (
@@ -27,7 +27,7 @@ const Notificaciones = () => {
             <Typography variant="h6">Notificaciones</Typography>
           </Box>
         </Box>
-        <Stack
+        {/* <Stack
           sx={{ maxHeight: { xs: "15rem", md: "10rem" }, overflow: "auto" }}
         >
           {notificaciones && notificaciones.length > 0 ? (
@@ -80,7 +80,7 @@ const Notificaciones = () => {
               <CustomNoRowsOverlay mensaje="No hay notificaciones" />
             </Box>
           )}
-        </Stack>
+        </Stack> */}
       </Card>
     </Box>
   );
