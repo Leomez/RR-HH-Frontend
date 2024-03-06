@@ -104,8 +104,8 @@ var cont = 0
 export const empleadoActual = createAsyncThunk('empleado/empleadoActual', async(id) => {
     try {
         store.dispatch(setLoading(true))
-        cont++
-        console.log(cont);
+        // cont++
+        console.log('solicitud de empleado actual...');
         const response = await axios({
             url: `${URL}/empleado?id=${id}`,
             method: 'get',

@@ -16,19 +16,17 @@ export default function Perfil() {
   const dispatch = useDispatch();
 
   const usuarioActual = useSelector((state) => state.user);
-  // console.log(usuarioActual.token);
   const empleado = useSelector((state) => state.empleado.empleadoActual);
   const [fechaHoy, setFechaHoy] = useState("");
   // const [sector, setSector] = useState("")
-  console.log(empleado);
-  useEffect(() => {  
-    console.log('Destrabo el usuario...');     
-    dispatch(empleado && fetchSectorXId({id: empleado.sector_id, token: usuarioActual.token}));
+  // console.log(empleado);
+  useEffect(() => {          
+    empleado && dispatch(fetchSectorXId({id: empleado.sector_id, token: usuarioActual.token}));
     dispatch(fetchEmpleados(usuarioActual.token))    
   }, [dispatch, empleado.sector_id, empleado]);
   
-    const sector = useSelector((state) => state.sectores.sector);
-    const nombreSector = sector ? sector.nombre_sector : 'sector'     
+  const sector = useSelector((state) => state.sectores.sector);
+  const nombreSector = sector ? sector.nombre_sector : false    
   
   useEffect(() => {
     const fechaActual = obtenerFechaHoy();
