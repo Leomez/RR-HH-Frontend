@@ -15,16 +15,16 @@ export function Home() {
                 <Box>
                     <Grid container spacing={2}>
                         <Grid item xs={12} md={3}>
-                            {/* <Skeleton variant='rectangular' width={200} height={200}/> */}
-                            <Box boxShadow={3} sx={{ height: '100%' }}>
+                            <Skeleton variant='rectangular' width={200} height={200}/>
+                            {/* <Box boxShadow={3} sx={{ height: '100%' }}>
                                 <Perfil />
-                            </Box>
+                            </Box> */}
                         </Grid>
                         <Grid item xs={12} md={9}>
-                            {/* <Skeleton variant='rectangular' width={400} height={180}/> */}
-                            <Box boxShadow={3} sx={{ height: '100%' }}>
+                            <Skeleton variant='rectangular' width={400} height={180}/>
+                            {/* <Box boxShadow={3} sx={{ height: '100%' }}>
                                 <Notificaciones />
-                            </Box>
+                            </Box> */}
                         </Grid>
                         <Grid item xs={12} sm={4} md={4}>
                             <Box boxShadow={3} sx={{ height: '100%' }}>
