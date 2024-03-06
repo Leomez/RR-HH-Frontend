@@ -9,6 +9,10 @@ import { SideBar } from "../SideBar/SideBar";
 import LayoutSkelton from "./LayoutSkelton";
 import LoginPage from "../../Pages/LoginPage/LoginPage";
 import S from "./Layout.module.css";
+import { ErrorModal } from "../ErrorModal";
+
+
+
 export function Layout({ children }) {
   const drawerWidth = 240;
   const auth = useSelector((state) => state.user.isAuth);
@@ -24,6 +28,7 @@ export function Layout({ children }) {
   // loading ? console.log('cargando...') : '';
   return (
     <div id="layout">
+      <ErrorModal/>
       <NavBar
         open={openMenu}
         handleOpenMenu={handleOpenMenu}

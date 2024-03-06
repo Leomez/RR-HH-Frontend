@@ -22,6 +22,7 @@ const initialState = {
 
 export const nuevoEmpleado = createAsyncThunk('empleado/nuevoEmpleado', async (data) => {
     try {        
+        store.dispatch(setLoading(true))
         const response = await axios({
             method: 'post',
             url: `${URL}/empleado`,
@@ -34,28 +35,37 @@ export const nuevoEmpleado = createAsyncThunk('empleado/nuevoEmpleado', async (d
         const { data } = error.response;
         store.dispatch(showError(data.errorMessage))
         throw new Error(error.response?.data?.message || "Error desconocido al crear un nuevo empleado");
+    } finally {
+        store.dispatch(setLoading(false))
     }
 })
 
 export const fetchEmpleados = createAsyncThunk('empleado/fetchEmpleados', async () => {
-    try {       
+    try {  
+        store.dispatch(setLoading(true))     
         const response = await axios({
             url: `${URL}/empleado`,
             method: 'get',
             headers: { "Authorization": "Bearer " + store.getState().user.token }
         });        
         return response.data.data;
-    } catch (error) {        
+    } catch (error) {      
+        const { data } = error.response;
+        store.dispatch(showError(data.errorMessage))
+        throw new Error(error.response?.data?.message || "Error desconocido al cargar los empleados");  
         // throw new Error(error)
-        return{
-            success: false,
-            error: error
-        }
+        // return{
+        //     success: false,
+        //     error: error
+        // }
+    } finally {
+        store.dispatch(setLoading(false))
     }
 })
 
 export const fetchDomicilios = createAsyncThunk('empleado/fetchDomicilios', async () => {
     try {
+        store.dispatch(setLoading(true))
         const response = await axios({
             url: `${URL}/domicilio`,
             method: 'get',
@@ -63,12 +73,18 @@ export const fetchDomicilios = createAsyncThunk('empleado/fetchDomicilios', asyn
         });
         return response.data.data
     } catch (error) {
-        throw new Error(error)        
+        const { data } = error.response;
+        store.dispatch(showError(data.errorMessage))
+        throw new Error(error.response?.data?.message || "Error desconocido al cargar domicilios");
+        // throw new Error(error)        
+    } finally {
+        store.dispatch(setLoading(false))
     }
 })
 
 export const fetchEmpleadoById = createAsyncThunk('empleado/fetchEmpleadoById', async(id) => {
     try {
+        store.dispatch(setLoading(true))
         const response = await axios({
             url:`${URL}/empleado/${id}`,
             method: 'get',
@@ -76,7 +92,12 @@ export const fetchEmpleadoById = createAsyncThunk('empleado/fetchEmpleadoById', 
         });
         return response.data
     } catch (error) {
-        throw new Error(error)        
+        const { data } = error.response;
+        store.dispatch(showError(data.errorMessage))
+        throw new Error(error.response?.data?.message || "Error desconocido al cargar el empleado");
+        // throw new Error(error)        
+    } finally {
+        store.dispatch(setLoading(false))
     }
 });
 var cont = 0
@@ -93,7 +114,9 @@ export const empleadoActual = createAsyncThunk('empleado/empleadoActual', async(
         console.log(response.data);
         return response.data.data[0]
     } catch (error) {
-        throw new Error(error)
+        const { data } = error.response;
+        store.dispatch(showError(data.errorMessage))
+        throw new Error(error.response?.data?.message || "Error desconocido al cargar el empleado actual");
     } finally {
         store.dispatch(setLoading(false))
     }

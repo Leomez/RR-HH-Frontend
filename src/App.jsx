@@ -2,14 +2,14 @@ import './App.css'
 import { Box } from '@mui/material'
 import { Layout } from './Componentes/Layout/Layout'
 import { AppRouter } from './Routes/AppRouter'
-import ErrorModal from './Componentes/ErrorModal'
+// import { ErrorModal } from './Componentes/ErrorModal'
 
 
 function App() {
   return (
     <Box>
       <Layout>
-        <ErrorModal />
+        {/* <ErrorModal /> */}
         <AppRouter />
       </Layout>
     </Box>

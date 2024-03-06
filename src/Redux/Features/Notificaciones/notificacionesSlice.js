@@ -3,6 +3,7 @@ import store from "../../Store/store";
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { setLoading } from "../Loading/loadingSlice";
 import { URL_API } from "../constantes";
+import { showError } from "../Error/errorSlice";
 const URL = URL_API
 
 
@@ -21,13 +22,17 @@ export const obtenerNotificaciones = createAsyncThunk(
         url: `${URL}/notificaciones/${id}`,
         headers: {"Authorization": "Bearer " + token}
       });
-      store.dispatch(setLoading(false));
+      // store.dispatch(setLoading(false));
       return resp.data;
     } catch (error) {
+      const { data } = error.response
+      store.dispatch(showError(data.errorMessage))
       throw new Error(
         error.response?.data?.message ||
           "Error desconocido al obtener las notificaciones"
       );
+    } finally {
+      store.dispatch(setLoading(false))
     }
   }
 );

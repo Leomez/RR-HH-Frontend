@@ -1,23 +1,26 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { hideError } from '../Redux/Features/Error/errorSlice';
-import { Modal, Dialog, DialogTitle, Typography } from '@mui/material';
+import { Modal, Dialog, DialogTitle, Typography, Button } from '@mui/material';
 
 
-const ErrorModal = () => {
+export const ErrorModal = () => {
   const dispatch = useDispatch();
   const showErrorModal = useSelector(state => state.error.showErrorModal);
   const errorMessage = useSelector(state => state.error.errorMessage);
+  const [open, setOpen] = useState(showErrorModal)
 
   const handleClose = () => {
+    setOpen(false)
     dispatch(hideError());
   };
 
   return (
     <div>
-      <Dialog open={showErrorModal} onClose={handleClose}>
+      <Dialog open={open} onClose={handleClose}>
         <DialogTitle>
           <Typography>{errorMessage}</Typography>
+          <Button variant='outlined' color='info'>Cerrar</Button>
         </DialogTitle>
       </Dialog>
       {/* <Modal open={true} onClose={handleClose}>
@@ -36,4 +39,4 @@ const ErrorModal = () => {
   );
 };
 
-export default ErrorModal;
+// export default ErrorModal;

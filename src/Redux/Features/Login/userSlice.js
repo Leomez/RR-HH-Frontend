@@ -52,7 +52,6 @@ export const registrarUser = createAsyncThunk('user/registrarUser', async (user)
             nombreUsuario: response.data.data.usuario
         }        
     } catch (error) {
-
         if (error.response) {
             // console.log(error.response);
             const errorData = {
@@ -78,6 +77,7 @@ const userSlice = createSlice({
             state.user = null;
             state.rol = null;
             state.isAuth = false;
+            state.token = null
         }, 
         resetConexion: (state) => {
             state.conexion = true
