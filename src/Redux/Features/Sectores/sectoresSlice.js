@@ -9,14 +9,13 @@ import { showError } from '../Error/errorSlice';
 const URL = URL_API
 
 const initialState = {
+    loading: false,
     sectores: [],
     sector: {}
 }
 
 export const crearSector = createAsyncThunk('sectores/crearSector', async ({inputs, userToken}) => {
     try {
-        store.dispatch(setLoading(true))
-        // console.log(inputs + ' - ' + userToken);
         const res = await axios({
             url:`${URL}/sector`,
             method: 'post', 
@@ -28,15 +27,12 @@ export const crearSector = createAsyncThunk('sectores/crearSector', async ({inpu
         const { data } = error.response;
         store.dispatch(showError(data.errorMessage))        
         throw new Error(error.response?.data?.message || "Error desconocido al crear el sector")
-    } finally {
-        store.dispatch(setLoading(false))
     }
 })
 
 export const fetchSectores = createAsyncThunk('sectores/fetchSectores', async (token) => {
     
-    try {
-        store.dispatch(setLoading(true))
+    try {        
         const res = await axios({
             url: `${URL}/sector`,
             method: 'get',
@@ -47,14 +43,11 @@ export const fetchSectores = createAsyncThunk('sectores/fetchSectores', async (t
         const { data } = error.response;
         store.dispatch(showError(data.errorMessage))
         throw new Error(error.response?.data?.message || "Error desconocido al traer los sectores");
-    } finally {
-        store.dispatch(setLoading(false))
     }
 })
 
 export const fetchSector = createAsyncThunk('sectores/fetchSector', async ({nombre, token}) => {
     try {
-        store.dispatch(setLoading(true))
         const res = await axios.get(`${URL}/sector`,{
             data: nombre,
             headers: {"Authorization": "Bearer " + token}
@@ -67,15 +60,12 @@ export const fetchSector = createAsyncThunk('sectores/fetchSector', async ({nomb
     }
 })
 
-export const fetchSectorXId = createAsyncThunk('sectores/fetchSectorXId', async ({id, token}) => {
-    
+export const fetchSectorXId = createAsyncThunk('sectores/fetchSectorXId', async ({id, token}) => {    
     try {
-        store.dispatch(setLoading(true))
         const res = await axios({
             url:`${URL}/sector/${id}`,
             method: 'get',
             headers: {"authorization": "Bearer " + token}
-
         })
         return res.data
     }
@@ -94,31 +84,51 @@ const sectoresSlice = createSlice({
         constructor
         .addCase(crearSector.fulfilled, (state, action) => {
             state.sector = action.payload.data
+            state.loading = false
         })
         .addCase(crearSector.rejected, (state, action) => {
             console.log("Error al crear el sector:", action.error.message);
             state.sector = { error: action.error.message }
+            state.loading = false
+        })
+        .addCase(crearSector.pending, (state) => {
+            state.loading = true
         })
         .addCase(fetchSectores.fulfilled, (state, action) => {
             state.sectores = action.payload.data;
+            state.loading = false
         })
         .addCase(fetchSectores.rejected, (state, action) => {
             console.log("Error al cargar los sectores:", action.error.message);
             state.sectores = { error: action.error.message }
+            state.loading = false
+        })
+        .addCase(fetchSectores.pending, (state) => {
+            state.loading = true
         })
         .addCase(fetchSector.fulfilled, (state, action) => {
             state.sector = action.payload.data;
+            state.loading = false
+        })
+        .addCase(fetchSector.pending, (state) => {
+            state.loading = true
         })
         .addCase(fetchSector.rejected, (state, action) => {
             console.log("Error al cargar el sector:", action.error.message);
             state.sector = { error: action.error.message }
+            state.loading = false
         })
         .addCase(fetchSectorXId.fulfilled, (state, action) => {
             state.sector = action.payload.data;
+            state.loading = false
+        })
+        .addCase(fetchSectorXId.pending, (state) => {
+            state.loading = true
         })
         .addCase(fetchSectorXId.rejected, (state, action) => {
             console.log("Error al cargar el sector:", action.error.message);
             state.sector = { error: action.error.message }
+            state.loading = false
         })        
     }
 })

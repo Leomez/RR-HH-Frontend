@@ -2,27 +2,21 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import axios from 'axios'
 import store from '../../Store/store';
-import { setLoading } from "../Loading/loadingSlice";
 import { URL_API } from "../constantes";
 import { showError } from '../Error/errorSlice';
 
 const URL = URL_API
-
-// const token = ''
-// console.log(store.getState().user);
-
-// const { VITE_API_URL } = import.meta.env
 
 const initialState = {
     nuevoEmpleadoCreado: {},
     empleados: [],
     domicilios:[],
     empleadoActual: null,
+    loading: true
 };
 
 export const nuevoEmpleado = createAsyncThunk('empleado/nuevoEmpleado', async (data) => {
-    try {        
-        store.dispatch(setLoading(true))
+    try {
         const response = await axios({
             method: 'post',
             url: `${URL}/empleado`,
@@ -35,14 +29,11 @@ export const nuevoEmpleado = createAsyncThunk('empleado/nuevoEmpleado', async (d
         const { data } = error.response;
         store.dispatch(showError(data.errorMessage))
         throw new Error(error.response?.data?.message || "Error desconocido al crear un nuevo empleado");
-    } finally {
-        store.dispatch(setLoading(false))
     }
 })
 
 export const fetchEmpleados = createAsyncThunk('empleado/fetchEmpleados', async () => {
-    try {  
-        store.dispatch(setLoading(true))     
+    try {             
         const response = await axios({
             url: `${URL}/empleado`,
             method: 'get',
@@ -58,14 +49,11 @@ export const fetchEmpleados = createAsyncThunk('empleado/fetchEmpleados', async 
         //     success: false,
         //     error: error
         // }
-    } finally {
-        store.dispatch(setLoading(false))
     }
 })
 
 export const fetchDomicilios = createAsyncThunk('empleado/fetchDomicilios', async () => {
-    try {
-        store.dispatch(setLoading(true))
+    try {        
         const response = await axios({
             url: `${URL}/domicilio`,
             method: 'get',
@@ -77,14 +65,11 @@ export const fetchDomicilios = createAsyncThunk('empleado/fetchDomicilios', asyn
         store.dispatch(showError(data.errorMessage))
         throw new Error(error.response?.data?.message || "Error desconocido al cargar domicilios");
         // throw new Error(error)        
-    } finally {
-        store.dispatch(setLoading(false))
-    }
+    }    
 })
 
 export const fetchEmpleadoById = createAsyncThunk('empleado/fetchEmpleadoById', async(id) => {
     try {
-        store.dispatch(setLoading(true))
         const response = await axios({
             url:`${URL}/empleado/${id}`,
             method: 'get',
@@ -96,14 +81,11 @@ export const fetchEmpleadoById = createAsyncThunk('empleado/fetchEmpleadoById', 
         store.dispatch(showError(data.errorMessage))
         throw new Error(error.response?.data?.message || "Error desconocido al cargar el empleado");
         // throw new Error(error)        
-    } finally {
-        store.dispatch(setLoading(false))
     }
 });
 var cont = 0
 export const empleadoActual = createAsyncThunk('empleado/empleadoActual', async(id) => {
-    try {
-        store.dispatch(setLoading(true))
+    try {        
         // cont++
         console.log('solicitud de empleado actual...');
         const response = await axios({
@@ -117,8 +99,6 @@ export const empleadoActual = createAsyncThunk('empleado/empleadoActual', async(
         const { data } = error.response;
         store.dispatch(showError(data.errorMessage))
         throw new Error(error.response?.data?.message || "Error desconocido al cargar el empleado actual");
-    } finally {
-        store.dispatch(setLoading(false))
     }
 });
 
@@ -130,30 +110,50 @@ const empleadoSlice = createSlice({
         constructor
         .addCase(nuevoEmpleado.fulfilled, (state, action) => {
             state.nuevoEmpleadoCreado = action.payload;
+            state.loading = false
         })
         .addCase(nuevoEmpleado.rejected, (state, action) => {
             console.error("Error al crear un nuevo empleado:", action.error.message);
             state.nuevoEmpleadoCreado = { error: action.error.message };
+            state.loading = false
+        })
+        .addCase(nuevoEmpleado.pending, (state) => {
+            state.loading = true
         })
         .addCase(fetchEmpleados.fulfilled, (state, action) => {
             state.empleados = action.payload
+            state.loading = false
         })
         .addCase(fetchEmpleados.rejected, (state, action) => {
             console.error("Error al obtener los empleados:", action.error.message);
             state.empleados = [action.error]
+            state.loading = false
+        })
+        .addCase(fetchEmpleados.pending, (state) => {
+            state.loading = true
         })
         .addCase(fetchDomicilios.fulfilled, (state, action) => {
             state.domicilios = action.payload
+            state.loading = false
         })
         .addCase(fetchDomicilios.rejected, (state, action) => {
             console.error("Error al obtener los domicilios: ", action.error.message);
             state.domicilios = {error: action.error.message}
+            state.loading = false
+        })
+        .addCase(fetchDomicilios.pending, (state) => {
+            state.loading = true
         })
         .addCase(fetchEmpleadoById.fulfilled, (state, action) => {
             state.empleadoActual = action.payload;
+            state.loading = false
         })
         .addCase(empleadoActual.fulfilled, (state, action) => {
             state.empleadoActual = action.payload;
+            state.loading = false
+        })
+        .addCase(empleadoActual.pending, (state) => {
+            state.loading = true
         })
     }
 })

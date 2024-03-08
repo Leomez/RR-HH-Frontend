@@ -9,30 +9,32 @@ const URL = URL_API
 
 const initialState = {
   notificaciones: [],
-  error: null,
+  loading: false,
+  error: {
+    showError: false,
+    errorData: null
+  },
 }
 
 export const obtenerNotificaciones = createAsyncThunk(
   "notificaciones/obtenerNotificaciones",
-  async ({id, token}) => {
+  async ({ id, token }) => {
     try {
-      store.dispatch(setLoading(true));
       const resp = await axios({
         method: 'get',
         url: `${URL}/notificaciones/${id}`,
-        headers: {"Authorization": "Bearer " + token}
+        headers: { "Authorization": "Bearer " + token }
       });
-      // store.dispatch(setLoading(false));
       return resp.data;
     } catch (error) {
-      const { data } = error.response
-      store.dispatch(showError(data.errorMessage))
-      throw new Error(
-        error.response?.data?.message ||
-          "Error desconocido al obtener las notificaciones"
-      );
-    } finally {
-      store.dispatch(setLoading(false))
+      if (error.response) {
+        const errorData = {
+          status: error.response.status,
+          data: error.response.data
+        };
+        return errorData
+      }
+      throw new Error(error.response?.data?.message || "Error desconocido al obtener las notificaciones");
     }
   }
 );
@@ -40,20 +42,28 @@ export const obtenerNotificaciones = createAsyncThunk(
 const notificacionesSlice = createSlice({
   name: "notificaciones",
   initialState,
-  reducers: {},
+  reducers: {
+    resetErrorNotificaciones: (state) => {
+      state.error.showError = false
+      state.error.errorData = null
+    }
+  },
   extraReducers: (constructor) => {
     constructor
-    .addCase(obtenerNotificaciones.fulfilled, (state, actions) => {
-      state.notificaciones = actions.payload
-    })
-    .addCase(obtenerNotificaciones.rejected, (state, actions) => {
-      state.notificaciones = [];
-      state.error = actions.payload
-    })
-    .addCase(obtenerNotificaciones.pending, (state) => {
-      state.isLoading = true;
-    })
-  } 
+      .addCase(obtenerNotificaciones.fulfilled, (state, actions) => {
+        state.notificaciones = actions.payload
+        state.loading = false
+      })
+      .addCase(obtenerNotificaciones.rejected, (state, actions) => {
+        state.notificaciones = [];
+        state.error.errorData = actions.payload;
+        state.error.showError = true;
+        state.loading = false
+      })
+      .addCase(obtenerNotificaciones.pending, (state) => {
+        state.loading = true;
+      })
+  }
   // {
   //   [obtenerNotificaciones.pending]: (state) => {
   //     state.isLoading = true;
@@ -68,5 +78,5 @@ const notificacionesSlice = createSlice({
   //   },
   // },
 });
-export const { setNotificacion } = notificacionesSlice.actions;
+export const { setNotificacion, resetErrorNotificaciones } = notificacionesSlice.actions;
 export default notificacionesSlice.reducer

@@ -3,8 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { Avatar, Box, Card, CardHeader, Typography, Skeleton } from "@mui/material";
 import obtenerFechaHoy from "../../Utils/FechaDeHoy";
 import { fetchSectorXId } from "../../Redux/Features/Sectores/sectoresSlice";
-
 import { fetchEmpleados } from "../../Redux/Features/Empleado/empleadoSlice"
+import PerfilSkeleton from "./PerfilSkeleton";
 
 // const empleado = {
 //     nombre: "Juan Perez",
@@ -14,27 +14,35 @@ import { fetchEmpleados } from "../../Redux/Features/Empleado/empleadoSlice"
 
 export default function Perfil() {
   const dispatch = useDispatch();
-
   const usuarioActual = useSelector((state) => state.user);
   const empleado = useSelector((state) => state.empleado.empleadoActual);
+  const sector = useSelector((state) => state.sectores.sector);
+  const loading = useSelector((state) => state.user.loading)
   const [fechaHoy, setFechaHoy] = useState("");
+  
   // const [sector, setSector] = useState("")
   // console.log(empleado);
+  // console.log(fechaHoy);
+  let cont = 0
   useEffect(() => {          
-    empleado && dispatch(fetchSectorXId({id: empleado.sector_id, token: usuarioActual.token}));
+    dispatch(empleado && fetchSectorXId({id: empleado.sector_id, token: usuarioActual.token}));
     dispatch(fetchEmpleados(usuarioActual.token))    
-  }, [dispatch, empleado.sector_id, empleado]);
-  
-  const sector = useSelector((state) => state.sectores.sector);
-  const nombreSector = sector ? sector.nombre_sector : false    
+    cont++;
+    console.log(cont);
+  }, []);
   
   useEffect(() => {
     const fechaActual = obtenerFechaHoy();
     setFechaHoy(fechaActual);
   }, []);
-
+    
+  const nombreSector = sector ? sector.nombre_sector : false   
+  console.log(nombreSector); 
+  
   return (
-    <Box>
+    loading ? 
+    <PerfilSkeleton/> :
+      <Box>
       <Card sx={{ height: "inherit", borderTop: "#4f5a92 3px solid" }}>
         <Typography
           variant="caption"
@@ -57,6 +65,6 @@ export default function Perfil() {
           sx={{ textAlign: "center" }}
         />
       </Card>
-    </Box>
+    </Box>  
   );
 }

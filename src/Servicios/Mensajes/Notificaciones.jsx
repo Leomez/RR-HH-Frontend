@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import { Box, Avatar, Typography, Card, Stack, Button } from "@mui/material";
+import { Box, Avatar, Typography, Card, Stack, Button, Skeleton } from "@mui/material";
 import { Link } from "react-router-dom";
 import { obtenerNotificaciones } from "../../Redux/Features/Notificaciones/notificacionesSlice";
 import CustomNoRowsOverlay from "../../Utils/NoRows";
@@ -9,9 +9,9 @@ const Notificaciones = () => {
   const dispatch = useDispatch();
   const idEmpleado = useSelector((state) => state.empleado.empleadoActual.id);
   const userToken = useSelector((state) => state.user.token)
-  const notificaciones = useSelector(
-    (state) => state.notificaciones.notificaciones.data
-  );
+  const notificaciones = useSelector((state) => state.notificaciones.notificaciones.data);
+  const loading = useSelector((state) => state.notificaciones.loading)
+
   // notificaciones &&
   //   notificaciones.map((notificacion) => console.log(notificacion.contenido));
   useEffect(() => {
@@ -20,6 +20,7 @@ const Notificaciones = () => {
   
 
   return (
+    loading ? <Skeleton variant='rectangular' width={400} height={180} /> :
     <Box sx={{ height: "100%" }}>
       <Card sx={{ height: "inherit", borderTop: "#4f5a92 3px solid" }}>
         <Box display={"flex"} alignItems={"center"} p={1}>

@@ -14,7 +14,7 @@ export const ErrorModal = () => {
     setOpen(false)
     dispatch(hideError());
   };
-
+console.log(errorMessage);
   return (
     <div>
       <Dialog open={open} onClose={handleClose}>

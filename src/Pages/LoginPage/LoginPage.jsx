@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { useSelector } from "react-redux";
 import { Box, Typography } from "@mui/material";
 // import LoginForm from '../../Servicios/Login/LoginForm';
 import { resetConexion } from "../../Redux/Features/Login/userSlice";
@@ -13,10 +14,12 @@ function LoginPage() {
   useEffect(() => {
     resetConexion();
   }, []);
+
+  const loading = useSelector(state => state.user.loading)
   //
   return (
     <div id="loginPage">
-      <LoadingPage/>
+      <LoadingPage loading={loading}/>
       <Box
         sx={{
           display: "flex",

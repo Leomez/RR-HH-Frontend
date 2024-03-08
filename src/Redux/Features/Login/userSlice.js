@@ -9,6 +9,11 @@ const URL = URL_API
 
 
 const initialState = {
+    loading: false,
+    error: {
+        showError: false,
+        errorData: null
+    },
     conexion: true,
     empleadoId: null,
     user: null,
@@ -20,8 +25,7 @@ const initialState = {
 }
 export const loginUser = createAsyncThunk('user/loginUser', async (user) => {
     const token = user.token    
-    try {
-        store.dispatch(setLoading(true))
+    try {        
         console.log(URL);
         const response = await axios({
             url: `${URL}/login`,
@@ -31,16 +35,19 @@ export const loginUser = createAsyncThunk('user/loginUser', async (user) => {
         store.dispatch(empleadoActual(response.data.data.EmpleadoId))
         return response.data
     } catch (error) {
-        console.log('error en el login...', URL);
+        if (error.response) {
+            const errorData = {
+                status: error.response.status,
+                data: error.response.data
+            };
+            return errorData
+        }
         throw error;
-    } finally {
-        store.dispatch(setLoading(false))
-    }
+    } 
 })
 
 export const registrarUser = createAsyncThunk('user/registrarUser', async (user) => {
-    try {
-        store.dispatch(setLoading(true))
+    try {        
         const response = await axios({
             url: `${URL}/usuario/registro`,
             method: "post",
@@ -53,17 +60,14 @@ export const registrarUser = createAsyncThunk('user/registrarUser', async (user)
         }        
     } catch (error) {
         if (error.response) {
-            // console.log(error.response);
             const errorData = {
                 status: error.response.status,
                 data: error.response.data
             };
-            throw new Error(JSON.stringify(errorData));
+            return errorData
         }
         throw error
-    } finally {
-        store.dispatch(setLoading(false))
-    }
+    } 
 })
 
 const userSlice = createSlice({
@@ -81,7 +85,11 @@ const userSlice = createSlice({
         }, 
         resetConexion: (state) => {
             state.conexion = true
-        }
+        },
+        resetUserError: (state) => {
+            state.error.showError = false
+            state.error.errorData = null
+        } 
     },
     extraReducers: (constructor) => {
         constructor
@@ -92,21 +100,33 @@ const userSlice = createSlice({
                 state.rol = action.payload.data.rol;
                 state.foto = action.payload.data.foto
                 state.token = action.payload.data.token
+                state.loading = false
             })
             .addCase(loginUser.rejected, (state, action) => {                
                 console.log(action);
                 console.log(URL);
+                state.error.showError = true
+                state.error.errorData = action.payload
                 state.conexion = false
+                state.loading = false
+            })
+            .addCase(loginUser.pending, (state) => {
+                state.loading = true
             })
             .addCase(registrarUser.fulfilled, (state, action) => {
-                state.nuevoUsuario = action.payload                
+                state.nuevoUsuario = action.payload
+                state.loading = false                
+            })
+            .addCase(registrarUser.pending, (state) => {
+                state.loading = true
             })
             .addCase(registrarUser.rejected, (state, action) => {
                 const errorData = JSON.parse(action.error.message); // Analizar la cadena JSON para obtener el objeto
-                state.nuevoUsuario = errorData;                
+                state.nuevoUsuario = errorData;
+                state.loading = false                
             })
     }
 })
 
-export const { loginSucces, logoutUser, resetConexion } = userSlice.actions
+export const { loginSucces, logoutUser, resetConexion, resetUserError } = userSlice.actions
 export default userSlice.reducer

@@ -1,11 +1,10 @@
 import { CircularProgress } from "@mui/joy";
-
 import { Dialog } from "@mui/material";
 import { useSelector } from "react-redux";
 
 
-export default function LoadingPage() {
-    const loading = useSelector(state => state.loading)
+export default function LoadingPage({loading}) {
+    
     return (
         <Dialog open= {loading} sx={{
             "& .MuiDialog-paper": {
