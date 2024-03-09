@@ -14,7 +14,7 @@ export function Home() {
         <div id="homeContainer">
             <Box component={"main"} sx={{ flexGrow: 1 }}>
                 <Box>
-                    {/* <Grid container spacing={2}>
+                    <Grid container spacing={2}>
                         <Grid item xs={12} md={3}>                            
                             <Perfil />                            
                         </Grid>
@@ -38,7 +38,7 @@ export function Home() {
                                 <Perfil />
                             </Box>
                         </Grid>
-                    </Grid> */}
+                    </Grid>
                 </Box>
             </Box>
         </div>
