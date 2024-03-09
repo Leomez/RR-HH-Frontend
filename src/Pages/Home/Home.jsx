@@ -20,7 +20,7 @@ export function Home() {
                         </Grid>
                         <Grid item xs={12} md={9}>                            
                                 <Box boxShadow={3} sx={{ height: '100%' }}>
-                                    <Notificaciones />
+                                    {/* <Notificaciones /> */}
                                 </Box>
                         </Grid>
                         <Grid item xs={12} sm={4} md={4}>
