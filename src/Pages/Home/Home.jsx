@@ -14,13 +14,13 @@ export function Home() {
         <div id="homeContainer">
             <Box component={"main"} sx={{ flexGrow: 1 }}>
                 <Box>
-                    <Grid container spacing={2}>
+                    {/* <Grid container spacing={2}>
                         <Grid item xs={12} md={3}>                            
                             <Perfil />                            
                         </Grid>
                         <Grid item xs={12} md={9}>                            
                                 <Box boxShadow={3} sx={{ height: '100%' }}>
-                                    {/* <Notificaciones /> */}
+                                    <Notificaciones />
                                 </Box>
                         </Grid>
                         <Grid item xs={12} sm={4} md={4}>
@@ -30,15 +30,15 @@ export function Home() {
                         </Grid>
                         <Grid item xs={12} sm={4} md={4}>
                             <Box boxShadow={3} sx={{ height: '100%' }}>
-                                {/* <Perfil /> */}
+                                <Perfil />
                             </Box>
                         </Grid>
                         <Grid item xs={12} sm={4} md={4}>
                             <Box boxShadow={3} sx={{ height: '100%' }}>
-                                {/* <Perfil /> */}
+                                <Perfil />
                             </Box>
                         </Grid>
-                    </Grid>
+                    </Grid> */}
                 </Box>
             </Box>
         </div>
