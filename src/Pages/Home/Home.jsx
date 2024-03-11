@@ -15,7 +15,7 @@ export function Home() {
             <Box component={"main"} sx={{ flexGrow: 1 }}>
                 <Box>
                     <Grid container spacing={2}>
-                        {/* <Grid item xs={12} md={3}>                            
+                        <Grid item xs={12} md={3}>                            
                             <Perfil />                            
                         </Grid>
                         <Grid item xs={12} md={9}>                            
@@ -37,7 +37,7 @@ export function Home() {
                             <Box boxShadow={3} sx={{ height: '100%' }}>
                                 <Perfil />
                             </Box>
-                        </Grid> */}
+                        </Grid>
                     </Grid>
                 </Box>
             </Box>

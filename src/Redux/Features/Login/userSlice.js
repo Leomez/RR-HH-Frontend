@@ -26,13 +26,13 @@ const initialState = {
 export const loginUser = createAsyncThunk('user/loginUser', async (user) => {
     const token = user.token    
     try {        
-        console.log(URL);
+        // console.log(URL);
         const response = await axios({
             url: `${URL}/login`,
             method: "post",
             headers: { "Authorization": "Bearer " + token }
         });
-        store.dispatch(empleadoActual(response.data.data.EmpleadoId))
+        await store.dispatch(empleadoActual({id:response.data.data.EmpleadoId, token:token}))
         return response.data
     } catch (error) {
         if (error.response) {

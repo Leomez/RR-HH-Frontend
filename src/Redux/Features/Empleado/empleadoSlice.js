@@ -84,14 +84,14 @@ export const fetchEmpleadoById = createAsyncThunk('empleado/fetchEmpleadoById', 
     }
 });
 var cont = 0
-export const empleadoActual = createAsyncThunk('empleado/empleadoActual', async(id) => {
+export const empleadoActual = createAsyncThunk('empleado/empleadoActual', async({id, token}) => {
     try {        
         // cont++
-        console.log('solicitud de empleado actual...');
+        console.log('solicitud de empleado actual...');        
         const response = await axios({
-            url: `${URL}/empleado?id=${id}`,
+            url: `${URL}/empleado/?id=${id}`,
             method: 'get',
-            headers: { "Authorization": "Bearer " + store.getState().user.token }
+            headers: { "Authorization": "Bearer " + token }
         });
         console.log(response.data);
         return response.data.data[0]
