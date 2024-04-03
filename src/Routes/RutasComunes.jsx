@@ -13,6 +13,7 @@ export const RutasComunes = () => {
             <Route path='/' element={<Home />} />            
             <Route path='mensajes' element={<Mensajes />} />
             <Route path='recibos' element={<MisRecibos/>}/>  
+            <Route path='licencias' element={<Mensajes/>}/> 
             {/* <Route path='firmar' element={<FirmaContainer/>}/>           */}
             <Route path='*' element={<Navigate to='/' replace />} />                        
         </Routes>

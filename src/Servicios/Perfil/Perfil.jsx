@@ -6,30 +6,19 @@ import { fetchSectorXId } from "../../Redux/Features/Sectores/sectoresSlice";
 import { fetchEmpleados } from "../../Redux/Features/Empleado/empleadoSlice"
 import PerfilSkeleton from "./PerfilSkeleton";
 
-// const empleado = {
-//     nombre: "Juan Perez",
-//     fotoPerfil: "https://upload.wikimedia.org/wikipedia/commons/3/3b/FrayJuanPerez.jpg",
-//     sector: "Mantenimiento"
-// }
-
 export default function Perfil() {
   const dispatch = useDispatch();
   const usuarioActual = useSelector((state) => state.user);
   const empleado = useSelector((state) => state.empleado.empleadoActual);
   const sector = useSelector((state) => state.sectores.sector);
   const loading = useSelector((state) => state.user.loading)
-  const [fechaHoy, setFechaHoy] = useState("");
+  const [fechaHoy, setFechaHoy] = useState("");  
   
-  // const [sector, setSector] = useState("")
-  // console.log(empleado);
-  // console.log(fechaHoy);
-  let cont = 0
-  useEffect(() => {          
+  
+  useEffect( () => {          
     dispatch(empleado && fetchSectorXId({id: empleado.sector_id, token: usuarioActual.token}));
-    dispatch(fetchEmpleados(usuarioActual.token))    
-    cont++;
-    console.log(cont);
-  }, []);
+    // dispatch(fetchEmpleados(usuarioActual.token))      
+  }, [empleado, usuarioActual]);
   
   useEffect(() => {
     const fechaActual = obtenerFechaHoy();
@@ -37,7 +26,7 @@ export default function Perfil() {
   }, []);
     
   const nombreSector = sector ? sector.nombre_sector : false   
-  console.log(nombreSector); 
+  // console.log(nombreSector); 
   
   return (
     loading ? 

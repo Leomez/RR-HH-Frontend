@@ -2,7 +2,8 @@ import { React, useEffect } from 'react'
 import { useSelector, useDispatch } from "react-redux"
 import { Box, Button, Divider, List, Typography } from '@mui/material'
 import { fetchSectores } from '../../../Redux/Features/Sectores/sectoresSlice'
-import { sector } from './sector'
+import { sector } from './utils'
+import LoadingPage from '../../../Componentes/Containers/Loading'
 import { Error } from '../../../Componentes/Error'
 import InfoBox from '../../../Utils/InfoBox'
 import PushPinIcon from '@mui/icons-material/PushPin';
@@ -13,6 +14,7 @@ export default function ListadoEmpleadosXs() {
     const dispatch = useDispatch()
     const token = useSelector((state) => state.user.token)
     const empleados = useSelector(state => state.empleado.empleados)
+    const loadingEmpleados = useSelector(state => state.empleado.loading)
     const sectores = useSelector(state => state.sectores.sectores)
 
     useEffect(() => {
@@ -34,6 +36,7 @@ export default function ListadoEmpleadosXs() {
 
     return (
         <List sx={{ width: '100%', maxWidth: 360, padding: 0 }}>
+            <LoadingPage loading={loadingEmpleados}/>
             {empleados.map(e => (
 
                 <Box key={e.id} >

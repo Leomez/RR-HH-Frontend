@@ -1,82 +1,57 @@
 import { React, useEffect, useState } from 'react'
 import { useSelector, useDispatch } from "react-redux"
-import { Box, Card, CardContent, Typography, Container, CardActions, Button, Divider } from '@mui/material'
+import { Box, } from '@mui/material'
 import CardSkeleton from './skeleton/cardSkeleton'
 import { fetchSectores } from '../../Redux/Features/Sectores/sectoresSlice'
-import InfoBox from '../../Utils/InfoBox'
-import { Info } from '@mui/icons-material'
-import SelectEncargados from './SelectEncargados'
+import { getSupervisores } from '../../Redux/Features/Supervisor/supervisorSlice'
+import { fetchEmpleados } from '../../Redux/Features/Empleado/empleadoSlice'
+import { setLoading } from '../../Redux/Features/Loading/loadingSlice'
 import { Error } from '../../Componentes/Error'
-
-
+import DetalleSector from '../../Servicios/Sector/DetalleSector'
 
 export default function Sectores() {
     const dispatch = useDispatch()
-    const aux = [1, 2, 3, 4, 5]
-    const [maxCardWidth, setMaxCardWidth] = useState(0)
-    const [open, setOpen] = useState(false)
-    const [encargadoValue, setEncargadoValue] = useState('Sin encargado')
+    const aux = [1, 2, 3, 4]
     const token = useSelector((state) => state.user.token)
-    useEffect(() => {
-        dispatch(fetchSectores(token))
-    }, [dispatch])
     const empleados = useSelector(state => state.empleado.empleados)
     const sectores = useSelector(state => state.sectores.sectores);
+    const supervisores = useSelector(state => state.supervisor.supervisores.data)
+    const loading = useSelector(state => state.sectores.loading)
+    const globalLoading = useSelector(state => state.loading)
     const error = sectores.error ? sectores.error : null
-    console.log(sectores);
+    // const [loading, setLoading] = useState(true);
+
+    // useEffect(() => {        
+    //     setTimeout(() => {
+    //         setLoading(false); 
+    //     }, 3000);
+    // }, []);
+
     useEffect(() => {
-        const widths = Array.from(document.querySelectorAll('.custom-card')).map(
-            card => card.clientWidth
-        )
-        setMaxCardWidth(Math.max(...widths))
-    }, [sectores])
+        if (empleados[0] === undefined || empleados[0].name !== 'Error') {
+            dispatch(fetchEmpleados())            
+        }
+        dispatch(fetchSectores(token))
+        dispatch(getSupervisores())        
+    }, [dispatch])
 
-    function handleClick() {
-        setOpen(true)
-    }
-
-    function handleClose(nuevoEncargado) {
-        if (nuevoEncargado) {
-            setEncargadoValue(nuevoEncargado)
-        } 
-        setOpen(false)
-    }
     if (error) {
-        return <Error error={error}/>
+        return <Error error={error} />
     }
-
     return (
-        <Box sx={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-evenly' }}>
-            {sectores ? sectores.map(s => {
-                return (
-                    <Card
-                        className="custom-card"
-                        key={s.id}
-                        sx={{ minWidth: '255px', margin: '0.5rem', width: `${maxCardWidth + 20}px` }}>
-                        <CardContent>
-                            <Typography variant='h5'>
-                                {s.nombre_sector}
-                            </Typography>
-                            <Divider variant='insets' />
-                            <InfoBox label={"Cantidad de empleados: "} value={empleados.filter(e => e.sector_id === s.id).length} />
-                            <InfoBox label={"Encargado del sector: "} value={encargadoValue} />
-                            <Box sx={{ display: 'flex', justifyContent: 'center', padding: 1 }}>
-                                <Button sx={{ margin: 'auto' }} variant='outlined' onClick={handleClick}>
-                                    {encargadoValue === 'Sin encargado' ? "Seleccionar Encargado" : "Cambiar encargado"}
-                                </Button>
-                            </Box>
-                            <SelectEncargados
-                                open={open}
-                                value={encargadoValue}
-                                onClose={handleClose}
-                                keepMounted
-                                empleados={empleados}
-                            />
-                        </CardContent>
-                    </Card>
-                )
-            }) : aux.map((n) =>
-                <CardSkeleton className="custom-card" key={String(n)} />
+        <Box sx={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-evenly' }}>         
+
+            {loading ? (
+                // Muestro Skeletons mientras los datos están cargando
+                aux.map((n) => <CardSkeleton className="custom-card" key={String(n)} />)
+            ) : (
+                // Cuando los datos están cargados, muestro los detalles del sector
+                sectores.map((s, i) => {
+                    const encargado = supervisores && supervisores.filter(sup => sup.SectorId === s.id)[0];
+                    return (
+                        <DetalleSector key={i} sector={s} empleados={empleados} encargado={encargado} />
+                    );
+                })
             )}
         </Box>
     )

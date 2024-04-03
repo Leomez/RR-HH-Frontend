@@ -14,6 +14,8 @@ import {
   Box,
 } from "@mui/material";
 import { DrawerHeader, DrawerWrapper } from "./SideBarController";
+import ListaComunes from "./ListaComunes";
+import ListasAdmin from "./ListasAdmin";
 // ICONOS
 
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
@@ -45,87 +47,10 @@ export function SideBar({ open, handleDrawerClose, drawerWidth }) {
         </DrawerHeader>
         <Divider />
         <Box id="ListCotainer">
-          <List>
-            {rutas().rutasComunes.map((ruta) => (
-              <ListItem
-
-                key={ruta.nombreSeccion}
-                disablePadding
-                sx={{ display: "block" }}
-              >                
-                <Link to={ruta.ruta}>
-                  <ListItemButton      
-                    selected={ seccionActiva === (`/${ruta.ruta}`) || seccionActiva === (ruta.ruta) }
-                    sx={{
-                      minHeight: 48,
-                      justifyContent: open ? "initial" : "center",
-                      px: 2.5,
-                      borderLeft: (seccionActiva === (`/${ruta.ruta}`) || seccionActiva === (ruta.ruta)) ? '2px solid #1976d2' : 'none'
-                    }}
-                  >
-                    <ListItemIcon
-                      sx={{
-                        minWidth: 0,
-                        mr: open ? 3 : "auto",
-                        justifyContent: "center",
-                      }}
-                    >
-                      {ruta.icono}
-                    </ListItemIcon>
-                    <ListItemText
-                      primary={ruta.nombreSeccion}
-                      sx={{
-                        color: theme.palette.primary.main,
-                        opacity: open ? 1 : 0,
-                      }}
-                    />
-                  </ListItemButton>
-                </Link>
-              </ListItem>
-            ))}
-          </List>
+          <ListaComunes seccionActiva={seccionActiva} theme={theme}/>          
           <Divider />
           {permisos === "ADMIN" && (
-            <List>
-              {rutas().rutasAdmin.map((ruta) => (
-                <ListItem
-                  key={ruta.nombreSeccion}
-                  disablePadding
-                  sx={{ display: "block"}}
-                >
-                  <Link to={ruta.ruta}>
-                    <ListItemButton
-                      selected={ seccionActiva === (`/${ruta.ruta}`) || seccionActiva === (ruta.ruta) }
-                      sx={{
-                        minHeight: 48,
-                        justifyContent: open ? "initial" : "center",
-                        px: 2.5, 
-                        borderLeft: (seccionActiva === (`/${ruta.ruta}`) || seccionActiva === (ruta.ruta)) ? '2px solid #1976d2' : 'none' 
-
-                        // ":focus": {backgroundColor: 'rgba(0, 0, 0, 0.06)'}                        
-                      }}                      
-                    >
-                      <ListItemIcon
-                        sx={{
-                          minWidth: 0,
-                          mr: open ? 3 : "auto",
-                          justifyContent: "center",
-                        }}
-                      >
-                        {ruta.icono}
-                      </ListItemIcon>
-                      <ListItemText
-                        primary={ruta.nombreSeccion}
-                        sx={{
-                          color: theme.palette.primary.light,
-                          opacity: open ? 1 : 0,
-                        }}
-                      />
-                    </ListItemButton>
-                  </Link>
-                </ListItem>
-              ))}
-            </List>
+            <ListasAdmin seccionActiva={seccionActiva} theme={theme}/>            
           )}
         </Box>
       </Box>

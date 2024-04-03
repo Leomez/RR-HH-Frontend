@@ -25,6 +25,7 @@ const initialState = {
 }
 export const loginUser = createAsyncThunk('user/loginUser', async (user) => {
     const token = user.token    
+    console.log(user);
     try {        
         // console.log(URL);
         const response = await axios({

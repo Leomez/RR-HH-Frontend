@@ -2,6 +2,7 @@
 import HomeIcon from "@mui/icons-material/Home";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import EmojiPeopleTwoToneIcon from "@mui/icons-material/EmojiPeopleTwoTone";
+import EventIcon from '@mui/icons-material/Event';
 import ApartmentIcon from '@mui/icons-material/Apartment';
 import PunchClockTwoToneIcon from "@mui/icons-material/PunchClockTwoTone";
 import ReceiptLongIcon from "@mui/icons-material/ReceiptLong";
@@ -36,6 +37,11 @@ const rutas = () => {
         icono: <FaceRetouchingNaturalIcon sx={{ color: theme.palette.primary.main }} />,
         ruta: "perfil",
       },
+      {
+        nombreSeccion: "Licencias y Permisos",
+        icono: <EventIcon sx={{ color: theme.palette.primary.main}} />,
+        ruta: "licencias"
+      }
     ],
     rutasAdmin: [
       {
