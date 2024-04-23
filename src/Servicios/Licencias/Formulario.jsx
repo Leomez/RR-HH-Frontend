@@ -1,11 +1,20 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Stack, Typography, FormControl, InputLabel, Select, MenuItem, Button, TextField } from '@mui/material';
+import { getTipoSolicitudes } from '../../Redux/Features/Solicitudes/solicitudesSlice';
 
 const Formulario = ({ close }) => {
-  const tipoSolicitud = ['Permiso', 'Licencia'];
-  const licencias = ['anual', 'enfermedad', 'maternidad', 'Cuidado familiar', 'duelo'];
-  const permisos = ['Llegar tarde', 'salida médica', 'franco compensatorio', 'retirarme temprano', 'cambio de horario'];
+  const tipoSolicitud = ['permiso', 'licencia'];
+  const licencias = ['vacaciones', 'enfermedad', 'maternidad', 'cuidado familiar', 'duelo'];
+  const permisos = ['llegar tarde',  'franco compensatorio', 'retirarme temprano', 'cambio de horario'];
+  const dispatch = useDispatch();
+  const tipoSolicitudes = useSelector((state) => state.solicitudes.tipoSolicitudes);
 
+  useEffect(() => {
+    dispatch(getTipoSolicitudes());
+  }, [dispatch]);
+  // Estado inicial del formulario
+  console.log(tipoSolicitudes);
   const initialState = {
     tipo: '',
     categoria: '',
@@ -51,7 +60,7 @@ const Formulario = ({ close }) => {
           ))}
         </Select>
       </FormControl>
-      {formData.tipo === 'Licencia' && (
+      {formData.tipo === 'licencia' && (
         <>
           <FormControl fullWidth>
             <InputLabel id="categoria-label">Categoría de licencia</InputLabel>
@@ -94,7 +103,7 @@ const Formulario = ({ close }) => {
           />
         </>
       )}
-      {formData.tipo === 'Permiso' && (
+      {formData.tipo === 'permiso' && (
         <>
           <FormControl fullWidth>
             <InputLabel id="permiso-label">Tipo de permiso</InputLabel>
@@ -124,7 +133,7 @@ const Formulario = ({ close }) => {
               shrink: true,
             }}
           />
-          {(formData.categoria === 'Llegar tarde' || formData.categoria === 'retirarme temprano') && (
+          {(formData.categoria === 'llegar tarde' || formData.categoria === 'retirarme temprano') && (
             <TextField
               id="horas-permiso"
               name="horasPermiso"
