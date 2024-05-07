@@ -37,19 +37,21 @@ const solicitudesSlice = createSlice({
         state.error = action.payload;
       })
       // Obtener tipos de solicitudes
-        .addCase(getTipoSolicitudes.pending, (state, action) => {
+      .addCase(getTipoSolicitudes.pending, (state, action) => {
         state.loading = true
-        })
-        .addCase(getTipoSolicitudes.fulfilled, (state, action) => {
+      })
+      .addCase(getTipoSolicitudes.fulfilled, (state, action) => {
         state.loading = false;
         state.tipoSolicitudes = action.payload;
-        })
-        .addCase(getTipoSolicitudes.rejected, (state, action) => {
+      })
+      .addCase(getTipoSolicitudes.rejected, (state, action) => {
         state.loading = false;
         console.log("Error al obtener los tipos de solicitudes");
         state.respuesta = 'Error al obtener los tipos de solicitudes';
         state.error = action.payload;
       })
+      // crear solicitudes
+      
   }
 
 });
@@ -65,23 +67,32 @@ export const getTipoSolicitudes = createAsyncThunk(
       });
       // console.log(response.data);
       return response.data.data;
-      
+
     } catch (error) {
       console.log(error);
-      return error     
+      return error
     }
   }
 );
 
 // Crear solicitud
-// export const createSolicitud = createAsyncThunk(
-//   "solicitudes/createSolicitud",
-//   async (solicitud) => {
-//     const response = await axios.post(`${URL_API}/licencias/crearTipoSolicitud}`, solicitud);
-//     console.log(response.data);
-//     return response.data;
-//   }
-// );
+export const createSolicitud = createAsyncThunk(
+  "solicitudes/createSolicitud",
+  async (solicitud) => {
+    try {
+      const response = await axios({
+        method: 'POST',
+        url: `${URL_API}/licencias/crearSolicitud`,
+        data: solicitud,
+        headers: { "Authorization": "Bearer " + store.getState().user.token }
+      })
+      console.log(response.data);
+      return response.data;
+    } catch (error) {
+      return error
+    }
+  }
+);
 
 // Crear tipos de solicitud
 export const crearTipoSolicitud = createAsyncThunk(
