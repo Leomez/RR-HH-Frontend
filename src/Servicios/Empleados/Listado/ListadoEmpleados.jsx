@@ -31,6 +31,10 @@ export default function ListadoEmpleados() {
   //   return <Error error={empleados[0]} />
   // } 
 
+  function suma(a,b) {
+    return a + b
+  }
+
   const columns = [
     { field: 'id', headerName: 'ID', width: 150 },
     { field: 'col1', headerName: 'Nombre', width: 300 },
@@ -43,11 +47,11 @@ export default function ListadoEmpleados() {
       width: 150,
     }
   ]
-  // console.log(empleados);
   const rows = /*!loadingEmpleados &&*/
-    empleados[0].name !== 'Error' && 
-    empleados.map(e => {
-      return {
+  empleados[0].name !== 'Error' && 
+  empleados.map(e => {
+    {console.log(encargado(supervisores, e, empleados))}
+    return {
         id: e.id,
         col1: `${e.nombre_empleado} ${e.apellido_empleado}`,
         col2: e.legajo,

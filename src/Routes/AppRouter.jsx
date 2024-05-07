@@ -11,6 +11,7 @@ import { RutasSuper } from "./RutasSuper";
 export const AppRouter = () => {
   const usuario = useSelector((state) => state.user);
   const autenticado = usuario ? usuario.isAuth : false
+  console.log(usuario);
   console.log(autenticado);
   
 

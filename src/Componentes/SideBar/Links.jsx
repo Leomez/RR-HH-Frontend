@@ -8,6 +8,7 @@ import PunchClockTwoToneIcon from "@mui/icons-material/PunchClockTwoTone";
 import ReceiptLongIcon from "@mui/icons-material/ReceiptLong";
 import RequestPageIcon from '@mui/icons-material/RequestPage';
 import FaceRetouchingNaturalIcon from '@mui/icons-material/FaceRetouchingNatural';
+import EditCalendarIcon from '@mui/icons-material/EditCalendar';
 import BadgeIcon from '@mui/icons-material/Badge';
 import { useTheme } from "@mui/material";
 
@@ -55,6 +56,12 @@ const rutas = () => {
         nombreSeccion: "Sectores",
         icono: <ApartmentIcon sx={{ color: theme.palette.primary.light }} />,
         ruta: "sectores",
+      },
+      {
+        nombreSeccion: "Solicitudes",
+        icono: <EditCalendarIcon sx={{ color: theme.palette.primary.light }} />,
+        ruta: "solicitudes",
+
       },
       {
         nombreSeccion: "Cargar Recibos",
