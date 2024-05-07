@@ -31,7 +31,8 @@ export const loginUser = createAsyncThunk('user/loginUser', async (user) => {
         const response = await axios({
             url: `${URL}/login`,
             method: "post",
-            headers: { "Authorization": "Bearer " + token }
+            headers: { "Authorization": "Bearer " + token },
+            data : user
         });
         await store.dispatch(empleadoActual({id:response.data.data.EmpleadoId, token:token}))
         return response.data
