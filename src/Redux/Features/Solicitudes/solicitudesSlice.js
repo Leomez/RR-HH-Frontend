@@ -11,6 +11,7 @@ const initialState = {
   respuesta: ''
 };
 
+
 const solicitudesSlice = createSlice({
   name: "solicitudes",
   initialState,
@@ -50,8 +51,7 @@ const solicitudesSlice = createSlice({
         state.respuesta = 'Error al obtener los tipos de solicitudes';
         state.error = action.payload;
       })
-      // crear solicitudes
-      
+      // crear solicitudes      
   }
 
 });
@@ -63,11 +63,11 @@ export const getTipoSolicitudes = createAsyncThunk(
     try {
       const response = await axios({
         method: 'GET',
-        url: `${URL_API}/licencias/traerTipoSolicitud`
+        url: `${URL_API}/licencias/traerTipoSolicitud`,
+        headers: { "Authorization": "Bearer " + store.getState().user.token }
       });
       // console.log(response.data);
       return response.data.data;
-
     } catch (error) {
       console.log(error);
       return error
@@ -114,7 +114,6 @@ export const crearTipoSolicitud = createAsyncThunk(
     }
   }
 );
-
 
 export const { setSolicitudes } = solicitudesSlice.actions;
 
