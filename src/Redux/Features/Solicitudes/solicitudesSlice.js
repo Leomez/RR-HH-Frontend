@@ -43,7 +43,10 @@ const solicitudesSlice = createSlice({
       })
       .addCase(getTipoSolicitudes.fulfilled, (state, action) => {
         state.loading = false;
+        // state.tipoSolicitudes.push(action.payload);
         state.tipoSolicitudes = action.payload;
+        state.respuesta = 'Tipos de solicitudes obtenidos correctamente';
+        state.error = action.payload;
       })
       .addCase(getTipoSolicitudes.rejected, (state, action) => {
         state.loading = false;
@@ -59,18 +62,24 @@ const solicitudesSlice = createSlice({
 // Obtener solicitudes
 export const getTipoSolicitudes = createAsyncThunk(
   "solicitudes/getSolicitudes",
-  async () => {
+  async (id, { rejectWithValue }) => {
+    const token = store.getState().user.token;
+
     try {
+      
+      console.log(id);
       const response = await axios({
         method: 'GET',
         url: `${URL_API}/licencias/traerTipoSolicitud`,
-        headers: { "Authorization": "Bearer " + store.getState().user.token }
+        params: { id },
+        headers: { "Authorization": `Bearer ${token}` }
       });
-      // console.log(response.data);
+      // console.log(response.data.data);
       return response.data.data;
+
     } catch (error) {
-      console.log(error);
-      return error
+      console.error('Error fetching solicitudes:', error.response?.data || error.message);
+      return rejectWithValue(error.response?.data || error.message);
     }
   }
 );

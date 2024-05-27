@@ -69,14 +69,14 @@ const rutas = () => {
         ruta: "cargarRecibos",
       },
     ],
-    rutasEmpleado: [
+    rutasSuper: [
       {
-        nombreSeccion: "Home",
-        icono: <HomeIcon sx={{ color: theme.palette.primary.main }} />,
-        ruta: "/home",
+        nombreSeccion: "Solicitudes del personal",
+        icono: <EditCalendarIcon sx={{ color: theme.palette.primary.light }} />,
+        ruta: "solicitudesAAutorizar",
       },
       {
-        nombreSeccion: "Mi Asistencia",
+        nombreSeccion: "Asignar tareas",
         icono: (
           <PunchClockTwoToneIcon sx={{ color: theme.palette.primary.main }} />
         ),

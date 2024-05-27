@@ -3,18 +3,18 @@ import { List, ListItem, ListItemButton, ListItemIcon, ListItemText } from '@mui
 import { Link } from 'react-router-dom'
 import rutas from './Links'
 
-function ListaComunes(props) {
-    const {seccionActiva, theme} = props
+function ListasSuper(props) {
+    const { seccionActiva, theme } = props
     return (
         <List>
-            {rutas().rutasComunes.map((ruta) => (
+            {rutas().rutasSuper.map((ruta) => (
                 <ListItem
                     key={ruta.nombreSeccion}
                     disablePadding
                     sx={{ display: "block" }}
                 >
-                    <Link to={ruta.ruta}>
-                        <ListItemButton
+                   <Link to={ruta.ruta}>
+                   <ListItemButton
                             selected={seccionActiva === (`/${ruta.ruta}`) || seccionActiva === (ruta.ruta)}
                             sx={{
                                 minHeight: 48,
@@ -40,11 +40,12 @@ function ListaComunes(props) {
                                 }}
                             />
                         </ListItemButton>
-                    </Link>
+                   </Link> 
                 </ListItem>
             ))}
         </List>
     )
+
 }
 
-export default ListaComunes
+export default ListasSuper
