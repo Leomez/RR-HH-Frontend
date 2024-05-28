@@ -14,7 +14,7 @@ import { ErrorModal } from "../ErrorModal";
 
 
 export function Layout({ children }) {
-  const drawerWidth = 240;
+  const drawerWidth = 255;
   const auth = useSelector((state) => state.user.isAuth);
   const loading = useSelector((state) => state.loading);
   const [openMenu, setOpenMenu] = useState(false);

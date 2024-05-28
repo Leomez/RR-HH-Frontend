@@ -14,8 +14,11 @@ import {
   Box,
 } from "@mui/material";
 import { DrawerHeader, DrawerWrapper } from "./SideBarController";
+// SECCIONES
 import ListaComunes from "./ListaComunes";
+import ListasSuper from "./ListaSuper";
 import ListasAdmin from "./ListasAdmin";
+
 // ICONOS
 
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
@@ -35,7 +38,7 @@ export function SideBar({ open, handleDrawerClose, drawerWidth }) {
   const theme = useTheme();
   return (
     <DrawerWrapper variant="permanent" open={open} drawerwidth={drawerWidth}>
-      <Box className="drawerClass" onClick={handleDrawerClose} height={"100%"}>
+      <Box className="drawerClass" onClick={handleDrawerClose} sx={{ width: drawerWidth }} height={"100%"}>
         <DrawerHeader className="drawerClass">
           <IconButton className="drawerClass" onClick={handleDrawerClose}>
             {theme.direction === "rtl" ? (
@@ -51,6 +54,8 @@ export function SideBar({ open, handleDrawerClose, drawerWidth }) {
           <Divider />
           {permisos === "ADMIN" && (
             <ListasAdmin seccionActiva={seccionActiva} theme={theme}/>            
+          )}{permisos === "SUP" && (
+            <ListasSuper seccionActiva={seccionActiva} theme={theme}/>
           )}
         </Box>
       </Box>

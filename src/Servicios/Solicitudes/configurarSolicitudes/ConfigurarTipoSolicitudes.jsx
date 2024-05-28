@@ -7,7 +7,7 @@ import { crearTipoSolicitud } from '../../../Redux/Features/Solicitudes/solicitu
 const ConfigurarTipoSolicitudes = ({close}) => {
 
   const dispatch = useDispatch()
-  const inputs = { nombre: '', canti_dias: 0, caracteristicas: '' }
+  const inputs = { nombre: '', caracteristicas: '' }
   const [tipoSolicitud, setTipoSolicitud] = useState(inputs)
 //   const errorRespuesta = useSelector(state => state.tipoSolicitud.error)
 //   const error = errorRespuesta ? errorRespuesta : ''
@@ -31,7 +31,6 @@ const ConfigurarTipoSolicitudes = ({close}) => {
     setTipoSolicitud(inputs)
     close(false)
   }
-
 
   return (
     <Stack
@@ -58,7 +57,7 @@ const ConfigurarTipoSolicitudes = ({close}) => {
         label="Denominacion*"
         variant="outlined"
       />
-      <TextField
+      {/* <TextField
         id="canti_dias"
         name="canti_dias"
         value={tipoSolicitud.canti_dias}
@@ -67,7 +66,7 @@ const ConfigurarTipoSolicitudes = ({close}) => {
         type="number"
         variant="outlined"
         inputProps={{ min: 0, max: 90 }}
-      />
+      /> */}
       <TextField
         name="caracteristicas"
         value={tipoSolicitud.caracteristicas}

@@ -11,8 +11,8 @@ import { RutasSuper } from "./RutasSuper";
 export const AppRouter = () => {
   const usuario = useSelector((state) => state.user);
   const autenticado = usuario ? usuario.isAuth : false
-  console.log(usuario);
-  console.log(autenticado);
+  // console.log(usuario);
+  // console.log(autenticado);
   
 
   let elementToRender;
@@ -20,7 +20,7 @@ export const AppRouter = () => {
     console.log('autorizado...');
     if (usuario.rol === "ADMIN") {
       elementToRender = <RutasAdmin />;
-    } else if (usuario.rol === "SUPER") {
+    } else if (usuario.rol === "SUP") {
       elementToRender = <RutasSuper />;
     } else {
       elementToRender = <RutasComunes />;

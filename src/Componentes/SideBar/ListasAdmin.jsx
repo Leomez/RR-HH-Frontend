@@ -21,9 +21,7 @@ function ListasAdmin(props) {
                                 justifyContent: open ? "initial" : "center",
                                 px: 2.5,
                                 borderLeft: (seccionActiva === (`/${ruta.ruta}`) || seccionActiva === (ruta.ruta)) ? '2px solid #1976d2' : 'none'
-
-                                // ":focus": {backgroundColor: 'rgba(0, 0, 0, 0.06)'}                        
-                            }}
+                            }}                      
                         >
                             <ListItemIcon
                                 sx={{
