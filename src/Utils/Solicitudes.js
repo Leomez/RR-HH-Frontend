@@ -30,7 +30,7 @@ const solicitudes = [
 		"estado" : "En proceso"
 	},
 	{
-		"id" : "c09a68f5-38d4-4742-b325-cfa61de4744c",
+		"id" : "c09y68f5-38d4-4742-b325-cfa61de4744c",
 		"icono" : "reloj",
 		"empleado" : "Alberto Lopez",
 		"Tipo" : "llegar Tarde",
