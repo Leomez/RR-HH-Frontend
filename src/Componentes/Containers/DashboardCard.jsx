@@ -1,6 +1,6 @@
 import { React, useState } from "react";
 import { Card, CardContent, Typography, Stack, Box } from "@mui/material";
-
+import ExpandMoreSharpIcon from '@mui/icons-material/ExpandMoreSharp'
 const DashboardCard = ({
     title,
     subtitle,
@@ -13,7 +13,7 @@ const DashboardCard = ({
     middlecontent,
 }) => {
 
-    const [spand, setSpand] = useState(false);
+    const [spand, setSpand] = useState(true);
     const handleSpand = () => {
         setSpand(!spand);
     }
@@ -22,13 +22,18 @@ const DashboardCard = ({
         <Card sx={{ padding: 0 }} elevation={9} variant={undefined}>
             {cardheading ? (
                 <CardContent>
-                    <Typography variant="h5">{headtitle}</Typography>
+                    <Typography variant="h6">{headtitle}</Typography>
                     <Typography variant="subtitle2" color="textSecondary">
                         {headsubtitle}
                     </Typography>
                 </CardContent>
             ) : (
-                <CardContent sx={{ p: "10px" }}>
+                <CardContent sx={{ 
+                    p: "10px", 
+                    height: spand ? 'auto' : '3rem', 
+                    maxHeight: '25rem', 
+                    overflow: 'hidden', 
+                    transition: 'all 0.3s ease-in-out' }}>
                     {title ? (
                         <Stack
                             direction="row"
@@ -38,7 +43,7 @@ const DashboardCard = ({
                             mb={3}
                         >
                             <Box>
-                                {title ? <Typography variant="h5">{title}</Typography> : ""}
+                                {title ? <Typography variant="h6">{title}</Typography> : ""}
 
                                 {subtitle ? (
                                     <Typography variant="subtitle2" color="textSecondary">
@@ -47,6 +52,13 @@ const DashboardCard = ({
                                 ) : (
                                     ""
                                 )}
+                            </Box>
+                            <Box onClick={handleSpand} sx={{ cursor: "pointer", transition: 'all 0.3s ease-in-out' }}>
+                                <ExpandMoreSharpIcon sx={{
+                                    transform: spand ? 'rotate(180deg)' : 'rotate(0deg)',
+                                    transition: 'all 0.3s ease-in-out'
+                                }}
+                                />
                             </Box>
                             {action}
                         </Stack>

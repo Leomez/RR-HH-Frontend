@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import {
     Typography, Box,
     Table,
@@ -11,12 +12,11 @@ import {
 import DashboardCard from '../../Componentes/Containers/DashboardCard';
 import ThumbDownAltIcon from '@mui/icons-material/ThumbDownAlt';
 import ThumbUpAltIcon from '@mui/icons-material/ThumbUpAlt';
-import { useState } from 'react';
+import { GoCheckCircle } from "react-icons/go";
 
 const PermisosTable = (props) => {
-
-    const { permisos } = props;
-    console.log(permisos);
+    const { permisos, onAction } = props;
+    // console.log(permisos);   
 
     return (
         <DashboardCard title={'PERMISOS'}>
@@ -76,12 +76,7 @@ const PermisosTable = (props) => {
                         {permisos.map((permiso) => (
                             <TableRow key={permiso.id}>
                                 <TableCell>
-                                    <Typography
-                                        sx={{
-                                            fontSize: "15px",
-                                            fontWeight: "500",
-                                        }}
-                                    >
+                                <Typography sx={{ fontSize: "15px", fontWeight: "500"}}>
                                         {permiso.empleado}
                                     </Typography>
                                 </TableCell>
@@ -112,52 +107,74 @@ const PermisosTable = (props) => {
                                 </TableCell>
                                 <TableCell>
                                     <Typography color="textSecondary" variant="subtitle2" fontWeight={400}>
-                                        {permiso.fecha_compensatoria}
+                                        {permiso.dia_compensatorio}
                                     </Typography>
                                 </TableCell>
                                 <TableCell>
                                     <Chip
                                         sx={{
                                             px: "4px",
-                                            backgroundColor: permiso.estado === "En proceso" ? "secondary.main" : permiso.estado === "Aprobado" ? "success.main" : permiso.estado === "Rechazado" ? permiso.estado : "error.main",
+                                            backgroundColor:
+                                                permiso.estado === "En proceso" ? "secondary.main" :
+                                                    permiso.estado === "Aprobado" ? "success.light" :
+                                                        permiso.estado === "Elevado" ? "info.light" :
+                                                            "error.main",
                                             color: "#fff",
                                         }}
                                         size="small"
+                                        variant='outlined'
                                         label={permiso.estado}
+                                        // avatar={<Avatar>{`${permiso.estado === "En proceso" ? "S" : permiso.estado === "Elevado" ? "R" : ""}`}</Avatar>}
                                     ></Chip>
                                 </TableCell>
-                                <TableCell align="right">
-                                    <Button sx={{
-                                        mr: 1,
-                                        color: 'error.main',
-                                        // border: '1px solid red',
-                                        borderRadius: '50%',
-                                        padding: '5px',
-                                        minWidth: '5px',
-                                        backgroundColor: 'error.light',
-                                        ':hover': {
-                                            backgroundColor: 'error.main',
-                                            color: '#fff'
-                                        }                                        
-                                    }}>
-                                        <ThumbDownAltIcon />
-                                    </Button>
-                                    <Button sx={{
-                                        mr: 1,
-                                        color: 'primary.main',
-                                        // border: '1px solid blue',
-                                        backgroundColor: 'primary.light',
-                                        borderRadius: '50%',
-                                        padding: '5px',
-                                        minWidth: '5px',
-                                        ':hover': {
-                                            backgroundColor: 'primary.main',
-                                            color: '#fff'
-                                        }
-                                    }}>
-                                        <ThumbUpAltIcon />
-                                    </Button>
-                                </TableCell>
+                                {permiso.estado === "En proceso" ? (
+                                    <TableCell align="right">
+                                        <Button onClick={() => onAction(permiso.id, 'Rechazado')} sx={{
+                                            mr: 1,
+                                            color: 'error.main',
+                                            // border: '1px solid red',
+                                            borderRadius: '50%',
+                                            padding: '5px',
+                                            minWidth: '5px',
+                                            backgroundColor: 'error.light',
+                                            ':hover': {
+                                                backgroundColor: 'error.main',
+                                                color: '#fff'
+                                            }
+                                        }}>
+                                            <ThumbDownAltIcon />
+
+                                        </Button>
+                                        <Button onClick={() => onAction(permiso.id, 'Elevado')} sx={{
+                                            mr: 1,
+                                            color: 'primary.main',
+                                            // border: '1px solid blue',
+                                            backgroundColor: 'primary.light',
+                                            borderRadius: '50%',
+                                            padding: '5px',
+                                            minWidth: '5px',
+                                            ':hover': {
+                                                backgroundColor: 'primary.main',
+                                                color: '#fff'
+                                            }
+                                        }}>
+                                            <ThumbUpAltIcon />
+                                        </Button>
+                                    </TableCell>) : (
+                                    <TableCell align="right">
+                                        <Box sx={{
+                                            color:
+                                                permiso.estado === "Aprobado" ?
+                                                    "success.light" : permiso.estado === "Elevado" ?
+                                                        "info.main" : 'success.main',
+                                            fontSize: 'large',
+                                            padding: '5px',
+                                            minWidth: '5px',
+                                            borderRadius: '50%',
+                                        }}>
+                                            <GoCheckCircle />
+                                        </Box>
+                                    </TableCell>)}
                             </TableRow>
                         ))}
                     </TableBody>

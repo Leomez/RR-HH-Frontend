@@ -149,6 +149,27 @@ export const crearTipoSolicitud = createAsyncThunk(
   }
 );
 
+export const elevarSolicitud = createAsyncThunk(
+  "solicitudes/elevarSolicitud",
+  async ({solicitudId, estado} ) => {
+    console.log(solicitudId, estado);
+    try {
+      const response = await axios({
+        method: 'PUT',
+        url: `${URL_API}/licencias/responderSolicitud/${solicitudId}`,
+        data: {estado: estado},
+        headers: { "Authorization": "Bearer " + store.getState().user.token },
+      })
+      console.log(response.data);
+      return response.data;
+    } catch (error) {
+      console.log(error);
+      return error
+    }
+  }
+)
+
+
 export const { setSolicitudes } = solicitudesSlice.actions;
 
 export default solicitudesSlice.reducer;

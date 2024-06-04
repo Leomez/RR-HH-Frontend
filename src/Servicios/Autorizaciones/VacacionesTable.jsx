@@ -6,19 +6,16 @@ import {
     TableHead,
     TableRow,
     Chip,
-    Button
+    Button    
 } from '@mui/material';
 import DashboardCard from '../../Componentes/Containers/DashboardCard';
 import ThumbDownAltIcon from '@mui/icons-material/ThumbDownAlt';
 import ThumbUpAltIcon from '@mui/icons-material/ThumbUpAlt';
-
-
+import { GoCheckCircle } from "react-icons/go";
 
 const VacacionesTable = (props) => {
-
-    const { vacaciones } = props;
-    console.log(vacaciones);
-
+    const { vacaciones, onAction } = props;
+    
     return (
         <DashboardCard title={'VACACIONES'}>
             <Box sx={{ overflow: 'auto', width: { xs: '280px', sm: 'auto' } }}>
@@ -36,11 +33,6 @@ const VacacionesTable = (props) => {
                                     Empleado
                                 </Typography>
                             </TableCell>
-                            {/* <TableCell>
-                                <Typography variant="subtitle2" fontWeight={600}>
-                                    Tipo
-                                </Typography>
-                            </TableCell> */}
                             <TableCell>
                                 <Typography variant="subtitle2" fontWeight={600}>
                                     Fecha solicitud
@@ -58,7 +50,7 @@ const VacacionesTable = (props) => {
                             </TableCell>
                             <TableCell>
                                 <Typography variant="subtitle2" fontWeight={600}>
-                                    Cantidad de dias
+                                    Dias
                                 </Typography>
                             </TableCell>
                             <TableCell>
@@ -77,15 +69,10 @@ const VacacionesTable = (props) => {
                         {vacaciones.map((vac) => (
                             <TableRow key={vac.id}>
                                 <TableCell>
-                                    <Typography
-                                        sx={{
-                                            fontSize: "15px",
-                                            fontWeight: "500",
-                                        }}
-                                    >
+                                    <Typography sx={{ fontSize: "15px", fontWeight: "500"}}>
                                         {vac.empleado}
                                     </Typography>
-                                </TableCell>                               
+                                </TableCell>
                                 <TableCell>
                                     <Typography color="textSecondary" variant="subtitle2" fontWeight={400}>
                                         {vac.fecha}
@@ -110,15 +97,21 @@ const VacacionesTable = (props) => {
                                     <Chip
                                         sx={{
                                             px: "4px",
-                                            backgroundColor: vac.estado === "En proceso" ? "secondary.main" : vac.estado === "Aprobado" ? "success.main" : vac.estado === "Rechazado" ? vac.estado : "error.main",
+                                            backgroundColor:
+                                                vac.estado === "En proceso" ? "secondary.main" :
+                                                    vac.estado === "Aprobado" ? "success.main" :
+                                                        vac.estado === "Elevado" ? "info.light" :
+                                                            "error.main",
                                             color: "#fff",
                                         }}
                                         size="small"
+                                        variant='outlined'
                                         label={vac.estado}
+                                    // avatar={<Avatar>{`${vac.estado === "En proceso" ? "S" : vac.estado === "Elevado" ? "R" : ""}`}</Avatar>}
                                     ></Chip>
                                 </TableCell>
-                                <TableCell align="right">
-                                    <Button sx={{
+                                {vac.estado === "En proceso" ? (<TableCell align="right">
+                                    <Button onClick={() => onAction(vac.id, 'Rechazado')} sx={{
                                         mr: 1,
                                         color: 'error.main',
                                         // border: '1px solid red',
@@ -129,11 +122,11 @@ const VacacionesTable = (props) => {
                                         ':hover': {
                                             backgroundColor: 'error.main',
                                             color: '#fff'
-                                        }                                        
+                                        }
                                     }}>
                                         <ThumbDownAltIcon />
                                     </Button>
-                                    <Button sx={{
+                                    <Button onClick={() => onAction(vac.id, 'Elevado')} sx={{
                                         mr: 1,
                                         color: 'primary.main',
                                         // border: '1px solid blue',
@@ -148,7 +141,20 @@ const VacacionesTable = (props) => {
                                     }}>
                                         <ThumbUpAltIcon />
                                     </Button>
-                                </TableCell>
+                                </TableCell>) : (<TableCell align="right">
+                                    <Box sx={{
+                                        color:
+                                            vac.estado === "Aprobado" ?
+                                                "success.light" : vac.estado === "Elevado" ?
+                                                    "info.main" : 'success.main',
+                                        fontSize: 'large',
+                                        padding: '5px',
+                                        minWidth: '5px',
+                                        borderRadius: '50%',
+                                    }}>
+                                        <GoCheckCircle />
+                                    </Box>
+                                </TableCell>)}
                             </TableRow>
                         ))}
                     </TableBody>

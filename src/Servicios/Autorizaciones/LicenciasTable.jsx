@@ -6,29 +6,25 @@ import {
     TableHead,
     TableRow,
     Chip,
-    Button
+    Button,
 } from '@mui/material';
 import DashboardCard from '../../Componentes/Containers/DashboardCard';
 import ThumbDownAltIcon from '@mui/icons-material/ThumbDownAlt';
 import ThumbUpAltIcon from '@mui/icons-material/ThumbUpAlt';
-
-
+import { GoCheckCircle } from "react-icons/go";
 
 const LicenciasTable = (props) => {
-
-    const { licencias } = props;
-    console.log(licencias);
+    const { licencias, onAction } = props;
 
     return (
         <DashboardCard title={'LICENCIAS'}>
             <Box sx={{ overflow: 'auto', width: { xs: '280px', sm: 'auto' } }}>
-                <Table                
+                <Table
                     aria-label="simple table"
                     sx={{
                         whiteSpace: "nowrap",
                         mt: 2
-                    }}
-                >
+                    }}>
                     <TableHead>
                         <TableRow>
                             <TableCell>
@@ -63,7 +59,7 @@ const LicenciasTable = (props) => {
                             </TableCell>
                             <TableCell>
                                 <Typography variant="subtitle2" fontWeight={600}>
-                                    Cantidad de dias
+                                    Dias
                                 </Typography>
                             </TableCell>
                             <TableCell>
@@ -82,22 +78,12 @@ const LicenciasTable = (props) => {
                         {licencias.map((lic) => (
                             <TableRow key={lic.id}>
                                 <TableCell>
-                                    <Typography
-                                        sx={{
-                                            fontSize: "15px",
-                                            fontWeight: "500",
-                                        }}
-                                    >
+                                    <Typography sx={{ fontSize: "15px", fontWeight: "500" }}>
                                         {lic.empleado}
                                     </Typography>
                                 </TableCell>
                                 <TableCell>
-                                    <Typography
-                                        color="textSecondary"
-                                        sx={{
-                                            fontSize: "13px",
-                                        }}
-                                    >
+                                    <Typography color="textSecondary" sx={{ fontSize: "13px" }}>
                                         {lic.nombre_tipo}
                                     </Typography>
                                 </TableCell>
@@ -130,45 +116,62 @@ const LicenciasTable = (props) => {
                                     <Chip
                                         sx={{
                                             px: "4px",
-                                            backgroundColor: lic.estado === "En proceso" ? "secondary.main" : lic.estado === "Aprobado" ? "success.main" : lic.estado === "Rechazado" ? lic.estado : "error.main",
+                                            backgroundColor:
+                                                lic.estado === "En proceso" ? "secondary.main" :
+                                                    lic.estado === "Aprobado" ? "success.main" :
+                                                        lic.estado === "Elevado" ? "info.light" :
+                                                            "error.main",
                                             color: "#fff",
                                         }}
                                         size="small"
+                                        variant='outlined'
                                         label={lic.estado}
                                     ></Chip>
                                 </TableCell>
-                                <TableCell align="right">
-                                    <Button sx={{
-                                        mr: 1,
-                                        color: 'error.main',
-                                        // border: '1px solid red',
-                                        borderRadius: '50%',
-                                        padding: '5px',
-                                        minWidth: '5px',
-                                        backgroundColor: 'error.light',
-                                        ':hover': {
-                                            backgroundColor: 'error.main',
-                                            color: '#fff'
-                                        }                                        
-                                    }}>
-                                        <ThumbDownAltIcon />
-                                    </Button>
-                                    <Button sx={{
-                                        mr: 1,
-                                        color: 'primary.main',
-                                        // border: '1px solid blue',
-                                        backgroundColor: 'primary.light',
-                                        borderRadius: '50%',
-                                        padding: '5px',
-                                        minWidth: '5px',
-                                        ':hover': {
-                                            backgroundColor: 'primary.main',
-                                            color: '#fff'
-                                        }
-                                    }}>
-                                        <ThumbUpAltIcon />
-                                    </Button>
-                                </TableCell>
+                                {lic.estado === "En proceso" ? (
+                                    <TableCell align="right">
+                                        <Button onClick={() => onAction(lic.id, 'Rechazado')} sx={{
+                                            mr: 1,
+                                            color: 'error.main',
+                                            borderRadius: '50%',
+                                            padding: '5px',
+                                            minWidth: '5px',
+                                            backgroundColor: 'error.light',
+                                            ':hover': {
+                                                backgroundColor: 'error.main',
+                                                color: '#fff'
+                                            }
+                                        }}>
+                                            <ThumbDownAltIcon />
+                                        </Button>
+                                        <Button onClick={() => onAction(lic.id, 'Elevado')} sx={{
+                                            mr: 1,
+                                            color: 'primary.main',
+                                            backgroundColor: 'primary.light',
+                                            borderRadius: '50%',
+                                            padding: '5px',
+                                            minWidth: '5px',
+                                            ':hover': {
+                                                backgroundColor: 'primary.main',
+                                                color: '#fff'
+                                            }
+                                        }}>
+                                            <ThumbUpAltIcon />
+                                        </Button>
+                                    </TableCell>
+                                ) : (
+                                    <TableCell align="right">
+                                        <Box sx={{
+                                            color: lic.estado === "Aprobado" ? "success.light" : lic.estado === "Elevado" ? "info.main" : 'success.main',
+                                            fontSize: 'large',
+                                            padding: '5px',
+                                            minWidth: '5px',
+                                            borderRadius: '50%',
+                                        }}>
+                                            <GoCheckCircle />
+                                        </Box>
+                                    </TableCell>
+                                )}
                             </TableRow>
                         ))}
                     </TableBody>
