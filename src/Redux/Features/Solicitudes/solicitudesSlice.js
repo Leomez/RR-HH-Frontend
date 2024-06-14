@@ -41,9 +41,9 @@ const solicitudesSlice = createSlice({
         state.loading = true
       })
       .addCase(getTipoSolicitudes.fulfilled, (state, action) => {
-        state.loading = false;        
+        state.loading = false;
         state.tipoSolicitudes = action.payload;
-        state.respuesta = 'Tipos de solicitudes obtenidos correctamente';        
+        state.respuesta = 'Tipos de solicitudes obtenidos correctamente';
       })
       .addCase(getTipoSolicitudes.rejected, (state, action) => {
         state.loading = false;
@@ -56,7 +56,7 @@ const solicitudesSlice = createSlice({
       })
       .addCase(getSolicitudes.fulfilled, (state, action) => {
         state.loading = false;
-        state.solicitudes = action.payload; 
+        state.solicitudes = action.payload;
         state.respuesta = 'Solicitudes obtenidas correctamente';
       })
       .addCase(getSolicitudes.rejected, (state, action) => {
@@ -64,8 +64,21 @@ const solicitudesSlice = createSlice({
         state.respuesta = 'Error al obtener las solicitudes';
         state.error = action.payload
       })
-    }
-  });
+      .addCase(getSolicitudesElevadas.pending, (state, action) => {
+        state.loading = true
+      })
+      .addCase(getSolicitudesElevadas.fulfilled, (state, action) => {
+        state.loading = false;
+        state.solicitudes = action.payload;
+        state.respuesta = 'Solicitudes elevadas obtenidas correctamente';
+      })
+      .addCase(getSolicitudesElevadas.rejected, (state, action) => {
+        state.loading = false;
+        state.respuesta = 'Error al obtener las solicitudes elevadas';
+        state.error = action.payload
+      })
+  }
+});
 
 
 
@@ -74,13 +87,13 @@ export const getTipoSolicitudes = createAsyncThunk(
   "solicitudes/getTipoSolicitudes",
   async (id, { rejectWithValue }) => {
     const token = store.getState().user.token;
-    try {      
+    try {
       const response = await axios({
         method: 'GET',
         url: `${URL_API}/licencias/traerTipoSolicitud`,
         params: { id },
-        headers: { "Authorization": `Bearer ${token}` }      
-      });      
+        headers: { "Authorization": `Bearer ${token}` }
+      });
       return response.data.data;
     } catch (error) {
       console.error('Error al traer los tipos de solicitudes:', error.response?.data || error.message);
@@ -118,11 +131,30 @@ export const getSolicitudes = createAsyncThunk(
         method: 'GET',
         url: `${URL_API}/licencias/getSolicitud`,
         params: { id },
-        headers: { "Authorization": `Bearer ${token}`}
-      })  
+        headers: { "Authorization": `Bearer ${token}` }
+      })
       return response.data.data;
     } catch (error) {
       console.error('Error al traer las solicitudes:', error.response?.data || error.message);
+      return rejectWithValue(error.response?.data || error.message);
+    }
+  }
+)
+
+export const getSolicitudesElevadas = createAsyncThunk(
+  "solicitudes/getSolicitudesElevadas",
+  async (undefined, { rejectWithValue }) => {
+    const token = store.getState().user.token;
+    try {
+      const response = await axios({
+        method: 'GET',
+        url: `${URL_API}/licencias/getSolicitudElevada`,
+        headers: { "Authorization": `Bearer ${token}` }
+      })
+      console.log(response.data.data);
+      return response.data.data
+    } catch (error) {
+      console.error('Error al traer las solicitudes:', error.response?.data || error.message)
       return rejectWithValue(error.response?.data || error.message);
     }
   }
@@ -151,13 +183,32 @@ export const crearTipoSolicitud = createAsyncThunk(
 
 export const elevarSolicitud = createAsyncThunk(
   "solicitudes/elevarSolicitud",
-  async ({solicitudId, estado} ) => {
+  async ({ solicitudId, estado }) => {
     console.log(solicitudId, estado);
     try {
       const response = await axios({
         method: 'PUT',
         url: `${URL_API}/licencias/responderSolicitud/${solicitudId}`,
-        data: {estado: estado},
+        data: { estado: estado },
+        headers: { "Authorization": "Bearer " + store.getState().user.token },
+      })
+      console.log(response.data);
+      return response.data;
+    } catch (error) {
+      console.log(error);
+      return error
+    }
+  }
+)
+
+export const autorizarSolicitud = createAsyncThunk(
+  "solicitudes/autorizarSolicitud",
+  async ({ solicitudId, estado }) => {
+    try {
+      const response = await axios({
+        method: 'PUT',
+        url: `${URL_API}/licencias/responderSolicitud/${solicitudId}`,
+        data: { estado: estado },
         headers: { "Authorization": "Bearer " + store.getState().user.token },
       })
       console.log(response.data);

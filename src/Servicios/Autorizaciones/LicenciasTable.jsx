@@ -13,8 +13,8 @@ import ThumbDownAltIcon from '@mui/icons-material/ThumbDownAlt';
 import ThumbUpAltIcon from '@mui/icons-material/ThumbUpAlt';
 import { GoCheckCircle } from "react-icons/go";
 
-const LicenciasTable = (props) => {
-    const { licencias, onAction } = props;
+const LicenciasTable = ({ licencias, onAction}) => {
+    // const { licencias, onAction } = props;
 
     return (
         <DashboardCard title={'LICENCIAS'}>
