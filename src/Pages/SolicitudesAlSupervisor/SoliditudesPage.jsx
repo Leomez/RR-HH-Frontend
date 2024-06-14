@@ -1,4 +1,4 @@
-import {React, useState} from 'react'
+import { React, useState } from 'react'
 import { Typography, Box, Button, Divider, Paper, Tabs, Tab } from '@mui/material'
 import { TabPanel } from './TabPanel';
 import ListadoDeSolicitudes from '../../Servicios/Autorizaciones/Listado';
@@ -20,15 +20,13 @@ export default function SoliditudesPage() {
                     </Tabs>
                 </Box>
                 <TabPanel value={index} index={0}>
-                    <Typography px={2} fontWeight={400} lineHeight={2} level="h5">SOLICITUDES</Typography>
                     <ListadoDeSolicitudes />
                 </TabPanel>
                 <TabPanel value={index} index={1}>
-                <Typography px={2} fontWeight={400} lineHeight={2} level="h5">CALENDARIO</Typography>
                 </TabPanel>
 
             </Paper>
-            
+
         </div>
     )
 }
