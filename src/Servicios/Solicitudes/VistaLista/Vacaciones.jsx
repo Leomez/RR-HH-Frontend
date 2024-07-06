@@ -1,28 +1,30 @@
 import { React, useState, useEffect } from 'react'
 import { Box, Paper, Typography, List, ListItem, ListItemText, IconButton, Divider, Skeleton } from '@mui/material'
-import DashboardCard from '../../Componentes/Containers/DashboardCard'
+import DashboardCard from '../../../Componentes/Containers/DashboardCard'
 import { useSelector } from 'react-redux/es/hooks/useSelector'
 import ThumbDownAltIcon from '@mui/icons-material/ThumbDownAlt';
 import ThumbUpAltIcon from '@mui/icons-material/ThumbUpAlt';
 
-function Licencias({onAction}) {
+
+
+function Vacaciones({onAction}) {
     const solicitudes = useSelector(state => state.solicitudes.solicitudes)
 
-    const licencias = solicitudes.filter(s => s.tipo === 'Licencia')
+    const vacaciones = solicitudes.filter(s => s.tipo === 'Vacaciones')
 
     // console.log(permisos)
 
     return (
-        <DashboardCard title={"LICENCIAS"}>
+        <DashboardCard title={"VACACIONES"}>
             <List sx={{ width: '100%', bgcolor: 'background.paper', alignContent: 'right' }}>
-                {licencias.length > 0 ? licencias.map((l, i) => (
-                    <Box key={l.id}>
+                {vacaciones.length > 0 ? vacaciones.map((v, i) => (
+                    <Box key={v.id}>
                         {i !== 0 && <Divider />}
                         <ListItem
                             secondaryAction={
                                 <Box sx={{ display: 'flex', gap: 1 }}>
                                     <IconButton 
-                                    onClick={() => onAction(l.id, 'Aprobado')}
+                                    onClick={() => onAction(v.id, 'Aprobado')}
                                     sx={{
                                         color: 'primary.main',
                                         backgroundColor: 'primary.light',
@@ -34,7 +36,7 @@ function Licencias({onAction}) {
                                         <ThumbUpAltIcon />
                                     </IconButton>
                                     <IconButton 
-                                    onClick={() => onAction(l.id, 'Rechazado')}
+                                    onClick={() => onAction(v.id, 'Rechazado')}
                                     sx={{
                                         color: 'error.main',
                                         backgroundColor: 'error.light',
@@ -48,22 +50,22 @@ function Licencias({onAction}) {
                                 </Box>
                             }
                         >
-                            <ListItemText primary={l.empleado} />                            
+                            <ListItemText primary={v.empleado} />                            
                         </ListItem>
                         <ListItem>
-                        <ListItemText primary={'Tipo'} secondary={l.nombre_tipo} />
-                            {/* {<ListItemText primary={'Fecha'} secondary={l.fecha_permiso} />} */}
-                            {l.fecha_desde && <ListItemText primary={'Fecha de inicio'} secondary={l.fecha_desde} />}
-                            {l.fecha_hasta && <ListItemText primary={'Fecha de fin'} secondary={l.fecha_hasta} />}
-                            {/* <ListItemText primary={'Cantidad disponibles'} secondary={l.cant_dias} /> */}
-                            <ListItemText primary={'Dias solicitadas'} secondary={l.dias_solicitados} />
-                            <ListItemText primary={'Motivo'} secondary={l.motivo} />
-                            <ListItemText primary={'Sector'} secondary={l.sector} />
+                            {/* <ListItemText primary={'Tipo'} secondary={p.nombre_tipo} /> */}
+                            {/* <ListItemText primary={'Fecha'} secondary={p.fecha_permiso} /> */}
+                            {v.fecha_desde && <ListItemText primary={'Fecha de inicio'} secondary={v.fecha_desde} />}
+                            {v.fecha_hasta && <ListItemText primary={'Fecha de fin'} secondary={v.fecha_hasta} />}
+                            {v.cant_dias && <ListItemText primary={'Días disponibles'} secondary={v.cant_dias} />}
+                            {v.dias_solicitados && <ListItemText primary={'Días solicitados'} secondary={v.dias_solicitados} />}
+                            {/* <ListItemText primary={'Motivo'} secondary={p.motivo} /> */}
+                            <ListItemText primary={'Sector'} secondary={v.sector} />
                         </ListItem>
                     </Box>
                 )) :
                     <ListItem>
-                        <ListItemText primary={'No hay solicitudes de licencias.'} />
+                        <ListItemText secondary={'No hay solicitudes de vacaciones'} />
                     </ListItem>
                 }
             </List>
@@ -71,4 +73,4 @@ function Licencias({onAction}) {
     )
 }
 
-export default Licencias
+export default Vacaciones

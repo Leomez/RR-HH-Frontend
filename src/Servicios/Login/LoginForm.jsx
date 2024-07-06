@@ -1,9 +1,11 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux'
+import { getAuth, onIdTokenChanged } from 'firebase/auth';
 import { useNavigate, Navigate } from 'react-router-dom';
-import { Box, Button, TextField, Divider, Typography } from '@mui/material';
+import { Box, Button, TextField, Divider, Typography, Modal } from '@mui/material';
 import { FcGoogle } from 'react-icons/fc'
-import { loginUser } from '../../Redux/Features/Login/userSlice';
+import { loginUser, refreshUserToken, logoutUser } from '../../Redux/Features/Login/userSlice';
+
 import { loginConGoogle } from './loginConGoogle';
 import loginConUsuYCont from './loginConUsuarioYContrasenia';
 
@@ -11,15 +13,70 @@ import loginConUsuYCont from './loginConUsuarioYContrasenia';
 function LoginForm(props) {
   // eslint-disable-next-line react/prop-types
   const { handleModal } = props
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-
   const [input, setInput] = useState({
     usuario: '',
     password: ''
   })
   const [usuario, setUsuario] = useState({})
   const [authError, setAuthError] = useState(false);
+  const [showModal, setShowModal] = useState(false); // agregado
+  const [countDown, setCountDown] = useState(60); // 60 segundos de cuenta regresiva
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  //agregado
+  useEffect(() => {
+    const auth = getAuth();
+    const unsubscribe = onIdTokenChanged(auth, async(user) => {
+      if(user) {
+        const token = await user.getIdToken()
+        const { exp } = JSON.parse(atob(token.split('.')[1]));
+        const expirationTime = exp * 1000 - Date.now() - 60000; // 1 minuto antes de que expire
+        // const a = token.split('.')[2]
+        // const b = atob(a)
+        // const c = JSON.parse(a)      
+        
+        console.log(expirationTime);
+        // console.log(c);
+
+        setTimeout(() => {
+          setShowModal(true);
+          startCountdown();
+        }, expirationTime)
+      }
+    });
+    return () => unsubscribe();
+
+  }, [dispatch, navigate])
+
+  const startCountdown = () => {
+    const countdownTimer = setInterval(() => {
+      setCountDown((prevCount) => {
+        if (prevCount <=1 ) {
+          clearInterval(countdownTimer)
+          handleLogout();
+        }
+        return prevCount - 1
+      });
+    }, 1000);
+  };
+
+  const handleLogout = () => {
+    dispatch(logoutUser())
+    navigate('/login', { replace: true })
+    setShowModal(false);
+  }
+
+  const handleRenovarSesion = async () => {
+    const auth = getAuth();
+    const user = auth.currentUser;
+    if (user) {
+      const newToken = await user.getIdToken(true);
+      dispatch(refreshUserToken( newToken ));
+      setShowModal(false);
+      setCountDown(60); // Reseteo al cuenta regresiva    
+    }
+  };
 
   const handleChange = (e) => {
     setInput({
@@ -27,7 +84,7 @@ function LoginForm(props) {
       [e.target.name]: e.target.value
     })
   };
-
+  
   const handleAlert = (error) => {
     setAuthError(!error);
   };
@@ -68,6 +125,13 @@ function LoginForm(props) {
 
   return (
     <Box>
+      <Modal opoen={showModal} onClose={handleLogout}>
+        <Box sx={{ p: 2, backgroundColor: 'white', borderRadius: '8px', boxShadow: 24 }}>
+          <Typography>Tu sesión expirará en {countDown} segundos</Typography>
+          <Button onClick={handleRenovarSesion} variant="contained">Renovar sesión</Button>
+          <Button onClick={handleLogout} variant="outlined">Cerrar sesión</Button>
+        </Box>
+      </Modal>
       <Box component="form" onSubmit={handleFormSubmit} sx={{ mt: 2 }}>
         <TextField
           error={(authError && usuario.errorCode === "auth/user-not-found") || (authError && usuario.errorCode === "auth/invalid-email")}

@@ -1,6 +1,6 @@
 import { combineReducers} from "@reduxjs/toolkit";
 import empleadoReducer from "../Features/Empleado/empleadoSlice";
-import userReducer from "../Features/Login/userSlice";
+import userReducer, { logoutUser } from "../Features/Login/userSlice";
 import sectoresReducer from "../Features/Sectores/sectoresSlice";
 import reciboReducer from "../Features/Recibos/recibosDeSueldoSlice";
 import loadingReducer from "../Features/Loading/loadingSlice";
@@ -12,7 +12,7 @@ import errorReducer from "../Features/Error/errorSlice";
 import solicitudesReducer from "../Features/Solicitudes/solicitudesSlice";
 
 
-const rootReducer =  combineReducers({
+const appReducer =  combineReducers({
     empleado: empleadoReducer,
     user: userReducer,
     sectores: sectoresReducer,
@@ -24,7 +24,16 @@ const rootReducer =  combineReducers({
     supervisor: supervisorReducer,
     solicitudes: solicitudesReducer,
     error: errorReducer
-})
+});
+
+const rootReducer = (state, action) => {
+    if (action.type === logoutUser.type) {        
+        state = undefined;
+    }
+    return appReducer(state, action);
+}
+
+
 
 
 export default rootReducer

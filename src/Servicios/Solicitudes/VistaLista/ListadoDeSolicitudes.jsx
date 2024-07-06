@@ -1,11 +1,11 @@
 import { React, useState, useEffect } from 'react'
 import { Box, Dialog, DialogTitle, DialogContent, DialogActions, DialogContentText, Button, Divider, Typography } from '@mui/material'
 import { useDispatch, useSelector } from 'react-redux'
-import { getSolicitudesElevadas } from '../../Redux/Features/Solicitudes/solicitudesSlice'
+import { getSolicitudesElevadas } from '../../../Redux/Features/Solicitudes/solicitudesSlice'
 import Permisos from './Permisos'
 import Licencias from './Licencias'
 import Vacaciones from './Vacaciones'
-import { autorizarSolicitud } from '../../Redux/Features/Solicitudes/solicitudesSlice'
+import { autorizarSolicitud } from '../../../Redux/Features/Solicitudes/solicitudesSlice'
 
 
 function ListadoDeSolicitudes() {
@@ -14,10 +14,20 @@ function ListadoDeSolicitudes() {
   const [open, setOpen] = useState(false)
   const [accion, setAccion] = useState("")
   const [selectedSolicitud, setSelectedSolicitud] = useState(null);
+  const [refresh, setRefresh] = useState(false);
+
 
   useEffect(() => {
-    dispatch(getSolicitudesElevadas())
-  }, [dispatch])
+    if (refresh) {
+      console.log('efecto refresh');
+      dispatch(getSolicitudesElevadas())
+      setRefresh(false)
+    }
+  }, [refresh])
+
+  // useEffect(() => {
+  //   dispatch(getSolicitudesElevadas())
+  // }, [dispatch])
 
   const handleDialogOpen = (solicitudId, estado) => {
     setSelectedSolicitud({solicitudId, estado})
@@ -35,7 +45,8 @@ function ListadoDeSolicitudes() {
   const handleConfirm = () => {
     if (selectedSolicitud) {
       dispatch(autorizarSolicitud(selectedSolicitud)).then(() => {
-        dispatch(getSolicitudesElevadas())
+        // dispatch(getSolicitudesElevadas())
+        setRefresh(true)
         handleDialogClose()
       })          
     }

@@ -1,7 +1,7 @@
 import { React, useState } from 'react'
 import { Typography, Box, Button, Divider, Paper, Tabs, Tab } from '@mui/material'
 import { TabPanel } from './TabPanel';
-import ListadoDeSolicitudes from '../../Servicios/Autorizaciones/Listado';
+import ListadoDeSolicitudes from '../../Servicios/SolicitudesAlSupervisor/Listado';
 // import ListadoDeSolicitudes from '../../Servicios/Autorizaciones/ListadoDeSolicitudes';
 
 export default function SoliditudesPage() {

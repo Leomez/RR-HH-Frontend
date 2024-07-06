@@ -1,6 +1,6 @@
 import { React, useState, useEffect } from 'react'
 import { Box, Paper, Typography, List, ListItem, ListItemText, IconButton, Divider, Skeleton } from '@mui/material'
-import DashboardCard from '../../Componentes/Containers/DashboardCard'
+import DashboardCard from '../../../Componentes/Containers/DashboardCard'
 import { useSelector } from 'react-redux/es/hooks/useSelector'
 import ThumbDownAltIcon from '@mui/icons-material/ThumbDownAlt';
 import ThumbUpAltIcon from '@mui/icons-material/ThumbUpAlt';
@@ -63,7 +63,7 @@ function Permisos({ onAction }) {
                     </Box>
                 )) :
                     <ListItem>
-                        <ListItemText primary={'No hay solicitudes de permisos'} />
+                        <ListItemText secondary={'No hay solicitudes de permisos'} />
                     </ListItem>
                 }
             </List>

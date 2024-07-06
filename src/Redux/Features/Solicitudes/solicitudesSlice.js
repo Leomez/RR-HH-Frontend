@@ -1,10 +1,12 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk, isAsyncThunkAction } from "@reduxjs/toolkit";
 import store from "../../Store/store";
 import axios from "axios";
 import { URL_API } from "../constantes";
 
 const initialState = {
   solicitudes: [],
+  todasSolicitudes: [],
+  solicitudesXEmpleado: [],
   tipoSolicitudes: [],
   loading: false,
   error: null,
@@ -64,6 +66,7 @@ const solicitudesSlice = createSlice({
         state.respuesta = 'Error al obtener las solicitudes';
         state.error = action.payload
       })
+      // get de solicitudes elevadas
       .addCase(getSolicitudesElevadas.pending, (state, action) => {
         state.loading = true
       })
@@ -77,12 +80,42 @@ const solicitudesSlice = createSlice({
         state.respuesta = 'Error al obtener las solicitudes elevadas';
         state.error = action.payload
       })
+      // get solicitudes por empleado
+      .addCase(getSolicitudesXEmpleado.pending, (state, action) => {
+        state.loading = true
+      })
+      .addCase(getSolicitudesXEmpleado.fulfilled, (state, action) => {
+        state.loading = false;
+        state.solicitudesXEmpleado =  action.payload;
+        state.respuesta = 'Solicitudes completadas obtenidas correctamente';
+      })
+      .addCase(getSolicitudesXEmpleado.rejected, (state, action) => {
+        state.loading = false;
+        state.respuesta = 'Error al obtener las solicitudes completadas';
+        state.solicitudesXEmpleado = [];
+        state.error = action.payload
+      })
+      .addCase(getTodasSolicetudes.pending, (state, action) => {
+        state.loading = true
+      })
+      .addCase(getTodasSolicetudes.fulfilled, (state, action) => {
+        state.loading = false
+        state.todasSolicitudes = action.payload;
+        state.respuesta = 'Todas las solicitudes obtenidas correctamente';
+      })
+      .addCase(getTodasSolicetudes.rejected, (state, action) => {
+        state.loading = false
+        state.respuesta = 'Error al obtener las solicitudes';
+        state.todasSolicitudes = [];
+        state.error = action.payload
+      })
+
   }
 });
 
 
 
-// Obtener solicitudes
+// Obtener tipos de solicitudes
 export const getTipoSolicitudes = createAsyncThunk(
   "solicitudes/getTipoSolicitudes",
   async (id, { rejectWithValue }) => {
@@ -121,7 +154,26 @@ export const createSolicitud = createAsyncThunk(
   }
 );
 
-//get de solicitudes
+//get de todas las solicitudes
+export const getTodasSolicetudes = createAsyncThunk(
+  "solicitudes/getTodasSolicitudes",
+  async () => {
+    const token = store.getState().user.token;
+    try {
+      const respuesta = await axios({
+        method: "GET",
+        url: `${URL_API}/licencias/getAllSolicitudes`,
+        headers: { "Authorization": `Bearer ${token}` }
+      })
+      return respuesta.data.data;
+    } catch (error) {
+      console.error('Error al traer las solicitudes: ', error.response?.data || error.message)
+      return error.response?.data || error.message;
+    }
+  }
+)
+
+//get de solicitudes al supervisor
 export const getSolicitudes = createAsyncThunk(
   "solicitudes/getSolicitudes",
   async (id, { rejectWithValue }) => {
@@ -129,7 +181,7 @@ export const getSolicitudes = createAsyncThunk(
     try {
       const response = await axios({
         method: 'GET',
-        url: `${URL_API}/licencias/getSolicitud`,
+        url: `${URL_API}/licencias/getSolicitudAlSuper`,
         params: { id },
         headers: { "Authorization": `Bearer ${token}` }
       })
@@ -159,6 +211,28 @@ export const getSolicitudesElevadas = createAsyncThunk(
     }
   }
 )
+
+// trae solicitudes autorizadas o rechazadas para mostrar al empleado
+export const getSolicitudesXEmpleado = createAsyncThunk(
+  "solicitudes/getSolicitudesXEmpleado",
+  async (id, { rejectWithValue }) => {
+    const token = store.getState().user.token;
+    try {
+      const response = await axios({
+        method: 'GET',
+        url: `${URL_API}/licencias/getSolicitudEmpleado`,
+        headers: { "Authorization": `Bearer ${token}`},
+        params: { id }
+      })
+      return response.data.data
+    } catch (error) {
+      console.error('Error al traer las solicitudes:', error.response?.data || error.message)
+      return rejectWithValue(error.response?.data || error.message);
+    }
+  }
+)
+
+
 
 // Crear tipos de solicitud
 export const crearTipoSolicitud = createAsyncThunk(
@@ -221,6 +295,6 @@ export const autorizarSolicitud = createAsyncThunk(
 )
 
 
-export const { setSolicitudes } = solicitudesSlice.actions;
+export const { setSolicitude } = solicitudesSlice.actions;
 
 export default solicitudesSlice.reducer;
