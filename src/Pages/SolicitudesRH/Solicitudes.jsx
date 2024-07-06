@@ -1,19 +1,29 @@
-import { React, useState } from 'react'
-import { Typography, Divider } from '@mui/joy'
+import { React, useState, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { Typography, Divider } from '@mui/joy';
 import { Box, Button, Drawer, Paper, Tabs, Tab } from '@mui/material'
 import { TabPanel } from '../SolicitudesAlSupervisor/TabPanel';
 import SettingsIcon from '@mui/icons-material/Settings';
 import ConfigurarTipoSolicitudes from '../../Servicios/Solicitudes/configurarSolicitudes/ConfigurarTipoSolicitudes';
-import ListadoDeSolicitudes from '../../Servicios/Solicitudes/ListadoDeSolicitudes';
+import ListadoDeSolicitudes from '../../Servicios/Solicitudes/VistaLista/ListadoDeSolicitudes';
+import Calendario from '../../Servicios/Solicitudes/VistaCalendario/Index';
+import { getSolicitudesElevadas } from '../../Redux/Features/Solicitudes/solicitudesSlice';
 
 function Solicitudes() {
 
-    const [open, setOpen] = useState(false)
-    const [index, setIndex] = useState(0)
+    const [open, setOpen] = useState(false);
+    const [index, setIndex] = useState(0);
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        console.log('efecto inicial');
+        dispatch(getSolicitudesElevadas())
+    }, [dispatch]);
+
 
     const toggleDrawer = () => {
         setOpen(!open)
-    }
+    };
 
     return (
         <div>
@@ -46,10 +56,10 @@ function Solicitudes() {
                     </Tabs>
                 </Box>
                 <TabPanel value={index} index={0}>
-                    <ListadoDeSolicitudes />
-                    {/* {'Listado de solicitudes elevadas'} */}
+                    <ListadoDeSolicitudes />                    
                 </TabPanel>
-                <TabPanel value={index} index={1}>
+                <TabPanel sx={{paddinLeft: 0 }} value={index} index={1}>
+                    <Calendario />
                 </TabPanel>
             </Paper>
         </div>

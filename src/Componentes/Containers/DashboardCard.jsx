@@ -30,8 +30,8 @@ const DashboardCard = ({
             ) : (
                 <CardContent sx={{ 
                     p: "10px", 
-                    height: spand ? 'auto' : '3rem', 
-                    maxHeight: '25rem', 
+                    height: spand ? 'auto' : '2.5rem', 
+                    maxHeight: '20rem', 
                     overflow: 'hidden', 
                     transition: 'all 0.3s ease-in-out' }}>
                     {title ? (
