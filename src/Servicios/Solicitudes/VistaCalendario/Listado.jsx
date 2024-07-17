@@ -1,5 +1,6 @@
 import React from 'react'
 import { List, ListItem, ListItemText, Typography, Box, Card, CardContent } from '@mui/material'
+import styles from './CalendarioGrande.module.css'
 
 function Listado({ listado }) {
     // console.log(listado);
@@ -7,8 +8,8 @@ function Listado({ listado }) {
         listado.reduce((acc, item) => acc.set(item.tipo, item), new Map()).values()
     );
     return (
-        <Card>
-            <CardContent>
+        <Card className={styles.listadoCard}>
+            <CardContent className={styles.listadoCardContent}>
                 <Typography variant="h5" component="div">
                     Tipos de Evento
                 </Typography>
@@ -19,14 +20,9 @@ function Listado({ listado }) {
                         return <ListItem>
                             <Box
                                 key={t.tipo}
-                                display="flex"
-                                alignItems="center"
-                                sx={{
-                                    width: '100%',
-                                    maxWidth: 360,
-                                    bgcolor: t.color,
-                                    borderRadius: 2,
-                                    padding: '0.3rem'                                   
+                                className={styles.listadoListItem}
+                                sx={{                                    
+                                    bgcolor: t.color,                                                                       
                                 }}>
                                 <Typography>
                                     {t.tipo}

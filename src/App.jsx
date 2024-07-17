@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux'
 import { Layout } from './Componentes/Layout/Layout'
 import { AppRouter } from './Routes/AppRouter'
 import { showError } from './Redux/Features/Error/errorSlice'
-// import { ErrorModal } from './Componentes/ErrorModal'
+import { ErrorModal } from './Componentes/ErrorModal'
 
 
 function App() {
@@ -13,11 +13,12 @@ function App() {
     return (
       <Box>
         <Layout>
-          {/* <ErrorModal /> */}
-          <AppRouter />
+          {/* <ErrorModal> */}            
+            <AppRouter />
+          {/* </ErrorModal> */}
         </Layout>
       </Box>
-    )    
+    )
   } catch (error) {
     console.log(error);
     dispatch(showError(error))

@@ -1,8 +1,8 @@
-import { useEffect } from "react";
-import { useSelector } from "react-redux";
-import { Box, Typography } from "@mui/material";
+import { useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { Box, Typography, Dialog, DialogTitle, Button, DialogContent } from "@mui/material";
 // import LoginForm from '../../Servicios/Login/LoginForm';
-import { resetConexion } from "../../Redux/Features/Login/userSlice";
+import { resetConexion, resetUserError } from "../../Redux/Features/Login/userSlice";
 // import logoPersonalTransp from "../../assets/logoPersonalTransp.png";
 import logoPortal from "../../assets/PortalCOQlogo-trans.png";
 import EquipoTrabajo from "../../assets/EquipoTrabajo.jpeg";
@@ -13,13 +13,37 @@ import LoadingPage from "../../Componentes/Containers/Loading";
 function LoginPage() {
   useEffect(() => {
     resetConexion();
-  }, []);
-
+  }, []);  
+  const dispatch = useDispatch();
+    
   const loading = useSelector(state => state.user.loading)
+  const error = useSelector(state => state.user.error);
+  const [open, setOpen] = useState(false)
+  useEffect(() => {
+    console.log(error);
+    if (error.showError) {
+      setOpen(true)
+    }
+  }, [error])
+
+  const handleClose = () => {
+    setOpen(false)
+    dispatch(resetUserError());
+    dispatch(resetConexion());
+  }
   //
   return (
     <div id="loginPage">
-      <LoadingPage loading={loading}/>
+      <Dialog open={open} onClose={handleClose}>
+        <DialogTitle>
+          <Typography>{error.errorData && error.errorData.status}</Typography>
+        </DialogTitle>
+        <DialogContent>
+          <Typography>{error.errorData && error.errorData.data}</Typography>
+        </DialogContent>
+        <Button onClick={handleClose} variant='outlined' color='info'>Cerrar</Button>
+      </Dialog>
+      <LoadingPage loading={loading} />
       <Box
         sx={{
           display: "flex",
@@ -49,7 +73,7 @@ function LoginPage() {
               flexDirection: "column",
               alignItems: "center",
               justifyContent: "center",
-              width: {xs: "inherit", md: "50%"},
+              width: { xs: "inherit", md: "50%" },
               height: "inherit",
               backgroundColor: "rgba(0,0,0,0.5)",
               color: "white",
@@ -78,7 +102,7 @@ function LoginPage() {
           </Box>
           <Box
             sx={{
-              display: {xs: 'none', md: 'flex'},
+              display: { xs: 'none', md: 'flex' },
               justifyContent: "center",
               alignItems: "center",
               position: "absolute",

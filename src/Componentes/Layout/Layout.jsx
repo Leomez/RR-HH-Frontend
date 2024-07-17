@@ -28,7 +28,7 @@ export function Layout({ children }) {
   // loading ? console.log('cargando...') : '';
   return (
     <div id="layout">
-      <ErrorModal/>
+      {/* <ErrorModal/> */}
       <NavBar
         open={openMenu}
         handleOpenMenu={handleOpenMenu}
