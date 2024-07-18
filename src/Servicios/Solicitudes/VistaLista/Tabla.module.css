@@ -1,0 +1,18 @@
+.header {
+  background-color: #42a5f5;
+  /* Cambia este valor al color deseado */
+  color: #fff;
+  /* Color del texto */
+}
+
+.evenRow {
+  background-color: rgb(223, 223, 223);
+  /* Color de fondo para filas pares */
+}
+
+
+.oddRow {
+  background-color: #ffffff;
+
+  /* Color de fondo para filas impares */
+}

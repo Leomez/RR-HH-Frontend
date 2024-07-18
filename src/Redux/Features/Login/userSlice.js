@@ -1,6 +1,6 @@
-// userSlice.js
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { setLoading } from "../Loading/loadingSlice";
+import { showError, hideError } from "../Error/errorSlice"; 
 import { empleadoActual } from "../Empleado/empleadoSlice";
 import axios from "axios";
 import store from "../../Store/store";
@@ -12,7 +12,7 @@ const initialState = {
     loading: false,
     error: {
         showError: false,
-        errorData: null
+        errorData: ''
     },
     conexion: true,
     empleadoId: null,
@@ -24,7 +24,9 @@ const initialState = {
     nuevoUsuario: null
 };
 
-export const loginUser = createAsyncThunk('user/loginUser', async (user) => {
+export const loginUser = createAsyncThunk(
+    'user/loginUser', 
+    async (user, { rejectWithValue }) => {
     const token = user.token;
     try {        
         const response = await axios({
@@ -33,7 +35,7 @@ export const loginUser = createAsyncThunk('user/loginUser', async (user) => {
             headers: { "Authorization": "Bearer " + token },
             data : user
         });
-        await store.dispatch(empleadoActual({ id: response.data.data.EmpleadoId, token: token }));
+        await store.dispatch(empleadoActual({ id: response.data.data.EmpleadoId, token: token }));        
         return response.data;
     } catch (error) {
         if (error.response) {
@@ -41,13 +43,13 @@ export const loginUser = createAsyncThunk('user/loginUser', async (user) => {
                 status: error.response.status,
                 data: error.response.data
             };
-            return errorData;
+            return rejectWithValue(errorData);
         }
-        throw error;
-    } 
+        return rejectWithValue({ status: 'NETWORK_ERROR', data: 'Error de conexion con el servidor, Por favor intente de nuevo.' });
+    }
 });
 
-export const registrarUser = createAsyncThunk('user/registrarUser', async (user) => {
+export const registrarUser = createAsyncThunk('user/registrarUser', async (user, { rejectWithValue }) => {
     try {        
         const response = await axios({
             url: `${URL}/usuario/registro`,
@@ -65,9 +67,9 @@ export const registrarUser = createAsyncThunk('user/registrarUser', async (user)
                 status: error.response.status,
                 data: error.response.data
             };
-            return errorData;
+            return rejectWithValue(errorData);
         }
-        throw error;
+        return rejectWithValue({ status: 'NETWORK_ERROR', data: 'Error de conexion con el servidor, Por favor intente de nuevo.' });
     } 
 });
 
@@ -83,14 +85,14 @@ const userSlice = createSlice({
         },
         resetUserError: (state) => {
             state.error.showError = false;
-            state.error.errorData = null;
+            state.error.errorData = null;            
         },
         refreshUserToken: (state, action) => {
             state.token = action.payload;
-          } 
+        }           
     },
-    extraReducers: (constructor) => {
-        constructor
+    extraReducers: (builder) => {
+        builder
             .addCase(loginUser.fulfilled, (state, action) => {                
                 state.empleadoId = action.payload.data.EmpleadoId;
                 state.isAuth = action.payload.success;
@@ -99,6 +101,8 @@ const userSlice = createSlice({
                 state.foto = action.payload.data.foto;
                 state.token = action.payload.data.token;
                 state.loading = false;
+                state.error.showError = false;
+                state.error.errorData = null;
             })
             .addCase(loginUser.rejected, (state, action) => {                
                 state.error.showError = true;
@@ -112,13 +116,15 @@ const userSlice = createSlice({
             .addCase(registrarUser.fulfilled, (state, action) => {
                 state.nuevoUsuario = action.payload;
                 state.loading = false;                
+                state.error.showError = false;
+                state.error.errorData = null;
             })
             .addCase(registrarUser.pending, (state) => {
                 state.loading = true;
             })
             .addCase(registrarUser.rejected, (state, action) => {
-                const errorData = JSON.parse(action.error.message);
-                state.nuevoUsuario = errorData;
+                state.error.showError = true;
+                state.error.errorData = action.payload;
                 state.loading = false;
             });
     }

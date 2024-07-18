@@ -15,7 +15,7 @@ function ListaComunes(props) {
                 >
                     <Link to={ruta.ruta}>
                         <ListItemButton
-                            selected={seccionActiva === (`/${ruta.ruta}`) || seccionActiva === (ruta.ruta)}
+                            selected={seccionActiva === (`/${ruta.ruta}`) || seccionActiva === (ruta.ruta)}                            
                             sx={{
                                 minHeight: 48,
                                 justifyContent: open ? "initial" : "center",

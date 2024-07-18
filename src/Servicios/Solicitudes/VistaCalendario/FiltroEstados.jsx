@@ -1,9 +1,10 @@
 import React from 'react'
 import { List, ListItem, Typography, Box, Card, CardContent, Checkbox } from '@mui/material'
 import { estadoColors } from '../../../Utils/randomColors'
+import styles from './CalendarioGrande.module.css'
 
 function FiltroEstados({ estados, estadosSeleccionados, onChange }) {
-    
+
 
     console.log(estadosSeleccionados, '<--- estadosSeleccionados');
     console.log(estados, '<--- estados');
@@ -21,52 +22,36 @@ function FiltroEstados({ estados, estadosSeleccionados, onChange }) {
     };
 
     return (
-        <Card>
-            <CardContent>
+        <Card className={styles.filtroCard}>
+            <CardContent className={styles.filtroCardContent}>
                 <Typography variant="h5" component="div">
                     Estados
                 </Typography>
             </CardContent>
             <div>
                 <List>
-                    {estados.map(e => {
-                        console.log(e.toLowerCase())
-                        return (<ListItem key={e}>
+                    {estados.map(e => (
+                        <ListItem key={e} className={styles.filtroListItem}>
                             <Box
-                                display="flex"
-                                alignItems="center"
+                                className={styles.filtroColorBox}
                                 sx={{
-                                    width: '100%',
-                                    maxWidth: 360,
-                                    borderRadius: 2,
-                                    padding: '0.3rem',
-                                    height: '1rem'                                   
-                                }}
-                            >
-                                <Box sx={{ 
-                                    backgroundColor: estadoColors[e.toLowerCase()], 
-                                    width: '1rem', 
-                                    height: '1rem', 
-                                    borderRadius: '50%', 
-                                    marginRight: '1rem'
-                                }}></Box>   
-                                <Typography sx={{ flexGrow: 1 }}>
-                                    {e.toLowerCase()}
-                                </Typography>
-                                <Checkbox 
-                                    checked={estadosSeleccionados.includes(e)}
-                                    // defaultChecked={e} 
-                                    onChange={handleToggle(e)}
-                                    sx={{
+                                    backgroundColor: estadoColors[e.toLowerCase()],
+                                }}></Box>
+                            <Typography sx={{ flexGrow: 1 }}>
+                                {e.toLowerCase()}
+                            </Typography>
+                            <Checkbox
+                                checked={estadosSeleccionados.includes(e)}                                
+                                onChange={handleToggle(e)}
+                                sx={{
+                                    color: estadoColors[e.toLowerCase()],
+                                    '&.Mui-checked': {
                                         color: estadoColors[e.toLowerCase()],
-                                        '&.Mui-checked': {
-                                            color: estadoColors[e.toLowerCase()],
-                                        },
-                                    }}
-                                />
-                            </Box>
+                                    },
+                                }}
+                            />
                         </ListItem>)
-                    })}
+                    )}
                 </List>
             </div>
         </Card>

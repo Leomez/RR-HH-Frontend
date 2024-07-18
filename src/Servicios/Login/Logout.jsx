@@ -5,12 +5,14 @@ import { useNavigate } from "react-router-dom";
 import { logoutUser } from "../../Redux/Features/Login/userSlice";
 
 
-function Logout() {
+function Logout(props) {
+  const { onClose } = props
     const auth = getAuth();
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
-    const handleLogout = async () => {
+    const handleLogout = async (e) => {      
+      onClose(e)
       try {
         await signOut(auth)
         dispatch(logoutUser())
