@@ -1,0 +1,67 @@
+
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: center;
+  max-height: 80vh;
+}
+
+.banner {
+  display: flex;
+  flex-direction: row;
+  background-size: cover;
+  background-position: center;
+  text-align: center;
+  /* margin-bottom: 1rem; */
+  width: 100%;
+  height: 80vh;
+}
+
+.baseBannerText {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 50%;
+  height: inherit;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  z-index: 10;
+}
+
+.logoContainer {
+  padding: 16px;
+  backdrop-filter: blur(8px);
+  background-color: rgba(255, 255, 255, 0.5);
+}
+
+.logo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  right: 0;
+  width: 50%;
+  height: inherit;
+  margin: auto;
+  backdrop-filter: blur(8px);
+  background-color: rgba(255, 255, 255, 0.5);;
+}
+
+.logoImage {
+  min-width: 30vw;
+  object-fit: cover;
+}
+
+@media screen and (max-width: 768px){
+  .baseBannerText {
+    width: inherit;
+  }
+  .logo {
+    display: none;
+  }
+}
+
+
+

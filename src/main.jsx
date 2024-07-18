@@ -6,6 +6,7 @@ import { PersistGate } from "redux-persist/integration/react";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { Worker } from "@react-pdf-viewer/core";
+import { Footer } from "./Componentes/Footer/Footer.jsx";
 import store, { persistor } from "./Redux/Store/store.js";
 import App from "./App.jsx";
 import dayjs from "dayjs";
@@ -28,6 +29,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
           <BrowserRouter>
             <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.4.120/build/pdf.worker.min.js">
               <App />
+              {/* <Footer /> */}
             </Worker>
           </BrowserRouter>
         </LocalizationProvider>

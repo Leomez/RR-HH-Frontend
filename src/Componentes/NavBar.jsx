@@ -58,7 +58,7 @@ export function NavBar({ open, handleOpenMenu, drawerWidth }) {
             </Link>
           </Typography>
           {auth ? (
-            <Logout />
+            <Logout onClose={handleOpenMenu} className={'logout'} />
           ) : (
             <Button
               onClick={handleModal}

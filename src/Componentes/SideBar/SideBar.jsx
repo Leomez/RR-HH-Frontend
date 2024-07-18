@@ -1,31 +1,17 @@
 /* eslint-disable react/prop-types */
 import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
-import { Link, useLocation } from "react-router-dom";
-import {
-  IconButton,
-  ListItemIcon,
-  ListItemButton,
-  Divider,
-  List,
-  ListItem,
-  ListItemText,
-  useTheme,
-  Box,
-} from "@mui/material";
+import { useLocation } from "react-router-dom";
+import { IconButton, Divider, useTheme, Box} from "@mui/material";
 import { DrawerHeader, DrawerWrapper } from "./SideBarController";
 // SECCIONES
 import ListaComunes from "./ListaComunes";
 import ListasSuper from "./ListaSuper";
 import ListasAdmin from "./ListasAdmin";
-
 // ICONOS
-
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
-
-// RUTAS
-import rutas from "./Links";
+ 
 
 export function SideBar({ open, handleDrawerClose, drawerWidth }) {
   const permisos = useSelector((state) => state.user.rol);
@@ -50,12 +36,12 @@ export function SideBar({ open, handleDrawerClose, drawerWidth }) {
         </DrawerHeader>
         <Divider />
         <Box id="ListCotainer">
-          <ListaComunes seccionActiva={seccionActiva} theme={theme}/>          
+          <ListaComunes close={handleDrawerClose} seccionActiva={seccionActiva} theme={theme}/>          
           <Divider />
           {permisos === "ADMIN" && (
-            <ListasAdmin seccionActiva={seccionActiva} theme={theme}/>            
+            <ListasAdmin close={handleDrawerClose} seccionActiva={seccionActiva} theme={theme}/>            
           )}{permisos === "SUP" && (
-            <ListasSuper seccionActiva={seccionActiva} theme={theme}/>
+            <ListasSuper close={handleDrawerClose} seccionActiva={seccionActiva} theme={theme}/>
           )}
         </Box>
       </Box>
