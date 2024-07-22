@@ -21,7 +21,7 @@ function FormContainer({ titulo, children }) {
                             top: "-10px",
                             left: "0.5rem",
                             zIndex: 1,
-                            bgcolor: "#ffffff",
+                            bgcolor: "#dee7f3",
                             px: "4px",
                             // paddingRight: "0.5rem"
                         }}

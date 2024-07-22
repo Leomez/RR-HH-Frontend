@@ -48,6 +48,7 @@ function Registrarse() {
 
         if (emailValid && passwordValid && input.password === input.confPassword) {
             // Realizar el registro o mostrar mensajes de éxito aquí
+            console.log(input);
             dispatch(registrarUser(input))
             setInput({
                 email: '',
