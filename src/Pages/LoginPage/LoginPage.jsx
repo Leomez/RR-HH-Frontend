@@ -6,32 +6,32 @@ import logoPortal from "../../assets/PortalCOQlogo-trans.png";
 import EquipoTrabajo from "../../assets/EquipoTrabajo.jpeg";
 import LoadingPage from "../../Componentes/Containers/Loading";
 // import Footer from "../../Componentes/Footer/Footer";
-import style from "./LoginPage.module.css"
-
-
+import style from "./LoginPage.module.css";
 
 function LoginPage() {
   useEffect(() => {
     resetConexion();
   }, []);
+  
   const dispatch = useDispatch();
 
-  const loading = useSelector(state => state.user.loading)
+  const loading = useSelector(state => state.user.loading);
   const error = useSelector(state => state.user.error);
-  const [open, setOpen] = useState(false)
+  const [open, setOpen] = useState(false);
+  
   useEffect(() => {
     console.log(error);
     if (error.showError) {
-      setOpen(true)
+      setOpen(true);
     }
-  }, [error])
+  }, [error]);
 
   const handleClose = () => {
-    setOpen(false)
+    setOpen(false);
     dispatch(resetUserError());
     dispatch(resetConexion());
-  }
-  //
+  };
+
   return (
     <div id="loginPage">
       <Dialog open={open} onClose={handleClose}>
@@ -39,7 +39,9 @@ function LoginPage() {
           <Typography>{error.errorData && error.errorData.status}</Typography>
         </DialogTitle>
         <DialogContent>
-          <Typography>{error.errorData && error.errorData.data}</Typography>
+          <Typography>
+            {error.errorData && error.errorData.data && error.errorData.data.error}
+          </Typography>
         </DialogContent>
         <Button onClick={handleClose} variant='outlined' color='info'>Cerrar</Button>
       </Dialog>
@@ -47,7 +49,7 @@ function LoginPage() {
       <Box className={style.container}>
         <Box className={style.banner} sx={{ backgroundImage: `url("${EquipoTrabajo}")` }}>
           <Box className={style.baseBannerText}>
-            <Box sx={{}}>
+            <Box>
               <Typography variant="h4" sx={{ color: "white", mt: 10 }}>
                 BIENVENIDOS
               </Typography>
@@ -64,16 +66,11 @@ function LoginPage() {
           <Box className={style.logo}>
             <img
               className={style.logoImage}
-              // style={{ minWidth: "30vw" }}
               src={logoPortal}
               alt="Centro de ojos - Recursos Humanos"
             />
           </Box>
         </Box>
-        {/* <Typography variant="body1" sx={{ mb: 2 }}>
-          Por favor, iniciá sesion para acceder a tu cuenta
-        </Typography> */}
-        {/* <LoginForm /> */}
       </Box>
     </div>
   );

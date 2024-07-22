@@ -6,10 +6,26 @@ export const sector = (sectores, id) => {
   } else return 'sector no encontrado'
 }
 
+// Encargado.js
+
 export const encargado = (supervisores, empleado, empleados) => {
-  const supId = supervisores.find(sup => sup.SectorId === empleado.sector_id).EmpleadoId;
-  const enc = empleados.find(e => e.id === supId)
-  const nombre = `${enc.nombre_empleado} ${enc.apellido_empleado}`
-  return nombre
-}
+  // Buscar el ID del supervisor correspondiente al sector del empleado
+  const supervisor = supervisores.find(sup => sup.SectorId === empleado.sector_id);
+  if (!supervisor) {
+    return 'encargado no encontrado';
+  }
+  
+  const supId = supervisor.EmpleadoId;
+  console.log(supId);
+
+  // Buscar los datos del supervisor en la lista de empleados
+  const enc = empleados.find(e => e.id === supId);
+  if (!enc) {
+    return 'encargado no encontrado';
+  }
+  
+  const nombre = `${enc.nombre_empleado} ${enc.apellido_empleado}`;
+  return nombre;
+};
+
   

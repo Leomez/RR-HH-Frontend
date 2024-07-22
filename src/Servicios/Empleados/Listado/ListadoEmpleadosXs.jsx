@@ -1,8 +1,8 @@
-import { React, useEffect } from 'react'
+import { React, useEffect, useState } from 'react'
 import { useSelector, useDispatch } from "react-redux"
 import { Box, Button, Divider, List, Typography } from '@mui/material'
 import { fetchSectores } from '../../../Redux/Features/Sectores/sectoresSlice'
-import { sector } from './utils'
+import { sector, encargado } from './utils'
 import LoadingPage from '../../../Componentes/Containers/Loading'
 import { Error } from '../../../Componentes/Error'
 import InfoBox from '../../../Utils/InfoBox'
@@ -16,10 +16,17 @@ export default function ListadoEmpleadosXs() {
     const empleados = useSelector(state => state.empleado.empleados)
     const loadingEmpleados = useSelector(state => state.empleado.loading)
     const sectores = useSelector(state => state.sectores.sectores)
+    const supervisores = useSelector(state => state.supervisor.supervisores.data)
+    const [listados, setListados] = useState([])
 
     useEffect(() => {
         dispatch(fetchSectores(token))
     }, [dispatch])
+
+    useEffect(() => {
+        setListados(empleados)
+    }, [empleados])
+
 
     const error = empleados.error ? empleados.error : null;
     if (error) {
@@ -48,7 +55,7 @@ export default function ListadoEmpleadosXs() {
                             <InfoBox label={"Legajo: "} value={e.legajo} />
                             <InfoBox label={"Puesto: "} value={e.cargo} />
                             <InfoBox label={"Sector: "} value={sector(sectores, e.sector_id)} />
-                            <InfoBox label={"Encargado: "} value={"Fulanito"} />
+                            <InfoBox label={"Encargado: "} value={encargado(supervisores, e, empleados)} />
                         </Box>
                     </Box>
                     <Button variant='outlined' sx={{alignSelf: 'center', marginBottom: '1rem'}}>

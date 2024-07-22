@@ -1,4 +1,4 @@
-import { React, useEffect } from 'react'
+import { React, useEffect, useState } from 'react'
 import { useSelector, useDispatch } from "react-redux"
 import { Box, Typography, Skeleton } from '@mui/material'
 import { DataGrid, esES } from '@mui/x-data-grid'
@@ -12,6 +12,7 @@ import { getSupervisores } from '../../../Redux/Features/Supervisor/supervisorSl
 export default function ListadoEmpleados() {
   try {
     const dispatch = useDispatch()
+  const [listado, setListado] = useState([])
   const token = useSelector((state) => state.user.token)
   const empleados = useSelector(state => state.empleado.empleados)
   const loadingEmpleados = useSelector(state => state.empleado.loading)
@@ -27,9 +28,14 @@ export default function ListadoEmpleados() {
     }
   }, [dispatch, token])
 
+  useEffect(() => {
+    setListado(empleados)
+  }, [empleados])
+
   // if (empleados[0]) {
   //   return <Error error={empleados[0]} />
   // } 
+ 
 
   function suma(a,b) {
     return a + b
@@ -47,19 +53,22 @@ export default function ListadoEmpleados() {
       width: 150,
     }
   ]
-  const rows = /*!loadingEmpleados &&*/
-  empleados[0].name !== 'Error' && 
-  empleados.map(e => {
-    {console.log(encargado(supervisores, e, empleados))}
+  const rows = /*!loadingEmpleados &&*/ listado && 
+  /*empleados[0].name !== 'Error' &&*/ 
+  listado.map(e => 
+    {
+      console.log(e, 'empleado');
+      // console.log(encargado(supervisores, e, listado))
     return {
         id: e.id,
         col1: `${e.nombre_empleado} ${e.apellido_empleado}`,
         col2: e.legajo,
         col3: e.cargo,
-        col4: sector(sectores, e.sector_id),
+        col4: sector(sectores, e.sector_id) /*'sector'*/,
         col5: supervisores && encargado(supervisores, e, empleados) /*'encargado'*/
       }
-    })
+  })
+    console.log(rows, 'rows');
 
   return (
     <div>

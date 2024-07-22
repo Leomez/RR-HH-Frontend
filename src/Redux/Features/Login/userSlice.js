@@ -50,7 +50,8 @@ export const loginUser = createAsyncThunk(
 });
 
 export const registrarUser = createAsyncThunk('user/registrarUser', async (user, { rejectWithValue }) => {
-    try {        
+    try {
+        console.log(user, '<---en redux');        
         const response = await axios({
             url: `${URL}/usuario/registro`,
             method: "post",
