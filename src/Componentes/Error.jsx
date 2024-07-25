@@ -1,13 +1,19 @@
 import React from 'react'
-import { Box, Typography } from '@mui/material'
+import { Box, Typography, Card } from '@mui/material'
 
-export const Error = ({error}) => {
-    
+export const Error = ({ error }) => {
+    console.log(error, 'error el el componente error')
     return (
-        <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '30rem' }}>
-            <Typography variant="body1" color="#000">
-                Hubo un error: {<Typography color={'error'}>{error.message ? error.message : error }</Typography>}
-            </Typography>
-        </Box>
+        <Card >
+            <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '30rem' }}>
+                <Box sx={{ margin: 'auto' }}>
+                    <Typography variant="h5" >Hubo un error</Typography>
+                    <Typography variant="body1" color="#000">
+                        <Typography color={'error'}>{error.status}</Typography>
+                        <Typography>{error.data.message}</Typography>
+                    </Typography>
+                </Box>
+            </Box>
+        </Card>
     );
 }

@@ -57,7 +57,7 @@ export default function ListadoEmpleados() {
   /*empleados[0].name !== 'Error' &&*/ 
   listado.map(e => 
     {
-      console.log(e, 'empleado');
+      // console.log(e, 'empleado');
       // console.log(encargado(supervisores, e, listado))
     return {
         id: e.id,
@@ -68,7 +68,7 @@ export default function ListadoEmpleados() {
         col5: supervisores && encargado(supervisores, e, empleados) /*'encargado'*/
       }
   })
-    console.log(rows, 'rows');
+    // console.log(rows, 'rows');
 
   return (
     <div>

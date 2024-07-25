@@ -12,11 +12,11 @@ export default function DetalleSector(props) {
     const [openEncargados, setOpenEncargados] = useState(false)
     const [encargadoValue, setEncargadoValue] = useState('');
 
-    const enc = encargado && retornarEmpleado(empleados, encargado.EmpleadoId)
-    // console.log(empleados);
+    const enc = encargado && retornarEmpleado(empleados, encargado.empleadoId)
+    // console.log(encargado);
     useEffect(() => {
         if (encargado) {
-            setEncargadoValue(encargado.EmpleadoId);
+            setEncargadoValue(encargado.empleadoId);
         } else {
             setEncargadoValue('Sin encargado');
         }
@@ -58,16 +58,14 @@ export default function DetalleSector(props) {
                         {handleLeyendaBoton()}
                     </Button>
                 </Box>
-
-                {
-                    openEncargados && <SelectEncargados
-                        open={openEncargados}
-                        value={encargadoValue}
-                        onClose={handleClose}
-                        keepMounted
-                        sector={s}
-                        empleados={empleados.filter(e => e.sector_id === s.id)}
-                    />}
+                {openEncargados && <SelectEncargados
+                    open={openEncargados}
+                    value={encargadoValue}
+                    onClose={handleClose}
+                    keepMounted
+                    sector={s}
+                    empleados={empleados.filter(e => e.sector_id === s.id)}
+                />}
             </CardContent>
         </Card>
     )
