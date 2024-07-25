@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Box, Typography, Dialog, DialogTitle, Button, DialogContent } from "@mui/material";
+import { Box, Typography, Dialog, DialogTitle, Button, DialogContent, Card, CardContent } from "@mui/material";
 import { resetConexion, resetUserError } from "../../Redux/Features/Login/userSlice";
 import logoPortal from "../../assets/PortalCOQlogo-trans.png";
 import EquipoTrabajo from "../../assets/EquipoTrabajo.jpeg";
@@ -9,19 +9,19 @@ import LoadingPage from "../../Componentes/Containers/Loading";
 import style from "./LoginPage.module.css";
 
 function LoginPage() {
-  useEffect(() => {
-    resetConexion();
-  }, []);
-  
   const dispatch = useDispatch();
+  useEffect(() => {
+    resetUserError();
+    // resetConexion();
+  }, []);
 
   const loading = useSelector(state => state.user.loading);
   const error = useSelector(state => state.user.error);
   const [open, setOpen] = useState(false);
-  
+
   useEffect(() => {
-    console.log(error);
-    if (error.showError) {
+    if (error && error.showError) {
+      console.log('error');
       setOpen(true);
     }
   }, [error]);
@@ -31,20 +31,24 @@ function LoginPage() {
     dispatch(resetUserError());
     dispatch(resetConexion());
   };
-
+  console.log(error);
   return (
     <div id="loginPage">
-      <Dialog open={open} onClose={handleClose}>
+      {error && <Dialog open={open} onClose={handleClose}>
         <DialogTitle>
           <Typography>{error.errorData && error.errorData.status}</Typography>
         </DialogTitle>
         <DialogContent>
-          <Typography>
-            {error.errorData && error.errorData.data && error.errorData.data.error}
-          </Typography>
+          <Card>
+            <CardContent>
+              <Typography>
+                {error.errorData && error.errorData.data && error.errorData.data.error}
+              </Typography>
+            </CardContent>
+          </Card>
         </DialogContent>
         <Button onClick={handleClose} variant='outlined' color='info'>Cerrar</Button>
-      </Dialog>
+      </Dialog>}
       <LoadingPage loading={loading} />
       <Box className={style.container}>
         <Box className={style.banner} sx={{ backgroundImage: `url("${EquipoTrabajo}")` }}>
