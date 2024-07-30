@@ -110,6 +110,7 @@ function LoginForm(props) {
 
   const handleLoginConGoogle = async () => {
     const usuario = await loginConGoogle()
+    console.log(usuario);
     dispatch(loginUser(usuario))
     navigate('/', { replace: true })
     handleModal()
