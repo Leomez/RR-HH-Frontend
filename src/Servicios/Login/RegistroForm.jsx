@@ -1,20 +1,24 @@
-import { Box, TextField, Button, Typography, Modal, Card } from "@mui/material";
-import { validarEmail, validarPassword } from "./Validaciones";
+import { Box, TextField, Button, Typography, IconButton, InputAdornment } from "@mui/material";
 import { useSelector, useDispatch } from "react-redux";
-import { registrarUser } from "../../Redux/Features/Login/userSlice";
 import { useState } from "react";
+import { validarEmail, validarPassword } from "./Validaciones";
+import { registrarUser } from "../../Redux/Features/Login/userSlice";
 import { ModalDeRespuesta } from "./ModalDeRespuesta";
-
+import { Visibility, VisibilityOff } from '@mui/icons-material';
 
 const textFildStyle = {
     marginBottom: '1rem'
 }
 
 function Registrarse() {
-    const dispatch = useDispatch()    
-    const nuevoUsuario = useSelector(state => state.user.nuevoUsuario)
-    const cargando = useSelector(state => state.loading)
-    const [open, setOpen] = useState(false)
+    const dispatch = useDispatch();
+    const nuevoUsuario = useSelector(state => state.user.nuevoUsuario);
+    const [open, setOpen] = useState(false);
+    const [showPassword, setShowPassword] = useState({
+        password: false,
+        confPassword: false
+    });
+
     const [input, setInput] = useState({
         email: '',
         password: '',
@@ -35,6 +39,13 @@ function Registrarse() {
         }));
     };
 
+    const handleTogglePasswordVisibility = (field) => {
+        setShowPassword((prevShowPassword) => ({
+            ...prevShowPassword,
+            [field]: !prevShowPassword[field]
+        }));
+    };
+
     const handleSubmit = (event) => {
         event.preventDefault();
         const emailValid = validarEmail(input.email);
@@ -47,31 +58,25 @@ function Registrarse() {
         });
 
         if (emailValid && passwordValid && input.password === input.confPassword) {
-            // Realizar el registro o mostrar mensajes de éxito aquí
-            console.log(input);
-            dispatch(registrarUser(input))
+            dispatch(registrarUser(input));
             setInput({
                 email: '',
                 password: '',
                 confPassword: ''
-            })
-            setOpen(!open)
+            });
+            setOpen(true);
         }
     };
 
     return (
         <>
-            <Box
-                position={'relative'}
-                right='1rem'
-            >
-                <Box textAlign={'center'} margin={'2rem'} >
+            <Box position={'relative'} right='1rem'>
+                <Box textAlign={'center'} margin={'2rem'}>
                     <Typography variant="h4">
-                        Registrase
+                        Registrarse
                     </Typography>
                 </Box>
                 <Box
-
                     border={'ActiveBorder 1px solid'}
                     borderRadius='10px'
                     padding={3}
@@ -83,7 +88,7 @@ function Registrarse() {
                     >
                         <TextField
                             sx={textFildStyle}
-                            helperText={errors.usuario ? 'Ingresa un email válido' : 'Ingresa el email que proporcionaste en recursos humanos. Si no lo recuerdas, puedes pedírselo a tu encargado'}
+                            helperText={errors.email ? 'Ingresa un email válido' : 'Ingresa el email que proporcionaste en recursos humanos. Si no lo recuerdas, puedes pedírselo a tu encargado'}
                             variant='filled'
                             name="email"
                             label="Email"
@@ -100,12 +105,25 @@ function Registrarse() {
                             variant='filled'
                             name="password"
                             label="Contraseña"
-                            type="password"
+                            type={showPassword.password ? "text" : "password"}
                             value={input.password}
                             onChange={handleInputChange}
                             fullWidth
                             color={errors.password ? "error" : "primary"}
                             error={errors.password}
+                            InputProps={{
+                                endAdornment: (
+                                    <InputAdornment position="end">
+                                        <IconButton
+                                            aria-label="toggle password visibility"
+                                            onClick={() => handleTogglePasswordVisibility('password')}
+                                            edge="end"
+                                        >
+                                            {showPassword.password ? <VisibilityOff /> : <Visibility />}
+                                        </IconButton>
+                                    </InputAdornment>
+                                )
+                            }}
                         />
 
                         <TextField
@@ -114,14 +132,27 @@ function Registrarse() {
                             variant='filled'
                             name="confPassword"
                             label="Confirmar Contraseña"
-                            type="password"
+                            type={showPassword.confPassword ? "text" : "password"}
                             value={input.confPassword}
                             onChange={handleInputChange}
                             fullWidth
                             color={errors.confPassword ? "error" : "primary"}
                             error={errors.confPassword}
+                            InputProps={{
+                                endAdornment: (
+                                    <InputAdornment position="end">
+                                        <IconButton
+                                            aria-label="toggle password visibility"
+                                            onClick={() => handleTogglePasswordVisibility('confPassword')}
+                                            edge="end"
+                                        >
+                                            {showPassword.confPassword ? <VisibilityOff /> : <Visibility />}
+                                        </IconButton>
+                                    </InputAdornment>
+                                )
+                            }}
                         />
-                        <Box textAlign={"center"} margin={'2rem'} >
+                        <Box textAlign={"center"} margin={'2rem'}>
                             <Button type="submit" variant="contained" color="primary">
                                 Registrarse
                             </Button>
@@ -129,7 +160,7 @@ function Registrarse() {
                     </Box>
                 </Box>
             </Box>
-            {nuevoUsuario !== null && <ModalDeRespuesta open={open}/>}
+            {nuevoUsuario !== null && <ModalDeRespuesta open={open} />}
         </>
     );
 }
