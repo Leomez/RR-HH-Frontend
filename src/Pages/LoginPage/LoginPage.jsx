@@ -43,7 +43,7 @@ function LoginPage() {
           <Card>
             <CardContent>
               <Typography>
-                <span>
+                <span style={{ display: "flex", alignItems: "center" }}>
                   <ErrorTwoToneIcon color="error" />
                   {error.errorData && error.errorData.data && error.errorData.data}
                 </span>
