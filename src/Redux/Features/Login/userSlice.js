@@ -27,12 +27,16 @@ const initialState = {
 export const loginUser = createAsyncThunk(
     'user/loginUser',
     async (user, { rejectWithValue }) => {
-        const token = user.token;
+        const token = user?.token;
+        if (!token) {
+            console.error('Token no disponible');
+            // Maneja el caso donde el token no está disponible
+        }
         try {
             const response = await axios({
                 url: `${URL}/login`,
                 method: "post",
-                headers: { "Authorization": "Bearer " + token },
+                headers: { "Authorization": `Bearer ${token}` },
                 data: user
             });
             await store.dispatch(empleadoActual({ id: response.data.data.EmpleadoId, token: token }));
