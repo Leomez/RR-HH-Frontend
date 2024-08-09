@@ -42,7 +42,7 @@ function LoginPage() {
           <Card>
             <CardContent>
               <Typography>
-                {error.errorData && error.errorData.data && error.errorData.data.error}
+                {error.errorData && error.errorData.data && error.errorData.data}
               </Typography>
             </CardContent>
           </Card>
