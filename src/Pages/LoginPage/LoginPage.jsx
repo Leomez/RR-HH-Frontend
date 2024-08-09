@@ -5,6 +5,7 @@ import { resetConexion, resetUserError } from "../../Redux/Features/Login/userSl
 import logoPortal from "../../assets/PortalCOQlogo-trans.png";
 import EquipoTrabajo from "../../assets/EquipoTrabajo.jpeg";
 import LoadingPage from "../../Componentes/Containers/Loading";
+import ErrorTwoToneIcon from '@mui/icons-material/ErrorTwoTone';
 // import Footer from "../../Componentes/Footer/Footer";
 import style from "./LoginPage.module.css";
 
@@ -42,7 +43,10 @@ function LoginPage() {
           <Card>
             <CardContent>
               <Typography>
-                {error.errorData && error.errorData.data && error.errorData.data}
+                <span>
+                  <ErrorTwoToneIcon color="error" />
+                  {error.errorData && error.errorData.data && error.errorData.data}
+                </span>
               </Typography>
             </CardContent>
           </Card>
