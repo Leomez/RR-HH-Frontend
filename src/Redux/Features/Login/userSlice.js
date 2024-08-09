@@ -28,6 +28,7 @@ export const loginUser = createAsyncThunk(
     'user/loginUser',
     async (user, { rejectWithValue }) => {
         const token = user?.token;
+        console.log(token, '<-- token');
         if (!token) {
             console.error('Token no disponible');
             // Maneja el caso donde el token no está disponible
