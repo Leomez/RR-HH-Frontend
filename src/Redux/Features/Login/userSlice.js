@@ -45,7 +45,7 @@ export const loginUser = createAsyncThunk(
                 };
                 return rejectWithValue(errorData);
             }
-            return rejectWithValue({ status: 'NETWORK_ERROR', data: 'Error de conexion con el servidor, Por favor intente de nuevo.' });
+            return rejectWithValue({ status: 'NETWORK_ERROR', data: 'Error de conexion con el servidor, Por favor intente de nuevo.', error: error });
         }
     });
 
