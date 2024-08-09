@@ -44,10 +44,24 @@ export const loginUser = createAsyncThunk(
                     data: error.response.data
                 };
                 return rejectWithValue(errorData);
+            } else if (error.request) {
+                console.error("Error de red:", error);
+                return rejectWithValue({
+                    status: 'NETWORK_ERROR',
+                    data: 'No se recibió una respuesta del servidor. Verifica tu conexión a Internet.',
+                    error: error.message
+                });
+            } else {
+                console.error("Error durante la configuración de la solicitud:", error);
+                return rejectWithValue({
+                    status: 'REQUEST_ERROR',
+                    data: 'Ocurrió un error al configurar la solicitud.',
+                    error: error.message
+                });
             }
-            return rejectWithValue({ status: 'NETWORK_ERROR', data: 'Error de conexion con el servidor, Por favor intente de nuevo.', error: error });
         }
     });
+
 
 export const registrarUser = createAsyncThunk('user/registrarUser', async (user, { rejectWithValue }) => {
     try {
