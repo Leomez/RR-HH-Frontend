@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import { Card, CardContent, Box, Typography, Button, Divider } from '@mui/material';
+import { Card, CardContent, Box, Typography, Button, Divider, Skeleton } from '@mui/material';
 import InfoBox from '../../Utils/InfoBox';
 import SelectEncargados from './SelectEncargados';
 import retornarEmpleado from '../../Utils/buscarEmpleado';
@@ -10,6 +10,9 @@ function DetalleSector({ sector: s, empleados, encargado }) {
 
     // Memorizar los cálculos para evitar recalculaciones innecesarias
     const enc = useMemo(() => {
+        if (!encargado) {
+            return 'Sin encargado';
+        }
         return encargado === 'Sin dato' ? 'Sin encargado' : retornarEmpleado(empleados, encargado.empleadoId);
     }, [encargado, empleados]);
 
@@ -23,7 +26,7 @@ function DetalleSector({ sector: s, empleados, encargado }) {
         } else {
             setEncargadoValue('Sin encargado');
         }
-    }, [encargado]);
+    }, [encargado, encargadoValue]);
 
     const handleClick = () => {
         setOpenEncargados(true);

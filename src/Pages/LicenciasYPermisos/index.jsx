@@ -26,6 +26,7 @@ export function LicenciasYPermisos() {
     }, [dispatch, empleadoId]);  // Aseguro de que esto solo se ejecute cuando empleadoId cambie
 
     const ListaDeEventos = useSelector((state) => state.solicitudes.solicitudesXEmpleado);
+    
 
     // ListaDeEventos && console.log(ListaDeEventos);
 
@@ -56,7 +57,12 @@ export function LicenciasYPermisos() {
     const close = () => {
         setOpen(false);
     }
-
+    const handlerRefresh = () => {        
+        window.location.reload();        
+    }
+    
+    console.log(ListaDeEventos);
+    // console.log(solicitudesXEmpleado);
     return (
         <div>
             <Typography px={2} fontWeight={400} lineHeight={2} level="h4">LICENCIAS Y PERMISOS</Typography>
@@ -77,7 +83,7 @@ export function LicenciasYPermisos() {
                 }}>
                     <Button onClick={() => setOpen(true)} sx={{ margin: '1rem' }} variant='contained'> Solicitar </Button>
                     <Drawer anchor='right' open={open} onClose={() => setOpen(false)}>
-                        <Formulario close={close} />
+                        <Formulario close={close} reload={handlerRefresh} />
                     </Drawer>
                     <Divider />
                     <Box id="calendarioChico" sx={{ padding: 1, width: '100%'}}>

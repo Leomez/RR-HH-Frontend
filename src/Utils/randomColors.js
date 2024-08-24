@@ -31,7 +31,8 @@ const generateTipoColors = (solicitudes) => {
 
 const estadoColors = {
     aprobado: "#4caf50",
-    pendiente: "#03a9f4",
+    "pendiente en rr hh": "#ff9800",
+    "pendiente en el sector": "#03a9f4",
     rechazado: "#ef5350",
 }
 

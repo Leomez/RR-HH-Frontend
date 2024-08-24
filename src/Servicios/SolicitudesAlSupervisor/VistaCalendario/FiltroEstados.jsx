@@ -20,7 +20,7 @@ function FiltroEstados({ estados, estadosSeleccionados, onChange }) {
 
         onChange(newChecked);
     };
-    console.log(estados.length > 0);
+
     return (
         <Card className={styles.filtroCard}>
             <CardContent className={styles.filtroCardContent}>
@@ -40,9 +40,8 @@ function FiltroEstados({ estados, estadosSeleccionados, onChange }) {
                             <Typography sx={{ flexGrow: 1 }}>
                                 {e.toLowerCase()}
                             </Typography>
-                            <Checkbox    
-                                // defaultChecked                            
-                                checked={estadosSeleccionados.includes(e)}                                  
+                            <Checkbox
+                                checked={estadosSeleccionados.includes(e)}                                
                                 onChange={handleToggle(e)}
                                 sx={{
                                     color: estadoColors[e.toLowerCase()],

@@ -42,12 +42,13 @@ const CambioHorario = ({ formData, setFormData }) => {
 function TimePickerSelectivo(props) {
     const { formData, setFormData, categoria } = props
     console.log('estoy en TimePickerSelectivo');
+    console.log(categoria)
     switch (categoria) {
-        case 'Llegar Tarde':
+        case 'Llegar tarde':
             return llegarTarde({ formData, setFormData })
-        case 'Salir Temprano':
+        case 'Salir antes':
             return salirTemprano({ formData, setFormData })
-        case 'Cambio de horario':
+        case 'Cambio de Turno':
             return CambioHorario({ formData, setFormData })
         default:
             return null
