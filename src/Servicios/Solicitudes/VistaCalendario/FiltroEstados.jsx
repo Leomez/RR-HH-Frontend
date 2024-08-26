@@ -40,8 +40,7 @@ function FiltroEstados({ estados, estadosSeleccionados, onChange }) {
                             <Typography sx={{ flexGrow: 1 }}>
                                 {e.toLowerCase()}
                             </Typography>
-                            <Checkbox    
-                                // defaultChecked                            
+                            <Checkbox                           
                                 checked={estadosSeleccionados.includes(e)}                                  
                                 onChange={handleToggle(e)}
                                 sx={{

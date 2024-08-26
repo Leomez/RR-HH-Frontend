@@ -179,12 +179,14 @@ export const getSolicitudes = createAsyncThunk(
   async (id, { rejectWithValue }) => {
     const token = store.getState().user.token;
     try {
+      console.log('recargando solicitudes...');
       const response = await axios({
         method: 'GET',
         url: `${URL_API}/licencias/getSolicitudAlSuper`,
         params: { id },
         headers: { "Authorization": `Bearer ${token}` }
       })
+      console.log('Solicitudes actualizadas');
       return response.data.data;
     } catch (error) {
       console.error('Error al traer las solicitudes:', error.response?.data || error.message);
@@ -260,13 +262,14 @@ export const elevarSolicitud = createAsyncThunk(
   async ({ solicitudId, estado }) => {
     console.log(solicitudId, estado);
     try {
+      console.log('enviando solicitud');
       const response = await axios({
         method: 'PUT',
         url: `${URL_API}/licencias/responderSolicitud/${solicitudId}`,
         data: { estado: estado },
         headers: { "Authorization": "Bearer " + store.getState().user.token },
       })
-      console.log(response.data);
+      console.log('Solicitud enviada:  ',response.data);
       return response.data;
     } catch (error) {
       console.log(error);

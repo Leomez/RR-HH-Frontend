@@ -6,18 +6,16 @@ import VacacionesTable from "./VacacionesTable";
 import PermisosTable from "./PermisosTable";
 import { getSolicitudes, elevarSolicitud } from "../../Redux/Features/Solicitudes/solicitudesSlice";
 
-const ListadoDeSolicitudes = ({solicitudes}) => {
-    // const solicitudes = useSelector((state) => state.solicitudes.solicitudes);
-    // const empleado_id = useSelector((state) => state.empleado.empleadoActual.id);
-    const dispatch = useDispatch();
-    console.log(solicitudes);/*<--- Tengo que manejar esto*/
+const ListadoDeSolicitudes = ({solicitudes}) => {    
+    const empleado_id = useSelector((state) => state.empleado.empleadoActual.id);
+    const dispatch = useDispatch();    
 
     const [open, setOpen] = useState(false);
     const [sol, setSol] = useState([])
     const [selectedSolicitud, setSelectedSolicitud] = useState(null);
     const [accion, setAccion] = useState("");
-    useEffect(() => {
-        // dispatch(setSol(solicitudes));
+    
+    useEffect(() => {        
         setSol(solicitudes)
     }, [dispatch, solicitudes]);
 
@@ -30,7 +28,7 @@ const ListadoDeSolicitudes = ({solicitudes}) => {
     const handleDialogClose = () => {
         setOpen(false);
         setSelectedSolicitud(null);
-        setAccion("");
+        setAccion("");         
     };
 
     const handleConfirm = () => {

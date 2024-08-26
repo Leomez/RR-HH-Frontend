@@ -27,6 +27,12 @@ function Calendario({solicitudes, loading, error}) {
         }
     }, [error]);
 
+    useEffect(() => {
+        if (estados.length > 0) {
+            setEstadosSeleccionados(estados);
+        }
+    }, [estados])
+
     
     
     const tipoColorMap = useMemo(() => !error && generateTipoColors(solicitudes), [solicitudes]);
