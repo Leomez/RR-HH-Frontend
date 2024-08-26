@@ -1,4 +1,5 @@
 import { Backdrop, Box, Button, Typography, Card, CardContent, CardActions } from "@mui/material";
+import Loading from "../../Componentes/Loading";
 import React from "react";
 
 
@@ -17,6 +18,7 @@ const Confirmacion = ({ open, close, formData, cancel, confirm }) => {
             open={open}
         >
             <Card sx={{ width: '30rem', margin: 'auto', marginTop: '10rem' }}>
+                
                 <CardContent>
                     <Typography variant="h5" sx={{ textAlign: 'center' }}>
                         Vas a enviar la siguiente solicitud

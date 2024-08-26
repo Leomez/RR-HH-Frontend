@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Stack, Typography, FormControl, InputLabel, Select, MenuItem, Button, TextField, Box, Checkbox, FormHelperText } from '@mui/material';
 import { DatePicker } from '@mui/x-date-pickers';
 import dayjs from 'dayjs';
-import { getTipoSolicitudes } from '../../Redux/Features/Solicitudes/solicitudesSlice';
+import { getTipoSolicitudes, getSolicitudesXEmpleado} from '../../Redux/Features/Solicitudes/solicitudesSlice';
 import TimePickerSelectivo from './utils/TimePickerSelectivo';
 import { createSolicitud } from '../../Redux/Features/Solicitudes/solicitudesSlice';
 import { quitarGuionBajo, capitalizeWordsWithUnderscore } from '../../Utils/QuitarGuionBajo';
@@ -11,7 +11,7 @@ import Confirmacion from './Confirmacion';
 
 
 
-const Formulario = ({ close }) => {
+const Formulario = ({ close, reload }) => {
   const [diasSolicitados, setDiasSolicitados] = useState(0);
   const initialState = {
     empleado_id: '',
@@ -127,8 +127,10 @@ const Formulario = ({ close }) => {
   const handleConfirm = () => {
     // console.log(formData);
     dispatch(createSolicitud(formData));
+    dispatch(getSolicitudesXEmpleado(empleado.id));
     setFormData(initialState);
     setTipoSolicitudId('');
+    reload();
     close();
   }
 
@@ -258,7 +260,7 @@ const Formulario = ({ close }) => {
                   disabled={!compensatorio}
                 />)
               }
-              {!(formData.categoria === 'Franco compensatorio') ?
+              {!(formData.categoria === 'Compensar') ?
                 <TimePickerSelectivo
                   categoria={formData.categoria}
                   setFormData={setFormData}

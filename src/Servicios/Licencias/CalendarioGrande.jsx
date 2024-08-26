@@ -17,7 +17,7 @@ const EventComponent = ({ event }) => {
 }
 
 const CalendarioGrande = ({ marcador, eventos }) => {
-  // const { marcador, eventos } = props
+  // const { marcador, eventos } = props 
 
   const setEventos = eventos && eventos.map((evento) => {
     const isNumeric = (str) => !isNaN(str) && !isNaN(parseFloat(str));
@@ -44,7 +44,7 @@ const CalendarioGrande = ({ marcador, eventos }) => {
   }, [marcador, eventos])
 
   return (
-    <div>
+    <div >
       <Calendar
         localizer={localizer}
         events={myEventsList}

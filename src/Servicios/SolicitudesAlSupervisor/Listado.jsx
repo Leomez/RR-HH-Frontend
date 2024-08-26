@@ -6,18 +6,20 @@ import VacacionesTable from "./VacacionesTable";
 import PermisosTable from "./PermisosTable";
 import { getSolicitudes, elevarSolicitud } from "../../Redux/Features/Solicitudes/solicitudesSlice";
 
-const ListadoDeSolicitudes = () => {
-    const solicitudes = useSelector((state) => state.solicitudes.solicitudes);
-    const empleado_id = useSelector((state) => state.empleado.empleadoActual.id);
+const ListadoDeSolicitudes = ({solicitudes}) => {
+    // const solicitudes = useSelector((state) => state.solicitudes.solicitudes);
+    // const empleado_id = useSelector((state) => state.empleado.empleadoActual.id);
     const dispatch = useDispatch();
+    console.log(solicitudes);/*<--- Tengo que manejar esto*/
 
     const [open, setOpen] = useState(false);
+    const [sol, setSol] = useState([])
     const [selectedSolicitud, setSelectedSolicitud] = useState(null);
     const [accion, setAccion] = useState("");
-
     useEffect(() => {
-        dispatch(getSolicitudes(empleado_id));
-    }, [dispatch]);
+        // dispatch(setSol(solicitudes));
+        setSol(solicitudes)
+    }, [dispatch, solicitudes]);
 
     const handleDialogOpen = (solicitudId, estado) => {
         setSelectedSolicitud({ solicitudId, estado });
@@ -40,9 +42,9 @@ const ListadoDeSolicitudes = () => {
         }
     };
 
-    const licencias = solicitudes.filter((solicitud) => solicitud.tipo === "Licencia");
-    const vacaciones = solicitudes.filter((solicitud) => solicitud.tipo === "Vacaciones");
-    const permisos = solicitudes.filter((solicitud) => solicitud.tipo === "Permiso");
+    const licencias = sol.filter((solicitud) => solicitud.tipo === "Licencia");
+    const vacaciones = sol.filter((solicitud) => solicitud.tipo === "Vacaciones");
+    const permisos = sol.filter((solicitud) => solicitud.tipo === "Permiso");
 
     return (
         <>

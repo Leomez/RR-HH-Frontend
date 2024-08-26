@@ -25,7 +25,7 @@ export const crearSector = createAsyncThunk('sectores/crearSector', async ({inpu
         return res
     } catch (error) {
         const { data } = error.response;
-        store.dispatch(showError(data.errorMessage))        
+        store.dispatch(showError(data.errorMessage || data.message || "Error desconocido al crear el sector"))        
         throw new Error(error.response?.data?.message || "Error desconocido al crear el sector")
     }
 })
@@ -41,7 +41,8 @@ export const fetchSectores = createAsyncThunk('sectores/fetchSectores', async (t
         return res.data
     } catch (error) {
         const { data } = error.response;
-        store.dispatch(showError(data.errorMessage))
+        console.log(data);
+        store.dispatch(showError(data.errorMessage || data.message || "Error desconocido al traer los sectores"))
         throw new Error(error.response?.data?.message || "Error desconocido al traer los sectores");
     }
 })

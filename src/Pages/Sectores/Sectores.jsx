@@ -23,25 +23,30 @@ export default function Sectores() {
         dispatch(getSupervisores());
     }, [dispatch, token]);
 
-    const error = sectores.error || errorEmp || supervisores.error;
+    const loading = globalLoading || supervisores.loading || empleados.loading || sectores.loading;
 
-    const sectoresData = useMemo(() => 
-        sectores.sectores.map((s, i) => {
-            const encargado = supervisores.data?.find(sup => sup.SectorId === s.id) || 'Sin dato';
-            return (
-                <DetalleSector key={i} sector={s} empleados={empleados} encargado={encargado} />
-            );
-        }), [sectores.sectores, supervisores.data, empleados]);
+    const error = sectores.error || errorEmp || supervisores.error;
 
     if (error) {
         console.log(error, '<--- error en el componente');
         return <Error error={error} />;
     }
 
+    const sectoresData = useMemo(() =>
+        sectores.sectores.map((s, i) => {
+            const encargado = supervisores.data?.find(sup => sup.SectorId === s.id) || 'Sin dato';
+            return (
+                <DetalleSector key={i} sector={s} empleados={empleados} encargado={encargado} />
+            );
+        }), [sectores.sectores, supervisores.data, empleados]
+    );
+
+    
+
 
     return (
         <Box sx={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-evenly' }}>
-            {globalLoading ? (
+            {loading ? (
                 [1, 2, 3, 4].map((n) => <CardSkeleton className="custom-card" key={n} />)
             ) : (
                 sectoresData

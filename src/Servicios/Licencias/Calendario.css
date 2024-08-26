@@ -4,3 +4,7 @@
     
 }
 
+.loading-indicator .rbc-time-view, .loading-indicator .rbc-month-view  {
+    opacity: 0.5;
+}
+

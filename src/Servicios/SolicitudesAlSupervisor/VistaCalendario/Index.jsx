@@ -8,18 +8,18 @@ import Listado from './Listado';
 import FiltroEstados from './FiltroEstados';
 import { generateTipoColors, isNumeric } from '../../../Utils/randomColors';
 
-function Calendario() {
+function Calendario({solicitudes, loading, error}) {
     const [openError, setOpenError] = useState(false);
     const [listado, setListado] = useState([]);
     const [estados, setEstados] = useState([]);
     const [estadosSeleccionados, setEstadosSeleccionados] = useState([]);
 
-    const dispatch = useDispatch();
-    const { todasSolicitudes, loading, error } = useSelector(state => state.solicitudes);
+    // const dispatch = useDispatch();
+    // const { todasSolicitudes, loading, error } = useSelector(state => state.solicitudes);
 
-    useEffect(() => {
-        dispatch(getTodasSolicetudes());
-    }, [dispatch]);
+    // useEffect(() => {
+    //     dispatch(getTodasSolicetudes());
+    // }, [dispatch]);
 
     useEffect(() => {
         if (error) {
@@ -27,25 +27,21 @@ function Calendario() {
         }
     }, [error]);
 
-    useEffect(() => {
-        if (estados.length > 0) {
-            setEstadosSeleccionados(estados);
-        }
-    }, [estados])
-
-    const tipoColorMap = useMemo(() => !error && generateTipoColors(todasSolicitudes), [todasSolicitudes]);
+    
+    
+    const tipoColorMap = useMemo(() => !error && generateTipoColors(solicitudes), [solicitudes]);
 
     const eventos = useMemo(() => {
         if (error) {
             return [];
         }
-        // console.log(todasSolicitudes);
+        console.log(solicitudes);
         const clasificadorEstados = (estado) => {
             if (estado === 'Elevado') return 'Pendiente en RR HH';
             else if (estado === 'En proceso') return 'Pendiente en el sector';
             else if (estado === 'Rechazado') return 'Rechazado'            
         }
-        return todasSolicitudes.map(solicitud => {
+        return solicitudes.map(solicitud => {
             const estado = clasificadorEstados(solicitud.estado);
             const evento = {
                 id: solicitud.id,
@@ -63,7 +59,7 @@ function Calendario() {
             });
             return evento;
         });
-    }, [todasSolicitudes, error, tipoColorMap]);
+    }, [solicitudes, error, tipoColorMap]);
 
     const eventosFiltrados = useMemo(() => {
         if (estadosSeleccionados.length === 0) {
@@ -71,8 +67,7 @@ function Calendario() {
         }
         return eventos.filter(evento => estadosSeleccionados.includes(evento.estado));
     }, [estadosSeleccionados, eventos]);
-    // console.log(estadosSeleccionados && estadosSeleccionados);
-    // console.log(eventosFiltrados);
+
     return (
         <Box id="calendario" sx={{ flexGrow: 1, p: 1, flexDirection: 'row', display: 'flex', alignItems: 'center', justifyContent: 'space-around' }}>
             <Dialog
