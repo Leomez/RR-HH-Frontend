@@ -15,6 +15,7 @@ const initialState = {
 }
 
 export const crearSector = createAsyncThunk('sectores/crearSector', async ({inputs, userToken}) => {
+    
     try {
         const res = await axios({
             url:`${URL}/sector`,
@@ -41,7 +42,7 @@ export const fetchSectores = createAsyncThunk('sectores/fetchSectores', async (t
         return res.data
     } catch (error) {
         const { data } = error.response;
-        console.log(data);
+        // console.log(data);
         store.dispatch(showError(data.errorMessage || data.message || "Error desconocido al traer los sectores"))
         throw new Error(error.response?.data?.message || "Error desconocido al traer los sectores");
     }
@@ -61,7 +62,8 @@ export const fetchSector = createAsyncThunk('sectores/fetchSector', async ({nomb
     }
 })
 
-export const fetchSectorXId = createAsyncThunk('sectores/fetchSectorXId', async ({id, token}) => {    
+export const fetchSectorXId = createAsyncThunk('sectores/fetchSectorXId', async (id) => {   
+    const token = store.getState().user.token; 
     try {
         const res = await axios({
             url:`${URL}/sector/${id}`,

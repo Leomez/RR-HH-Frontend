@@ -32,7 +32,7 @@ function LoginPage() {
     dispatch(resetUserError());
     dispatch(resetConexion());
   };
-  console.log(error);
+  // console.log(error);
   return (
     <div id="loginPage">
       {error && <Dialog open={open} onClose={handleClose}>
@@ -45,7 +45,7 @@ function LoginPage() {
               <Typography>
                 <span style={{ display: "flex", alignItems: "center" }}>
                   <ErrorTwoToneIcon color="error" />
-                  {error.errorData && error.errorData.data && error.errorData.data}
+                  {error.errorData && error.errorData.data && error.errorData.data.error}
                 </span>
               </Typography>
             </CardContent>

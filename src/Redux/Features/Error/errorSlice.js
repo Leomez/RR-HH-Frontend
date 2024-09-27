@@ -9,7 +9,7 @@ const errorSlice = createSlice({
   
   reducers: {
     showError(state, action) {
-      console.log(action.payload);
+      // console.log(action.payload);
       state.showErrorModal = true;
       state.errorMessage = action.payload;
     },

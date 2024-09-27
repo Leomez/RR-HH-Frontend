@@ -126,6 +126,7 @@ const userSlice = createSlice({
                 state.foto = action.payload.data.foto;
                 state.token = action.payload.data.token;
                 state.loading = false;
+                console.log(state); //<--- console.log del estado para ver que imprime
                 state.error.showError = false;
                 state.error.errorData = null;
             })

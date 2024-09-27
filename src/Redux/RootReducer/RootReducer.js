@@ -10,6 +10,7 @@ import notificacionesReducer from "../Features/Notificaciones/notificacionesSlic
 import supervisorReducer from "../Features/Supervisor/supervisorSlice";
 import errorReducer from "../Features/Error/errorSlice";
 import solicitudesReducer from "../Features/Solicitudes/solicitudesSlice";
+import asistenciaReducer from "../Features/Asistencia/asistenciaSlice";
 
 
 const appReducer =  combineReducers({
@@ -23,7 +24,8 @@ const appReducer =  combineReducers({
     firma: firmaReducer,
     supervisor: supervisorReducer,
     solicitudes: solicitudesReducer,
-    error: errorReducer
+    error: errorReducer,
+    asistencia: asistenciaReducer
 });
 
 const rootReducer = (state, action) => {

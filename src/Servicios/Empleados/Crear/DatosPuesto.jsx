@@ -64,7 +64,7 @@ export default function DatosPuestoForm({ inputs, handleChange }) {
               <MenuItem value="1°">1°</MenuItem>
               <MenuItem value="2°">2°</MenuItem>
               <MenuItem value="3°">3°</MenuItem>
-              <MenuItem value="Fuera de convenio">Fuera de convenio</MenuItem>
+              <MenuItem value="Fuera de Convenio">Fuera de convenio</MenuItem>
             </Select>
           </FormControl>
 
