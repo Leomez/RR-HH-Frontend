@@ -17,7 +17,7 @@ export const AppRouter = () => {
 
   let elementToRender;
   if (autenticado) {
-    console.log('autorizado...');
+    // console.log('autorizado...');
     if (usuario.rol === "ADMIN") {
       elementToRender = <RutasAdmin />;
     } else if (usuario.rol === "SUP") {

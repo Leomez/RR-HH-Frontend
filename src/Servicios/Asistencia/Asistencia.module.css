@@ -1,0 +1,32 @@
+.innerContainer {
+    padding: 2rem;
+    border-top: 1px solid darkgray;
+    display: flex;
+    flex-direction: column;    
+    margin: 1rem;
+}
+
+.actividadContainer {
+    display: flex;
+    align-items: center;
+    margin: auto;
+    width: auto;
+}
+
+.actividad {
+    margin-block: 1rem;
+    border-radius: 20px;
+    padding: .5rem;
+}
+
+.pausaIcon {
+    color: green;
+}
+
+.pausaContainer {
+    display: flex;
+    flex-direction: row;
+    /* padding: 3px; */
+    border-radius: 20px;
+    background-color: chartreuse;
+}

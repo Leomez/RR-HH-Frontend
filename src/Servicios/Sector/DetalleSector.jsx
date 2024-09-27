@@ -3,11 +3,12 @@ import { Card, CardContent, Box, Typography, Button, Divider, Skeleton } from '@
 import InfoBox from '../../Utils/InfoBox';
 import SelectEncargados from './SelectEncargados';
 import retornarEmpleado from '../../Utils/buscarEmpleado';
+// import { sector } from '../Empleados/Listado/utils';
 
 function DetalleSector({ sector: s, empleados, encargado }) {
     const [openEncargados, setOpenEncargados] = useState(false);
     const [encargadoValue, setEncargadoValue] = useState('');
-
+    console.log(encargado);
     // Memorizar los cálculos para evitar recalculaciones innecesarias
     const enc = useMemo(() => {
         if (!encargado) {
@@ -38,6 +39,8 @@ function DetalleSector({ sector: s, empleados, encargado }) {
         }
         setOpenEncargados(false);
     };
+
+    console.log('sector');
 
     const leyendaBoton = useMemo(() => {
         return encargadoValue.includes('Sin encargado') ? "Seleccionar Encargado" : "Cambiar Encargado";
@@ -73,4 +76,4 @@ function DetalleSector({ sector: s, empleados, encargado }) {
     );
 }
 
-export default React.memo(DetalleSector);
+export default DetalleSector;

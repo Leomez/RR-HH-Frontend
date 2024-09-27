@@ -11,13 +11,13 @@
     "start": "serve dist -s -n -L -p $PORT"
   },
   "dependencies": {
-    "@emotion/react": "^11.11.1",
-    "@emotion/styled": "^11.11.0",
+    "@emotion/react": "^11.13.3",
+    "@emotion/styled": "^11.13.0",
     "@fontsource/roboto": "^5.0.5",
     "@meronex/icons": "^4.0.0",
     "@mui/icons-material": "^5.14.1",
     "@mui/joy": "^5.0.0-alpha.88",
-    "@mui/material": "^5.14.1",
+    "@mui/material": "^6.0.0",
     "@mui/styled-engine-sc": "^5.12.0",
     "@mui/x-data-grid": "^6.13.0",
     "@mui/x-date-pickers": "^6.10.0",
