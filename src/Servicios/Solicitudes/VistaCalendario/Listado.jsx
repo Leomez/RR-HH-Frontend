@@ -4,7 +4,7 @@ import styles from './CalendarioGrande.module.css'
 
 function Listado({ listado }) {
     // console.log(listado);
-    const uniqueArray = Array.from(
+    const arrayDeTipos = Array.from(
         listado.reduce((acc, item) => acc.set(item.tipo, item), new Map()).values()
     );
     return (
@@ -16,10 +16,12 @@ function Listado({ listado }) {
             </CardContent>
             <div>
                 <List>
-                    {uniqueArray.map(t => {
-                        return <ListItem>
+                    {arrayDeTipos.map(t => {
+                        console.log(t);
+                        return <ListItem
+                            key={t.tipo}
+                        >
                             <Box
-                                key={t.tipo}
                                 className={styles.listadoListItem}
                                 sx={{                                    
                                     bgcolor: t.color,                                                                       

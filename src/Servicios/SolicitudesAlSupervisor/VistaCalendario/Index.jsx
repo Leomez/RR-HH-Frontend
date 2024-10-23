@@ -45,7 +45,8 @@ function Calendario({solicitudes, loading, error}) {
         const clasificadorEstados = (estado) => {
             if (estado === 'Elevado') return 'Pendiente en RR HH';
             else if (estado === 'En proceso') return 'Pendiente en el sector';
-            else if (estado === 'Rechazado') return 'Rechazado'            
+            else if (estado === 'Rechazado') return 'Rechazado'   
+            else if (estado === 'Aprobado') return 'Aprobado'            
         }
         return solicitudes.map(solicitud => {
             const estado = clasificadorEstados(solicitud.estado);

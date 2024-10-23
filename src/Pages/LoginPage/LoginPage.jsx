@@ -22,7 +22,7 @@ function LoginPage() {
 
   useEffect(() => {
     if (error && error.showError) {
-      console.log('error');
+      console.log(error);
       setOpen(true);
     }
   }, [error]);
@@ -45,7 +45,8 @@ function LoginPage() {
               <Typography>
                 <span style={{ display: "flex", alignItems: "center" }}>
                   <ErrorTwoToneIcon color="error" />
-                  {error.errorData && error.errorData.data && error.errorData.data.error}
+                  {error.errorData && error.errorData.data && error.errorData.data}
+                  {console.log(error)}
                 </span>
               </Typography>
             </CardContent>
