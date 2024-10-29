@@ -10,7 +10,10 @@ const ConfigurarTipoSolicitudes = ({close}) => {
   const inputs = { nombre: '', caracteristicas: '' }
   const [tipoSolicitud, setTipoSolicitud] = useState(inputs)
 //   const errorRespuesta = useSelector(state => state.tipoSolicitud.error)
+
 //   const error = errorRespuesta ? errorRespuesta : ''
+
+
 
   function handleChange(value) {
     if (value.target.name === 'canti_dias') {

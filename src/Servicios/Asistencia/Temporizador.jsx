@@ -13,7 +13,7 @@ const Timer = () => {
   const [estaEnPausa, setEstaEnPausa] = useState(false);
   const [HoraEntrada, setHoraEntrada] = useState(null);
   const [HoraPausa, setHoraPausa] = useState(null);
-  const [HoraFin, setHoraFin ] = useState(null)
+  const [HoraFin, setHoraFin] = useState(null)
   // const [elapsedTime, setElapsedTime] = useState(0);
   const [estadoDeActividad, setEstadoDeAtividad] = useState("")
   // const [estadoDePausa, setEstadoDePausa] = useState("")
@@ -62,7 +62,7 @@ const Timer = () => {
   const handlePause = () => {
     if (estaEnPausa) {
       dispatch(nuevoFinPausa(empleadoId))
-      setEstaEnPausa(false);      
+      setEstaEnPausa(false);
       setEstadoDeAtividad("Jornada Iniciada")
       return;
     }
@@ -90,44 +90,51 @@ const Timer = () => {
   };
 
   return (
-    <Box className={s.timerContainer}>
-      <Button
-        variant="contained"
-        color="primary"
-        onClick={handleStart}
-        disabled={esActivo}
-      >
-        INICIAR TU ACTIVIDAD
-      </Button>
-      <Box display="flex" flexDirection="column" alignItems="center" mt={2}>
-        {/* <AccessTimeIcon fontSize="large" color={esActivo ? 'primary' : 'disabled'} /> */}
-        <Typography variant="h3">
-          <Clock size={110} padding={5} />
-        </Typography>
-        <Box mt={2}>
-          <Button
-            variant="outlined"
-            color="default"
-            onClick={handlePause}
-            disabled={!esActivo}            
-          >
-            {estaEnPausa ? 'REANUDAR' : 'PAUSA'}
-          </Button>
-          <Button
-            variant="contained"
-            color="secondary"
-            onClick={handleFinish}
-            disabled={!esActivo}
-            style={{ marginLeft: 10 }}
-          >
-            FINALIZAR
-          </Button>
+    <Box>
+      <Box className={s.timerContainer}>
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={handleStart}
+          disabled={esActivo}
+          size='small'
+        >
+          <Typography variant='button'>
+            INICIAR TU ACTIVIDAD
+          </Typography>
+        </Button>
+        <Box display="flex" flexDirection="column" alignItems="center" mt={2}>
+          {/* <AccessTimeIcon fontSize="large" color={esActivo ? 'primary' : 'disabled'} /> */}
+          <Typography variant="h3">
+            <Clock size={110} padding={5} />
+          </Typography>
+          <Box mt={2}>
+            <Button
+              variant="outlined"
+              color="default"
+              onClick={handlePause}
+              disabled={!esActivo}
+              size='small'
+            >
+              {estaEnPausa ? 'REANUDAR' : 'PAUSA'}
+            </Button>
+            <Button
+              variant="contained"
+              color="secondary"
+              onClick={handleFinish}
+              disabled={!esActivo}
+              style={{ marginLeft: 10 }}
+              size='small'
+            >
+              FINALIZAR
+            </Button>
+          </Box>
         </Box>
       </Box>
       <Box display="flex" justifyContent="center" pt={2} mt={2}>
-        <Typography variant="body2">INICIO: {HoraEntrada ? HoraEntrada : '--:--'}</Typography>
-        <Typography variant="body2" style={{ marginLeft: 20 }}>FIN: {esActivo ? '--:--' : HoraFin}</Typography>
-        <Typography variant="body2" style={{ marginLeft: 20 }}>PAUSA: {estaEnPausa ? HoraPausa : '--:--'}</Typography>
+        <Typography variant='caption'>INICIO: {HoraEntrada ? HoraEntrada : '--:--'}</Typography>
+        <Typography variant='caption' style={{ marginLeft: 20 }}>FIN: {esActivo ? '--:--' : HoraFin}</Typography>
+        <Typography variant='caption' style={{ marginLeft: 20 }}>PAUSA: {estaEnPausa ? HoraPausa : '--:--'}</Typography>
       </Box>
     </Box>
   );

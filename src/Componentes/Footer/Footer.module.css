@@ -1,12 +1,13 @@
 .footerContainer {
     display: flex;
+    flex-grow: 1;
     flex-direction: column;
-    background-color: #dee7f3;
-    margin: 0;
-    margin-top: 2rem;
+    background-color: #dee7f3;;
+    margin-top: 1rem;
     padding: 0;
     box-sizing: border-box;
-    height: 20vh;
+    /* height: 20vh; */
+    height: auto;
 }
 
 .footer {

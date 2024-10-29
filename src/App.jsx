@@ -18,9 +18,9 @@ function App() {
             {/* <ErrorModal> */}
             <AppRouter />
             {/* </ErrorModal> */}
-            <Footer />
           </Layout>
         </Box>
+        {/* <Footer /> */}
       </>
     )
   } catch (error) {

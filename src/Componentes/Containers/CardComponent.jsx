@@ -5,7 +5,7 @@ import Header from "./Header";
 export default function CardComponent({ titulo, link, children, footer }) {
     return (
         <Box sx={{ height: 'inherit' }}>
-            <Card sx={{ height: 'inherit', borderTop: '#4f5a92 3px solid' }}>
+            <Card sx={{ height: 'inherit', borderTop: '#1976d2 3px solid' }}>
                 <Box
                     display={"flex"}
                     flexDirection={'column'}
