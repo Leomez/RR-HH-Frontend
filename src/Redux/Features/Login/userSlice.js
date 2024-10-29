@@ -8,6 +8,7 @@ import { URL_API } from "../constantes";
 
 const URL = URL_API;
 
+
 const initialState = {
     loading: false,
     error: {
@@ -34,6 +35,7 @@ export const loginUser = createAsyncThunk(
             // Maneja el caso donde el token no está disponible
         }
         try {
+            console.log(URL);
             const response = await axios({
                 url: `${URL}/login`,
                 method: "post",

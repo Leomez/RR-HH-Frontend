@@ -43,7 +43,9 @@ function Calendario() {
         const clasificadorEstados = (estado) => {
             if (estado === 'Elevado') return 'Pendiente en RR HH';
             else if (estado === 'En proceso') return 'Pendiente en el sector';
-            else if (estado === 'Rechazado') return 'Rechazado'            
+            else if (estado === 'Rechazado') return 'Rechazado'
+            else if (estado === 'Aprobado') return 'Aprobado'
+
         }
         return todasSolicitudes.map(solicitud => {
             const estado = clasificadorEstados(solicitud.estado);
@@ -87,7 +89,7 @@ function Calendario() {
                 </DialogContent>
             </Dialog>
             <Grid container spacing={2}>
-                <Grid sx={{ justifyContent: 'center' }} item xs={12} sm={4} md={3}>
+                <Grid sx={{ justifyContent: 'center' }} size={3} item >
                     <Listado listado={listado} />
                     <br />
                     <FiltroEstados
@@ -97,11 +99,12 @@ function Calendario() {
                     />
                 </Grid>
                 <Divider sx={{ margin: 1 }} orientation="vertical" flexItem />
-                <Grid item xs={12} sm={7} md={8}>
+                <Grid item size={9}>
                     <CalendarioGrande eventos={eventosFiltrados} />
                 </Grid>
             </Grid>
         </Box>
+
     );
 }
 

@@ -6,13 +6,35 @@
     background-repeat: repeat;
     background-image: url("data:image/svg+xml;utf8,%3Csvg width=%222000%22 height=%221400%22 xmlns=%22http:%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cdefs%3E%3ClinearGradient id=%22a%22 gradientTransform=%22rotate(90)%22%3E%3Cstop offset=%225%25%22 stop-color=%22%232478f8%22%2F%3E%3Cstop offset=%2295%25%22 stop-color=%22%235a99f9%22%2F%3E%3C%2FlinearGradient%3E%3ClinearGradient id=%22b%22 gradientTransform=%22rotate(90)%22%3E%3Cstop offset=%225%25%22 stop-color=%22%23437df6%22%2F%3E%3Cstop offset=%2295%25%22 stop-color=%22%23729df8%22%2F%3E%3C%2FlinearGradient%3E%3ClinearGradient id=%22c%22 gradientTransform=%22rotate(90)%22%3E%3Cstop offset=%225%25%22 stop-color=%22%236181f5%22%2F%3E%3Cstop offset=%2295%25%22 stop-color=%22%2388a0f7%22%2F%3E%3C%2FlinearGradient%3E%3ClinearGradient id=%22d%22 gradientTransform=%22rotate(90)%22%3E%3Cstop offset=%225%25%22 stop-color=%22%237f86f3%22%2F%3E%3Cstop offset=%2295%25%22 stop-color=%22%239fa4f6%22%2F%3E%3C%2FlinearGradient%3E%3ClinearGradient id=%22e%22 gradientTransform=%22rotate(90)%22%3E%3Cstop offset=%225%25%22 stop-color=%22%239ba0f6%22%2F%3E%3Cstop offset=%2295%25%22 stop-color=%22%23b4b7f8%22%2F%3E%3C%2FlinearGradient%3E%3ClinearGradient id=%22f%22 gradientTransform=%22rotate(90)%22%3E%3Cstop offset=%225%25%22 stop-color=%22%23b7baf9%22%2F%3E%3Cstop offset=%2295%25%22 stop-color=%22%23c9cbfa%22%2F%3E%3C%2FlinearGradient%3E%3ClinearGradient id=%22g%22 gradientTransform=%22rotate(90)%22%3E%3Cstop offset=%225%25%22 stop-color=%22%23d3d3fc%22%2F%3E%3Cstop offset=%2295%25%22 stop-color=%22%23dedefc%22%2F%3E%3C%2FlinearGradient%3E%3ClinearGradient id=%22h%22 gradientTransform=%22rotate(90)%22%3E%3Cstop offset=%225%25%22 stop-color=%22%23efedff%22%2F%3E%3Cstop offset=%2295%25%22 stop-color=%22%23f3f1ff%22%2F%3E%3C%2FlinearGradient%3E%3C%2Fdefs%3E%3Cpath fill=%22%230673f9%22 d=%22M0 0h2000v1400H0z%22%2F%3E%3Cpath d=%22M0 155c108.518 7.108 217.037 14.216 332 17 114.963 2.784 236.372 1.243 346-4 109.628-5.243 207.475-14.187 316-20 108.525-5.813 227.728-8.496 336-5 108.272 3.496 205.612 13.172 335 10 129.388-3.172 290.825-19.192 352-21 61.175-1.808 22.087 10.596 23 23l-40 1245H0Z%22 fill=%22url(%23a)%22%2F%3E%3Cpath d=%22M0 311c112.597-16.128 225.193-32.257 335-23 109.807 9.257 216.824 43.9 333 45 116.176 1.1 241.511-31.34 352-44s206.131-5.538 307 6 206.965 27.49 333 34c126.035 6.51 272.01 3.574 332-1 59.99-4.574 33.995-10.787 48-17l-40 1089H0Z%22 fill=%22url(%23b)%22%2F%3E%3Cpath d=%22M0 466c104.44-10.22 208.88-20.441 324-18 115.12 2.441 240.92 17.544 351 25 110.08 7.456 204.438 7.266 315 8 110.562.734 237.326 2.393 346-2s199.258-14.836 324-22c124.742-7.164 283.64-11.047 346-9 62.36 2.047 28.18 10.023 34 18l-40 934H0Z%22 fill=%22url(%23c)%22%2F%3E%3Cpath d=%22M0 622c101.097-9.036 202.195-18.072 320-20 117.805-1.928 252.318 3.252 371 7 118.682 3.748 221.534 6.062 323 6 101.466-.062 201.548-2.501 311 5 109.452 7.501 228.276 24.943 357 23 128.724-1.943 267.35-23.27 322-30 54.65-6.73 25.325 1.135 36 9l-40 778H0Z%22 fill=%22url(%23d)%22%2F%3E%3Cpath d=%22M0 777c99.326 4.797 198.651 9.594 313 8 114.349-1.594 243.721-9.579 356-14 112.279-4.421 207.464-5.279 319 1s239.422 19.693 345 25c105.578 5.307 188.848 2.506 318-5s304.186-19.716 370-23c65.814-3.284 22.407 2.358 19 8l-40 623H0Z%22 fill=%22url(%23e)%22%2F%3E%3Cpath d=%22M0 933c108.404-6.236 216.807-12.473 323-10 106.193 2.473 210.175 13.654 326 15 115.825 1.346 243.492-7.145 362-3 118.508 4.145 227.858 20.925 329 19 101.142-1.925 194.077-22.557 322-34 127.923-11.443 290.835-13.698 353-10 62.165 3.698 23.582 13.349 25 23l-40 467H0Z%22 fill=%22url(%23f)%22%2F%3E%3Cpath d=%22M0 1088c105.382-5.595 210.764-11.19 329-13 118.236-1.81 249.327.162 360 0s200.929-2.46 304 0 218.957 9.68 324 9c105.043-.68 199.242-9.26 326-14 126.758-4.74 286.074-5.64 351-2 64.926 3.64 35.463 11.82 46 20l-40 312H0Z%22 fill=%22url(%23g)%22%2F%3E%3Cpath d=%22M0 1244c121.9-5.351 243.8-10.703 353-4 109.2 6.703 205.7 25.46 308 20 102.3-5.46 210.398-35.137 326-33 115.602 2.137 238.708 36.088 355 37 116.292.912 225.771-31.216 342-34 116.229-2.784 239.208 23.776 293 31s38.396-4.888 63-17l-40 156H0Z%22 fill=%22url(%23h)%22%2F%3E%3C%2Fsvg%3E");
   } */
-.layoutContainer {  
-  padding-top: 5rem;
-  width: calc(100% - 90px);
-  margin: auto;
-  height: auto;
-  position: absolute;
+
+.layoutAuth {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
   right: 1rem;
+  position: absolute;
+  width: calc(100% - 90px);  
+}
+
+.layout {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;  
+  position: absolute;
+  width: 100%;
+}
+
+.layoutContainer {  
+  flex: 1;
+  display: flex;
+  flex-direction: column;  
+  padding-top: 5rem;
+  margin: auto;  
+  height: auto;  
+}
+
+.footer {
+  margin-top: auto;
 }
 
 

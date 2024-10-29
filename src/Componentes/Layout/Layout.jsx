@@ -28,24 +28,15 @@ export function Layout({ children }) {
 
   return (
     <Box>
-      <div id="layout" className={styles.layout}>
-        <NavBar
-          open={openMenu}
-          handleOpenMenu={handleOpenMenu}
-          drawerWidth={drawerWidth}
-        />
-        {
-          auth ? (
+      <div id="layout" className={auth ? styles.layoutAuth : styles.layout}>
+        <NavBar open={openMenu} handleOpenMenu={handleOpenMenu} drawerWidth={drawerWidth}/>
+        {auth ? (
             <>
-              <SideBar
-                open={openMenu}
-                handleDrawerClose={handleOpenMenu}
-                drawerWidth={drawerWidth}
-              />
+              <SideBar open={openMenu} handleDrawerClose={handleOpenMenu} drawerWidth={drawerWidth}/>
               <Box>
                 <div onClick={hadlerClose} className={styles.layoutContainer} id="layoutContainer">
                   {children}
-                  {/* <Footer /> */}
+                  <Footer className={styles.footer} />
                 </div>
               </Box>
             </>
@@ -54,6 +45,7 @@ export function Layout({ children }) {
               <div>
                 {children}
               </div>
+              <Footer className={styles.footer} />
             </Box>
           )
         }

@@ -7,7 +7,7 @@ function FiltroEstados({ estados, estadosSeleccionados, onChange }) {
 
 
     console.log(estadosSeleccionados, '<--- estadosSeleccionados');
-    console.log(estados, '<--- estados');
+    // console.log(estados, '<--- estados');
     const handleToggle = (estado) => () => {
         const currentIndex = estadosSeleccionados.indexOf(estado);
         const newChecked = [...estadosSeleccionados];

@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
 import { Stack, Typography, FormControl, InputLabel, Select, MenuItem, Button, TextField, Box, Checkbox, FormHelperText } from '@mui/material';
 import { DatePicker } from '@mui/x-date-pickers';
 import dayjs from 'dayjs';
-import { getTipoSolicitudes, getSolicitudesXEmpleado} from '../../Redux/Features/Solicitudes/solicitudesSlice';
+import { getTipoSolicitudes, getSolicitudesXEmpleado } from '../../Redux/Features/Solicitudes/solicitudesSlice';
 import TimePickerSelectivo from './utils/TimePickerSelectivo';
 import { createSolicitud } from '../../Redux/Features/Solicitudes/solicitudesSlice';
 import { quitarGuionBajo, capitalizeWordsWithUnderscore } from '../../Utils/QuitarGuionBajo';
@@ -35,6 +36,9 @@ const Formulario = ({ close, reload }) => {
   const tipoSolicitudes = useSelector((state) => state.solicitudes.tipoSolicitudes);
   const empleado = useSelector((state) => state.empleado.empleadoActual);
   const [formData, setFormData] = useState(initialState);
+  const [feriados, setFeriados] = useState([]);
+  const [dayLoading, setDayLoading] = useState(false);
+  const [anio, setAnio] = useState(dayjs().year());
   const [compensatorio, setCompensatorio] = useState(false);
   const [tipoSolicitudId, setTipoSolicitudId] = useState();
   const [diasRestantes, setDiasRestantes] = useState(0);
@@ -46,6 +50,48 @@ const Formulario = ({ close, reload }) => {
     console.log(fin);
     return fin
   };
+
+  // console.log(dayjs().day());
+
+  // seteo de feriados
+  async function fetchFeriados(anio) {
+    try {
+      setDayLoading(true);
+      const response = await axios.get(`https://api.argentinadatos.com/v1/feriados/${anio}`);
+      setFeriados(response.data);
+      setDayLoading(false);
+    } catch (error) {
+      setFeriados([]);
+      setDayLoading(false);
+    }
+  }
+
+  useEffect(() => {
+    fetchFeriados(anio);
+  }, [anio]);
+
+  //maneja el cambio de año en el selector para actualizar la llamada a la api de feriados cuando cambia de año
+  function handleCambioAnio(e) {
+    const newYear = dayjs(e).year();
+    setAnio(newYear);
+  }
+
+// deshabilitar domingos y feriados
+  const shouldDisableDate = (date) => {
+    // Deshabilitar domingos
+    if (date.day() === 0) {
+      return true;
+    }
+
+    // Deshabilitar feriados
+    if (feriados.includes(date.format('YYYY-MM-DD'))) {
+      return true;
+    }
+
+    return false;
+  };
+
+
 
 
   useEffect(() => {
@@ -99,7 +145,7 @@ const Formulario = ({ close, reload }) => {
     caracteristicas: tipoSolicitudes.vacaciones.descripcion,
     diasCorrespondientes: tipoSolicitudes.vacaciones.cantDias
   });
-  
+
   const handleCompensatorioChange = () => {
     setCompensatorio(!compensatorio);
   };
@@ -196,7 +242,9 @@ const Formulario = ({ close, reload }) => {
               </FormControl>
               <DatePicker
                 label={'Desde'}
+                minDate={dayjs()}
                 defaultValue={dayjs()}
+
                 name={'fechaDesde'}
                 onChange={(newValue) => setFormData({ ...formData, fechaDesde: newValue.format('DD-MM-YYYY') })}
               />
@@ -207,7 +255,11 @@ const Formulario = ({ close, reload }) => {
                     dayjs(formData.fechaDesde, 'DD-MM-YYYY') :
                     dayjs()
                 }
+                loading={dayLoading}
+                shouldDisableDate={shouldDisableDate}
+                onMonthChange={handleCambioAnio}
                 minDate={dayjs(formData.fechaDesde, 'DD-MM-YYYY')}
+                maxDate={dayjs(formData.fechaDesde, 'DD-MM-YYYY').add(diasRestantes - 1, 'day')}
                 onChange={(newValue) => setFormData({ ...formData, fechaHasta: newValue.format('DD-MM-YYYY') })}
                 slotProps={{ sx: { paddingBottom: '3rem' } }}
               />

@@ -28,7 +28,7 @@ const loginConUsuYCont = async (input) => {
       errorMessage: error.message
     }
 
-    // console.log(errorLoguin);
+    console.log(errorLoguin);
     return errorLoguin
     // (
     //   <Alert severity="error" sx={{ mb: 2 }}>
