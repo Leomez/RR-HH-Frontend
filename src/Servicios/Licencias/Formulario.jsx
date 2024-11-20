@@ -15,6 +15,7 @@ import Confirmacion from './Confirmacion';
 const Formulario = ({ close, reload }) => {
   const [diasSolicitados, setDiasSolicitados] = useState(0);
   const initialState = {
+    //campos obligatorios con *
     empleado_id: '',
     tipo: '',
     fecha: '',
@@ -168,7 +169,7 @@ const Formulario = ({ close, reload }) => {
     setFormData(initialState);
     setTipoSolicitudId('');
     close();
-  };
+  };  
 
   const handleConfirm = () => {
     // console.log(formData);

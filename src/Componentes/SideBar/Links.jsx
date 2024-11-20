@@ -28,11 +28,11 @@ const rutas = () => {
         ),
         ruta: "mensajes",
       },
-      {
-        nombreSeccion: "Mis Recibos",
-        icono: <RequestPageIcon sx={{ color: theme.palette.primary.main }} />,
-        ruta: "recibos",
-      },
+      // {
+      //   nombreSeccion: "Mis Recibos",
+      //   icono: <RequestPageIcon sx={{ color: theme.palette.primary.main }} />,
+      //   ruta: "recibos",
+      // },
       {
         nombreSeccion: "Mi Perfil",
         icono: <FaceRetouchingNaturalIcon sx={{ color: theme.palette.primary.main }} />,
@@ -63,11 +63,11 @@ const rutas = () => {
         ruta: "solicitudes",
 
       },
-      {
-        nombreSeccion: "Cargar Recibos",
-        icono: <ReceiptLongIcon sx={{ color: theme.palette.primary.light }} />,
-        ruta: "cargarRecibos",
-      },
+      // {
+      //   nombreSeccion: "Cargar Recibos",
+      //   icono: <ReceiptLongIcon sx={{ color: theme.palette.primary.light }} />,
+      //   ruta: "cargarRecibos",
+      // },
     ],
     rutasSuper: [
       {

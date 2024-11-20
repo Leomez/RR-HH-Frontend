@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Box } from "@mui/material";
-import { DataGrid, esES } from "@mui/x-data-grid";
+import { DataGrid } from "@mui/x-data-grid";
 import PictureAsPdfRoundedIcon from "@mui/icons-material/PictureAsPdfRounded";
 import { getRecibos } from "../../../Redux/Features/Recibos/recibosDeSueldoSlice";
 import CustomNoRowsOverlay from "../../../Utils/NoRows";

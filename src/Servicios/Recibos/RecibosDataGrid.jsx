@@ -1,9 +1,10 @@
 /* eslint-disable react/prop-types */
-import { DataGrid, esES } from "@mui/x-data-grid";
+import { DataGrid } from "@mui/x-data-grid";
+import { esES } from "@mui/x-data-grid/locales";
 import { Select, MenuItem, ButtonGroup, Typography, Icon } from "@mui/material";
 import ZoomInIcon from "@mui/icons-material/ZoomIn";
 import DeleteForeverTwoToneIcon from "@mui/icons-material/DeleteForeverTwoTone";
-import { mesesDelAnio } from "../../Utils/meses";
+import { mesesDelAnio } from "./utils/meses";
 
 export default function RecibosDataGrid({
   empleados,
