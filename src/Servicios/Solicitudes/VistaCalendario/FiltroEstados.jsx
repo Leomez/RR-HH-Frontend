@@ -38,7 +38,7 @@ function FiltroEstados({ estados, estadosSeleccionados, onChange }) {
                                     backgroundColor: estadoColors[e.toLowerCase()],
                                 }}></Box>
                             <Typography sx={{ flexGrow: 1 }}>
-                                {e.toLowerCase()}
+                                {e.toUpperCase()}
                             </Typography>
                             <Checkbox                           
                                 checked={estadosSeleccionados.includes(e)}                                  

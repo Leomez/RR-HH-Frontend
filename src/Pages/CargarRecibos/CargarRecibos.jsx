@@ -1,6 +1,7 @@
-import { Container, Typography, Grid, Divider, Card } from "@mui/material";
+import { Container, Typography, Divider, Card } from "@mui/material";
+import Grid from '@mui/material/Grid2/Grid2';
 import CargarRecibo from "../../Servicios/Recibos/CargarUnRecibo";
-import ListadoParaCargar from "../../Servicios/Recibos/CargarVariosRecibos";
+import ListadoParaCargar from "../../Servicios/Recibos/Componentes/ListadoParaCargar";
 import Alerta from "../../Servicios/Alerta/Alerta";
 
 
@@ -13,16 +14,16 @@ export default function CargarRecibos() {
             </Typography>
             <Grid container spacing={2}>
                 {/* Izquierda */}
-                <Grid item xs={12} md={7}>
+                <Grid item size={{ xs: 12, md: 8 }} >
                     <ListadoParaCargar />
                 </Grid>
                 {/* Separador vertical */}
-                <Grid item xs={12} md={1}>
+                <Grid item size={{ xs: 12, md: 0 }}>
                     <Divider orientation="vertical" />
                 </Grid>
                 {/* Derecha */}
-                <Grid item xs={12} md={4}>
-                    <Card sx={{p:1}}>
+                <Grid item size={{ xs: 12, md: 3 }}>
+                    <Card sx={{p:1, width:'max-content'}}>
                         <CargarRecibo />
                     </Card>
                 </Grid>

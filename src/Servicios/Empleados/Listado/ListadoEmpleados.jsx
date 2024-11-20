@@ -1,7 +1,7 @@
 import { React, useEffect, useState } from 'react'
 import { useSelector, useDispatch } from "react-redux"
 import { Box, Typography, Skeleton } from '@mui/material'
-import { DataGrid, esES } from '@mui/x-data-grid'
+import { DataGrid } from '@mui/x-data-grid'
 import { fetchSectores } from '../../../Redux/Features/Sectores/sectoresSlice'
 import { sector, encargado } from './utils'
 import LoadingPage from '../../../Componentes/Containers/Loading'
@@ -68,14 +68,14 @@ export default function ListadoEmpleados() {
         col5: supervisores && encargado(supervisores, e, empleados) /*'encargado'*/
       }
   })
-    // console.log(rows, 'rows');
+    console.log(rows, 'rows');
 
   return (
     <div>
       <Box>
         <LoadingPage loading={loadingEmpleados} />
         <DataGrid
-          localeText={esES.components.MuiDataGrid.defaultProps.localeText}
+          // localeText={esES.components.MuiDataGrid.defaultProps.localeText}          
           rows={rows}
           columns={columns}
           columnVisibilityModel={{ id: false }}

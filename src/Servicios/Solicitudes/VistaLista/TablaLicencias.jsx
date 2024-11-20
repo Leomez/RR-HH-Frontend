@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react"
-import { DataGrid, esES } from "@mui/x-data-grid"
-import { Button, Skeleton } from "@mui/material"
+import { DataGrid } from "@mui/x-data-grid"
+import { esES } from "@mui/x-data-grid/locales"
+import { Button, Dialog, Skeleton, Typography, Card } from "@mui/material"
 import { isNumeric } from "../../../Utils/randomColors"
 import styles from "./Tabla.module.css"
 
@@ -28,7 +29,6 @@ function TablaLicencias({ onAction, solicitudes, loading, error }) {
     const [rows, setRows] = useState([])
     const [refresh, setRefresh] = useState(false)
 
-
     useEffect(() => {
         setRows(crearFilas(solicitudes))
     }, [solicitudes])
@@ -52,7 +52,7 @@ function TablaLicencias({ onAction, solicitudes, loading, error }) {
         { field: 'desde', headerName: 'Desde', width: 100 },
         { field: 'hasta', headerName: 'Hasta', width: 100 },
         {
-            field: 'acciones', headerName: 'Acciones', width: 200, renderCell: (params) => (
+            field: 'acciones', headerName: 'Acciones', width: '200', renderCell: (params) => (
                 <>
                     <Button onClick={() => onAction(params.row.id, 'Aprobado')} sx={{ margin: '0 0.5rem', fontSize: '0.5rem' }} variant='outlined' color="primary">Aprobar</Button>
                     <Button onClick={() => onAction(params.row.id, 'Rechazado')} sx={{ margin: '0 0.5rem', fontSize: '0.5rem' }} variant='outlined' color="error">Rechazar</Button>
@@ -62,24 +62,31 @@ function TablaLicencias({ onAction, solicitudes, loading, error }) {
     ]
 
     // const rows = crearFilas(solicitudes)
+    console.log(DataGrid);
 
     return (
-        <DataGrid
-            autoHeight
-            loading={loading}
-            localeText={esES.components.MuiDataGrid.defaultProps.localeText}
-            rows={rows}
-            columns={columns}
-            pageSize={5}
-            rowsPerPageOptions={[5]}
-            columnVisibilityModel={{ id: false }}
-            classes={{
-                columnHeaders: styles.header, // Aplica la clase CSS al encabezado                           
-              }}
-            getRowClassName={(params) =>
-                params.indexRelativeToCurrentPage % 2 === 0 ? styles.evenRow : styles.oddRow
-            } 
-        />
+        <>
+            <DataGrid
+                loading={loading}
+                localeText={esES.components.MuiDataGrid.defaultProps.localeText}
+                rows={rows}
+                sx={{
+                    '& .MuiDataGrid-filler': {                       
+                        background: '#1976d2'
+                    }
+                }}
+                columns={columns}
+                pageSize={5}
+                rowsPerPageOptions={[5]}
+                columnVisibilityModel={{ id: false }}
+                classes={{
+                    columnHeader: styles.columnHeaders, // Aplica la clase CSS al encabezado                                        
+                }}
+                getRowClassName={(params) =>
+                    params.indexRelativeToCurrentPage % 2 === 0 ? styles.evenRow : styles.oddRow
+                }
+            />
+        </>
     )
 }
 

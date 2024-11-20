@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import { Dialog, DialogTitle, DialogContent, Box, Divider, Grid } from '@mui/material';
+import { Dialog, DialogTitle, DialogContent, Box, Divider } from '@mui/material';
+import Grid from '@mui/material/Grid2';
 import { useDispatch, useSelector } from 'react-redux';
 import dayjs from 'dayjs';
 import CalendarioGrande from './CalendarioGrande';
@@ -8,10 +9,12 @@ import Listado from './Listado';
 import FiltroEstados from './FiltroEstados';
 import { generateTipoColors, isNumeric } from '../../../Utils/randomColors';
 
+
 function Calendario() {
     const [openError, setOpenError] = useState(false);
     const [listado, setListado] = useState([]);
     const [estados, setEstados] = useState([]);
+    const [tiposSeleccionados, setTiposSeleccionados] = useState([])
     const [estadosSeleccionados, setEstadosSeleccionados] = useState([]);
 
     const dispatch = useDispatch();
@@ -52,6 +55,7 @@ function Calendario() {
             const evento = {
                 id: solicitud.id,
                 title: solicitud.empleado,
+                type: solicitud.nombre_tipo,
                 start: dayjs(solicitud.fecha_desde || solicitud.fecha_permiso, 'DD/MM/YYYY').startOf('day').toDate(),
                 end: dayjs(solicitud.fecha_hasta || solicitud.fecha_permiso, 'DD/MM/YYYY').endOf('day').toDate(),
                 estado: estado,
@@ -61,48 +65,61 @@ function Calendario() {
             setEstados(prev => {
                 const set = new Set(prev);
                 set.add(estado);
+                console.log(set);
                 return [...set];
             });
             return evento;
         });
     }, [todasSolicitudes, error, tipoColorMap]);
 
+    // console.log(tiposSeleccionados);
     const eventosFiltrados = useMemo(() => {
-        if (estadosSeleccionados.length === 0) {
-            return eventos;
+        let filteredEventos = eventos;
+
+        if (tiposSeleccionados.length > 0) {
+            console.log(tiposSeleccionados);
+            console.log(filteredEventos);
+            filteredEventos = filteredEventos.filter(evento => tiposSeleccionados.includes(isNumeric(evento.type) ? 'Vacaciones' : evento.type));
         }
-        return eventos.filter(evento => estadosSeleccionados.includes(evento.estado));
-    }, [estadosSeleccionados, eventos]);
+
+        if (estadosSeleccionados.length > 0) {
+            filteredEventos = filteredEventos.filter(evento => estadosSeleccionados.includes(evento.estado));
+        }
+
+        return filteredEventos;
+    }, [tiposSeleccionados, estadosSeleccionados, eventos]);
     // console.log(estadosSeleccionados && estadosSeleccionados);
-    // console.log(eventosFiltrados);
+
     return (
-        <Box id="calendario" sx={{ flexGrow: 1, p: 1, flexDirection: 'row', display: 'flex', alignItems: 'center', justifyContent: 'space-around' }}>
-            <Dialog
-                open={openError}
-                onClose={() => setOpenError(false)}
-                aria-labelledby="alert-dialog-title"
-                aria-describedby="alert-dialog-description"
-            >
-                <DialogTitle id="alert-dialog-title">Error</DialogTitle>
-                <DialogContent id="alert-dialog-description">
-                    {error && error.message}
-                </DialogContent>
-            </Dialog>
-            <Grid container spacing={2}>
-                <Grid sx={{ justifyContent: 'center' }} size={3} item >
-                    <Listado listado={listado} />
-                    <br />
-                    <FiltroEstados
-                        estados={estados}
-                        estadosSeleccionados={estadosSeleccionados}
-                        onChange={setEstadosSeleccionados}
-                    />
+        <Box display={'flex'}>
+            <Box id="calendario" sx={{ flexGrow: 1, p: 1, flexDirection: 'row', display: 'flex', justifyContent: 'flex-start' }}>
+                <Dialog
+                    open={openError}
+                    onClose={() => setOpenError(false)}
+                    aria-labelledby="alert-dialog-title"
+                    aria-describedby="alert-dialog-description"
+                >
+                    <DialogTitle id="alert-dialog-title">Error</DialogTitle>
+                    <DialogContent id="alert-dialog-description">
+                        {error && error.message}
+                    </DialogContent>
+                </Dialog>
+                <Grid container spacing={2}>
+                    <Grid item xs={3} >
+                        <Listado listado={listado} tiposSeleccionados={tiposSeleccionados} setTiposSeleccionados={setTiposSeleccionados} />
+                        <br />
+                        <FiltroEstados
+                            estados={estados}
+                            estadosSeleccionados={estadosSeleccionados}
+                            onChange={setEstadosSeleccionados}
+                        />
+                    </Grid>
+                    <Divider sx={{ margin: 1 }} orientation="vertical" flexItem />
+                    <Grid item xs={9}>
+                        <CalendarioGrande eventos={eventosFiltrados} />
+                    </Grid>
                 </Grid>
-                <Divider sx={{ margin: 1 }} orientation="vertical" flexItem />
-                <Grid item size={9}>
-                    <CalendarioGrande eventos={eventosFiltrados} />
-                </Grid>
-            </Grid>
+            </Box>
         </Box>
 
     );
@@ -112,14 +129,3 @@ export default Calendario;
 
 
 
-// sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-around' }}
-
-{/* <Box sx={{
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'flex-start',
-                justifyContent: 'flex-start',
-                marginBottom: 'auto',
-                position: 'absolute',
-                left: '0px',
-            }}> */}

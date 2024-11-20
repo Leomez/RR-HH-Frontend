@@ -11,7 +11,7 @@ export const sector = (sectores, id) => {
 export const encargado = (supervisores, empleado, empleados) => {
   // Buscar el ID del supervisor correspondiente al sector del empleado
   const supervisor = supervisores.find(sup => sup.SectorId === empleado.sector_id);
-  console.log(supervisor)  
+  // console.log(supervisor)  
 
   if (!supervisor) {
     return 'encargado no encontrado';
@@ -27,6 +27,7 @@ export const encargado = (supervisores, empleado, empleados) => {
   }
   
   const nombre = `${enc.nombre_empleado} ${enc.apellido_empleado}`;
+  console.log(nombre);
   return nombre;
 };
 

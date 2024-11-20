@@ -11,7 +11,7 @@ import {
   MenuItem,
 } from "@mui/material";
 import DeleteForeverTwoToneIcon from "@mui/icons-material/DeleteForeverTwoTone";
-import { mesesDelAnio } from "../../Utils/meses";
+import { mesesDelAnio } from "./utils/meses";
 import { useDispatch } from "react-redux";
 import { cargarRecibo } from "../../Redux/Features/Recibos/recibosDeSueldoSlice";
 import { showAlert } from "../../Redux/Features/Alerta/alertaSlice";
@@ -94,7 +94,7 @@ export default function CargarRecibo() {
   };
 
   return (
-    <Box>
+    <Box >
       <Typography variant="caption">
         Cargar recibo a un solo empleado
       </Typography>

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react"
-import { DataGrid, esES } from "@mui/x-data-grid"
+import { DataGrid } from "@mui/x-data-grid"
+import { esES } from "@mui/x-data-grid/locales"
 import { Button, Skeleton } from "@mui/material"
 import { isNumeric } from "../../../Utils/randomColors"
 import styles from "./Tabla.module.css"
@@ -55,8 +56,7 @@ function TablaPermisos({ onAction, solicitudes, loading, error }) {
 
     
     return (
-        <DataGrid
-            autoHeight
+        <DataGrid            
             loading={loading}
             localeText={esES.components.MuiDataGrid.defaultProps.localeText}
             rows={rows}
@@ -64,8 +64,13 @@ function TablaPermisos({ onAction, solicitudes, loading, error }) {
             pageSize={5}
             rowsPerPageOptions={[5]}
             columnVisibilityModel={{ id: false }}
+            sx={{
+                '& .MuiDataGrid-filler': {                       
+                    background: '#1976d2'
+                }
+            }}
             classes={{
-                columnHeaders: styles.header, // Aplica la clase CSS al encabezado                           
+                columnHeader: styles.columnHeaders, // Aplica la clase CSS al encabezado                           
               }}
             getRowClassName={(params) =>
                 params.indexRelativeToCurrentPage % 2 === 0 ? styles.evenRow : styles.oddRow

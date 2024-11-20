@@ -12,7 +12,8 @@ export const RutasAdmin = () => {
             <Route path='/*' element={<RutasComunes />} />
             <Route path='empleados' element={<Empleados />} />
             <Route path='sectores' element={<Sectores />} />
-            <Route path='cargarRecibos' element={<CargarRecibos />}/> 
+            {/* desbloquear cuando sea necesario... */}
+            {/* <Route path='cargarRecibos' element={<CargarRecibos />}/>  */}
             <Route path='solicitudes' element={<Solicitudes />} />
             <Route path='*' element={<Navigate to='/' replace />} />
         </Routes>

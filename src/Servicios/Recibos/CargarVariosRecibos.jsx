@@ -2,18 +2,18 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Box, Typography, Button, Select, MenuItem } from "@mui/material";
 import { fetchEmpleados } from "../../Redux/Features/Empleado/empleadoSlice";
-import { mesesDelAnio } from "../../Utils/meses";
+import { mesesDelAnio } from "./utils/meses";
 import { cargarRecibos } from "../../Redux/Features/Recibos/recibosDeSueldoSlice";
 import { showAlert } from "../../Redux/Features/Alerta/alertaSlice";
 import { Error } from "../../Componentes/Error";
 import RecibosDataGrid from "./RecibosDataGrid";
+import Hooks from "./customHooks";
+import setAllPeriodos from "./utils/setearTodosLosMeses";
+
 
 export default function ListadoParaCargar() {
   const dispatch = useDispatch();
-  useEffect(() => {
-    //fetch de empleados desde el back al cargar la pagina
-    dispatch(fetchEmpleados());
-  }, [dispatch]);
+  
   const [datos, setDatos] = useState([]);
   const [selectedPeriodos, setSelectedPeriodos] = useState({}); // Estado para almacenar los periodos seleccionados
   const [selectedFiles, setSelectedFiles] = useState({});
@@ -21,34 +21,27 @@ export default function ListadoParaCargar() {
   const userToken =useSelector((state) => state.user.token)
   const empleados = useSelector((state) => state.empleado.empleados); // Estado global para almacenar los empleados
   const respuesta = useSelector((state) => state.recibos.reciboCargado);
+
   const error = empleados.error ? empleados.error : null  
   if (error) {
     return <Error error={error}/>
   }
 
   useEffect(() => {
-    // console.log(respuesta);
-    if (respuesta) {
-      dispatch(
-        showAlert({
-          type: respuesta.success ? "success" : "error",
-          message: respuesta.message,
-        })
-      );
-      // Restablecer la respuesta para evitar mostrarla nuevamente
-      dispatch(cargarRecibos(null));
-      // Restablecer los datos y el formulario
-    }
-  }, [respuesta, dispatch]);
+    //fetch de empleados desde el back al cargar la pagina
+    dispatch(fetchEmpleados());
+  }, [dispatch]);
+  Hooks.useAlert(respuesta, cargarRecibos);  
 
   //funcion para todos los empleados con el mismo periodo
-  const setAllPeriodos = (mes) => {
-    const updatedPeriodos = {};
-    empleados.forEach((empleado) => {
-      updatedPeriodos[empleado.id] = mes;
-    });
-    setSelectedPeriodos(updatedPeriodos);
-  };
+  
+  // const setAllPeriodos = (mes) => {
+  //   const updatedPeriodos = {};
+  //   empleados.forEach((empleado) => {
+  //     updatedPeriodos[empleado.id] = mes;
+  //   });
+  //   setSelectedPeriodos(updatedPeriodos);
+  // };  
 
   function handleLimpiarSeleccion(empleadoId) {
     const inputFile = document.getElementById(`fileInput-${empleadoId}`);
@@ -145,7 +138,7 @@ export default function ListadoParaCargar() {
       <Select
         value="vaciar"
         variant="filled"
-        onChange={(e) => setAllPeriodos(e.target.value)}
+        onChange={(e) => setAllPeriodos(e.target.value, empleados, setSelectedPeriodos)}
         sx={{ marginBottom: "10px", width: 250 }}
       >
         <MenuItem value="">Vaciar todos los períodos</MenuItem>
@@ -186,3 +179,19 @@ export default function ListadoParaCargar() {
     </Box>
   );
 }
+
+
+// useEffect(() => {
+  //   // console.log(respuesta);
+  //   if (respuesta) {
+  //     dispatch(
+  //       showAlert({
+  //         type: respuesta.success ? "success" : "error",
+  //         message: respuesta.message,
+  //       })
+  //     );
+  //     // Restablecer la respuesta para evitar mostrarla nuevamente
+  //     dispatch(cargarRecibos(null));
+  //     // Restablecer los datos y el formulario
+  //   }
+  // }, [respuesta, dispatch]);
