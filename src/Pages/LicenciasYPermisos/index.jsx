@@ -7,6 +7,7 @@ import { Box, Button, Divider, Drawer, Chip, Stack } from "@mui/material";
 import CalendarioChico from "../../Servicios/Licencias/CalendarioChico";
 import CalendarioGrande from "../../Servicios/Licencias/CalendarioGrande";
 import Formulario from "../../Servicios/Licencias/Formulario";
+import FormularioContainer from "../../Servicios/Licencias/Formulario/FormularioContainer";
 import dayjs from "dayjs";
 
 
@@ -83,7 +84,8 @@ export function LicenciasYPermisos() {
                 }}>
                     <Button onClick={() => setOpen(true)} sx={{ margin: '1rem' }} variant='contained'> Solicitar </Button>
                     <Drawer anchor='right' open={open} onClose={() => setOpen(false)}>
-                        <Formulario close={close} reload={handlerRefresh} />
+                        {/* <Formulario close={close} reload={handlerRefresh} /> */}
+                        <FormularioContainer close={close} reload={handlerRefresh} />
                     </Drawer>
                     <Divider />
                     <Box id="calendarioChico" sx={{ padding: 1, width: '100%'}}>
