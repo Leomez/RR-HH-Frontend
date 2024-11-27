@@ -199,6 +199,10 @@ const Formulario = ({ close, reload }) => {
     setOpen(true);
   };
 
+
+
+  // renderizado
+
   return (
     <>
       <Stack sx={{ height: '100%', padding: '1rem', margin: '5rem 1rem' }} spacing={1}>

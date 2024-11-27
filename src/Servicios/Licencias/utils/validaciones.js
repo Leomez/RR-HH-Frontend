@@ -36,6 +36,9 @@ export const validateForm = (formData) => {
     if (!formData.fechaHasta) {
       errors.fechaHasta = 'Fecha de finalización es requerida';
     }
+    if (!formData.diasSolicitados){
+      errors.diasSolicitados = 'No se pudo establecer la cantidad de días solicitados';
+    }
   }
 
   if (formData.tipo === 'Permiso') {

@@ -140,14 +140,14 @@ export const createSolicitud = createAsyncThunk(
   "solicitudes/createSolicitud",
   async (solicitud) => {
     try {
-      const response = await axios({
-        method: 'POST',
-        url: `${URL_API}/licencias/crearSolicitud`,
-        data: solicitud,
-        headers: { "Authorization": "Bearer " + store.getState().user.token }
-      })
-      // console.log(response.data);
-      return response.data;
+      // const response = await axios({
+      //   method: 'POST',
+      //   url: `${URL_API}/licencias/crearSolicitud`,
+      //   data: solicitud,
+      //   headers: { "Authorization": "Bearer " + store.getState().user.token }
+      // })
+      console.log(solicitud);
+      // return response.data;
     } catch (error) {
       return error
     }
