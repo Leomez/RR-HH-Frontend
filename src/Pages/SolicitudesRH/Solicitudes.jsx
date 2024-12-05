@@ -1,16 +1,16 @@
+// import SettingsIcon from '@mui/icons-material/Settings';
+// import ConfigurarTipoSolicitudes from '../../Servicios/Solicitudes/configurarSolicitudes/ConfigurarTipoSolicitudes';
 import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { Typography, Divider } from '@mui/joy';
 import { Box, Button, Drawer, Paper, Tabs, Tab } from '@mui/material';
 import { TabPanel } from '../SolicitudesAlSupervisor/TabPanel';
-import SettingsIcon from '@mui/icons-material/Settings';
-import ConfigurarTipoSolicitudes from '../../Servicios/Solicitudes/configurarSolicitudes/ConfigurarTipoSolicitudes';
 import ListadoDeSolicitudes from '../../Servicios/Solicitudes/VistaLista/ListadoDeSolicitudes';
 import Calendario from '../../Servicios/Solicitudes/VistaCalendario/Index';
 import { getSolicitudesElevadas } from '../../Redux/Features/Solicitudes/solicitudesSlice';
 
 function Solicitudes() {
-  const [open, setOpen] = useState(false);
+  // const [open, setOpen] = useState(false);
   const [index, setIndex] = useState(0);
   const dispatch = useDispatch();
 
@@ -23,11 +23,7 @@ function Solicitudes() {
     if (savedIndex !== null) {
       setIndex(parseInt(savedIndex, 10));
     }
-  }, [dispatch]);
-
-  const toggleDrawer = () => {
-    setOpen(!open);
-  };
+  }, [dispatch]); 
 
   const handleChange = (event, newValue) => {
     setIndex(newValue);

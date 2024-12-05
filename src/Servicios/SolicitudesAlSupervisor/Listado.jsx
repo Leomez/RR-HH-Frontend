@@ -42,7 +42,8 @@ const ListadoDeSolicitudes = ({solicitudes}) => {
 
     const licencias = sol.filter((solicitud) => solicitud.tipo === "Licencia");
     const vacaciones = sol.filter((solicitud) => solicitud.tipo === "Vacaciones");
-    const permisos = sol.filter((solicitud) => solicitud.tipo === "Permiso");
+    const permisos = sol.filter((solicitud) => solicitud.tipo === "Permiso");    
+    // console.log(vacaciones);
 
     return (
         <>

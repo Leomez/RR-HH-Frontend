@@ -33,7 +33,7 @@ const solicitudesSlice = createSlice({
       })
       .addCase(crearTipoSolicitud.rejected, (state, action) => {
         state.loading = false;
-        console.log(action.payload)
+        // console.log(action.payload)
         console.log("Error al crear el tipo de solicitud");
         state.respuesta = 'Error al crear el tipo de solicitud';
         state.error = action.payload;
@@ -140,14 +140,13 @@ export const createSolicitud = createAsyncThunk(
   "solicitudes/createSolicitud",
   async (solicitud) => {
     try {
-      // const response = await axios({
-      //   method: 'POST',
-      //   url: `${URL_API}/licencias/crearSolicitud`,
-      //   data: solicitud,
-      //   headers: { "Authorization": "Bearer " + store.getState().user.token }
-      // })
-      console.log(solicitud);
-      // return response.data;
+      const response = await axios({
+        method: 'POST',
+        url: `${URL_API}/licencias/crearSolicitud`,
+        data: solicitud,
+        headers: { "Authorization": "Bearer " + store.getState().user.token }
+      })      
+      return response.data;
     } catch (error) {
       return error
     }
@@ -179,14 +178,14 @@ export const getSolicitudes = createAsyncThunk(
   async (id, { rejectWithValue }) => {
     const token = store.getState().user.token;
     try {
-      console.log('recargando solicitudes...');
+      // console.log('recargando solicitudes...');
       const response = await axios({
         method: 'GET',
         url: `${URL_API}/licencias/getSolicitudAlSuper`,
         params: { id },
         headers: { "Authorization": `Bearer ${token}` }
       })
-      console.log('Solicitudes actualizadas');
+      // console.log('Solicitudes actualizadas');
       return response.data.data;
     } catch (error) {
       console.error('Error al traer las solicitudes:', error.response?.data || error.message);
@@ -205,7 +204,7 @@ export const getSolicitudesElevadas = createAsyncThunk(
         url: `${URL_API}/licencias/getSolicitudElevada`,
         headers: { "Authorization": `Bearer ${token}` }
       })
-      console.log(response.data.data);
+      // console.log(response.data.data);
       return response.data.data
     } catch (error) {
       console.error('Error al traer las solicitudes:', error.response?.data || error.message)
@@ -260,16 +259,16 @@ export const crearTipoSolicitud = createAsyncThunk(
 export const elevarSolicitud = createAsyncThunk(
   "solicitudes/elevarSolicitud",
   async ({ solicitudId, estado }) => {
-    console.log(solicitudId, estado);
+    // console.log(solicitudId, estado);
     try {
-      console.log('enviando solicitud');
+      // console.log('enviando solicitud');
       const response = await axios({
         method: 'PUT',
         url: `${URL_API}/licencias/responderSolicitud/${solicitudId}`,
         data: { estado: estado },
         headers: { "Authorization": "Bearer " + store.getState().user.token },
       })
-      console.log('Solicitud enviada:  ',response.data);
+      // console.log('Solicitud enviada:  ',response.data);
       return response.data;
     } catch (error) {
       console.log(error);
@@ -288,7 +287,7 @@ export const autorizarSolicitud = createAsyncThunk(
         data: { estado: estado },
         headers: { "Authorization": "Bearer " + store.getState().user.token },
       })
-      console.log(response.data);
+      // console.log(response.data);
       return response.data;
     } catch (error) {
       console.log(error);

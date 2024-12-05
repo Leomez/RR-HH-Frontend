@@ -6,7 +6,6 @@ import { Typography } from "@mui/joy";
 import { Box, Button, Divider, Drawer, Chip, Stack } from "@mui/material";
 import CalendarioChico from "../../Servicios/Licencias/CalendarioChico";
 import CalendarioGrande from "../../Servicios/Licencias/CalendarioGrande";
-import Formulario from "../../Servicios/Licencias/Formulario";
 import FormularioContainer from "../../Servicios/Licencias/Formulario/FormularioContainer";
 import dayjs from "dayjs";
 

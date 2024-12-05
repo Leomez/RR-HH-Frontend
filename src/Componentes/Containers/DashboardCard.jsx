@@ -32,7 +32,7 @@ const DashboardCard = ({
                     p: "10px", 
                     height: spand ? 'auto' : '2.5rem', 
                     maxHeight: '20rem', 
-                    overflow: 'hidden', 
+                    overflowY: 'scroll', 
                     transition: 'all 0.3s ease-in-out' }}>
                     {title ? (
                         <Stack

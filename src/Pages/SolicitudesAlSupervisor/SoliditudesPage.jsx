@@ -16,16 +16,27 @@ export default function SoliditudesPage() {
     const empleado_id = useSelector((state) => state.empleado.empleadoActual.id);
     const {solicitudes, loading, error} = useSelector((state) => state.solicitudes);   
 
-    console.log(sol);
+    // console.log(sol);
 
     useEffect(() => {
         dispatch(getSolicitudes(empleado_id))
         // setSol(todasSolicitudes)
-    }, [dispatch])   
+        const savedIndex = localStorage.getItem('tabIndex');
+        if (savedIndex !== null) {
+            setIndex(parseInt(savedIndex, 10));
+        }
+    }, [dispatch])
+
     useEffect(() => {
         setSol(solicitudes)
     },[solicitudes])
     
+    const handleChange = (event, newValue) => {
+        setIndex(newValue);
+        // Guardar el índice del panel en localStorage
+        localStorage.setItem('tabIndex', newValue);
+    };
+
 
     return (
         <div>
@@ -33,7 +44,7 @@ export default function SoliditudesPage() {
             <Divider />
             <Paper elevation={1} sx={{ p: 2, mt: 2 }}>
                 <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-                    <Tabs value={index} onChange={(event, newValue) => setIndex(newValue)}>
+                    <Tabs value={index} onChange={handleChange}>
                         <Tab label="SOLICITUDES" sx={{ ":focus": { outline: 'none' } }} />
                         <Tab label="CALENDARIO" sx={{ ":focus": { outline: 'none' } }} />
                     </Tabs>
