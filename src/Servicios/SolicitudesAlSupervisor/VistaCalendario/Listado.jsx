@@ -1,12 +1,24 @@
-import React from 'react'
-import { List, ListItem, ListItemText, Typography, Box, Card, CardContent } from '@mui/material'
+import React, { useState } from 'react'
+import { List, ListItem, ListItemText, Typography, Box, Card, CardContent, Button } from '@mui/material'
 import styles from './CalendarioGrande.module.css'
 
-function Listado({ listado }) {
-    // console.log(listado);
+function Listado(props) {
+    const { listado, tiposSeleccionados, setTiposSeleccionados } = props;
+    const [selectedButtons, setSelectedButtons] = useState({});
+     // console.log(listado);
     const uniqueArray = Array.from(
         listado.reduce((acc, item) => acc.set(item.tipo, item), new Map()).values()
     );
+
+    const handleButtonClick = (tipo) => {        
+        setSelectedButtons((prevSelected) => {
+            const newSelected = { ...prevSelected, [tipo]: !prevSelected[tipo] };
+            const newTiposSeleccionados = Object.keys(newSelected).filter(key => newSelected[key]);
+            setTiposSeleccionados(newTiposSeleccionados);
+            return newSelected;
+        });
+    };
+
     return (
         <Card className={styles.listadoCard}>
             <CardContent className={styles.listadoCardContent}>
@@ -18,16 +30,19 @@ function Listado({ listado }) {
                 <List>
                     {uniqueArray.map(t => {
                         return <ListItem>
-                            <Box
+                            <Button
+                                variant='contained'
+                                onClick={() => handleButtonClick(t.tipo)}
                                 key={t.tipo}
-                                className={styles.listadoListItem}
+                                className={`${selectedButtons[t.tipo] ? styles.listadoListItemSelected : ''} ${styles.listadoListItem}`}
                                 sx={{                                    
-                                    bgcolor: t.color,                                                                       
+                                    bgcolor: t.color,   
+                                    boxShadow: selectedButtons[t.tipo] ? 0 : 10,                                                                    
                                 }}>
                                 <Typography>
                                     {t.tipo}
                                 </Typography>
-                            </Box>
+                            </Button>
                         </ListItem>
                     })}
                 </List>

@@ -65,7 +65,7 @@ function Calendario() {
             setEstados(prev => {
                 const set = new Set(prev);
                 set.add(estado);
-                console.log(set);
+                // console.log(set);
                 return [...set];
             });
             return evento;
