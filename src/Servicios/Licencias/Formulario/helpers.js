@@ -1,6 +1,7 @@
 import axios from 'axios';
 import dayjs from 'dayjs';
 import { loadFeriados } from '../utils/loadFeriados';
+// import { UseSelector } from 'react-redux/es/hooks/useSelector';
 
 
 /**´´FETCH DE DIAS FERIADOS´´**/
@@ -71,6 +72,13 @@ export const fechaMax = (fechaDesde, diasRestantes, feriados) => {
       diasRestantes--; // Solo reducimos los días restantes si es un día hábil
     }
   }
-  console.log(`Días no hábiles encontrados: ${feriadosYDomingos}`);
+  // console.log(`Días no hábiles encontrados: ${feriadosYDomingos}`);
   return date; // Devolvemos la fecha máxima calculada
 };
+
+/**´´REVISA SI YA HAY SOLICITUDES REALIZADAS PARA ESA FECHA´´**/
+
+export const validarFechas = () => {
+  
+
+}

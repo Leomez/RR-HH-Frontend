@@ -2,6 +2,7 @@ import { createSlice, createAsyncThunk, isAsyncThunkAction } from "@reduxjs/tool
 import store from "../../Store/store";
 import axios from "axios";
 import { URL_API } from "../constantes";
+import { showError } from "../Error/errorSlice";
 
 const initialState = {
   solicitudes: [],
@@ -129,8 +130,11 @@ export const getTipoSolicitudes = createAsyncThunk(
       });
       return response.data.data;
     } catch (error) {
-      console.error('Error al traer los tipos de solicitudes:', error.response?.data || error.message);
-      return rejectWithValue(error.response?.data || error.message);
+      const { data } = error.response;
+      store.dispatch(showError(data.errorMessage || data.message || "Error desconocido al traer los tipos de solicitudes"))
+      throw new Error(error.response?.data?.message || "Error desconocido al traer los tipos de solicitudes")
+      // console.error('Error al traer los tipos de solicitudes:', error.response?.data || error.message);
+      // return rejectWithValue(error.response?.data || error.message);
     }
   }
 );
@@ -148,7 +152,9 @@ export const createSolicitud = createAsyncThunk(
       })      
       return response.data;
     } catch (error) {
-      return error
+      const { data } = error.response;
+      store.dispatch(showError(data.errorMessage || data.message || "Error desconocido al crear la solicitud"))
+      throw new Error(error.response?.data?.message || "Error desconocido al crear la solicitud")      
     }
   }
 );
@@ -166,8 +172,11 @@ export const getTodasSolicetudes = createAsyncThunk(
       })
       return respuesta.data.data;
     } catch (error) {
-      console.error('Error al traer las solicitudes: ', error.response?.data || error.message)
-      return error.response?.data || error.message;
+      const { data } = error.response;
+      store.dispatch(showError(data.errorMessage || data.message || "Error desconocido al traer las solicitudes"))
+      throw new Error(error.response?.data?.message || "Error desconocido al traer las solicitudes")
+      // console.error('Error al traer las solicitudes: ', error.response?.data || error.message)
+      // return error.response?.data || error.message;
     }
   }
 )
@@ -188,8 +197,12 @@ export const getSolicitudes = createAsyncThunk(
       // console.log('Solicitudes actualizadas');
       return response.data.data;
     } catch (error) {
-      console.error('Error al traer las solicitudes:', error.response?.data || error.message);
-      return rejectWithValue(error.response?.data || error.message);
+      const { data } = error.response
+      store.dispatch(showError(data.errorMessage || data.message || "Error desconocido al traer las solicitudes"))
+      throw new Error(error.response?.data?.message || "Error desconocido al traer las solicitudes")
+
+      // console.error('Error al traer las solicitudes:', error.response?.data || error.message);
+      // return rejectWithValue(error.response?.data || error.message);
     }
   }
 )
@@ -207,8 +220,12 @@ export const getSolicitudesElevadas = createAsyncThunk(
       // console.log(response.data.data);
       return response.data.data
     } catch (error) {
-      console.error('Error al traer las solicitudes:', error.response?.data || error.message)
-      return rejectWithValue(error.response?.data || error.message);
+      const { data } = error.response;
+      store.dispatch(showError(data.errorMessage || data.message || "Error desconocido al traer las solicitudes"))
+      throw new Error(error.response?.data?.message || "Error desconocido al traer las solicitudes")
+
+      // console.error('Error al traer las solicitudes:', error.response?.data || error.message)
+      // return rejectWithValue(error.response?.data || error.message);
     }
   }
 )
@@ -227,8 +244,12 @@ export const getSolicitudesXEmpleado = createAsyncThunk(
       })
       return response.data.data
     } catch (error) {
-      console.error('Error al traer las solicitudes:', error.response?.data || error.message)
-      return rejectWithValue(error.response?.data || error.message);
+      const { data } = error.response;
+      store.dispatch(showError(data.errorMessage || data.message || "Error desconocido al traer las solicitudes"))
+      throw new Error(error.response?.data?.message || "Error desconocido al traer las solicitudes")
+
+      // console.error('Error al traer las solicitudes:', error.response?.data || error.message)
+      // return rejectWithValue(error.response?.data || error.message);
     }
   }
 )
@@ -250,8 +271,12 @@ export const crearTipoSolicitud = createAsyncThunk(
       // console.log(response.data);
       return response.data;
     } catch (error) {
-      console.log(error);
-      return error
+      const { data } = error.response;
+      store.dispatch(showError(data.errorMessage || data.message || "Error desconocido al crear el tipo de solicitud"))
+      throw new Error(error.response?.data?.message || "Error desconocido al crear el tipo de solicitud")
+
+      // console.log(error);
+      // return error
     }
   }
 );
@@ -271,8 +296,12 @@ export const elevarSolicitud = createAsyncThunk(
       // console.log('Solicitud enviada:  ',response.data);
       return response.data;
     } catch (error) {
-      console.log(error);
-      return error
+      const { data } = error.response;
+      store.dispatch(showError(data.errorMessage || data.message || "Error desconocido al actualizar el estado de la solicitud"))
+      throw new Error(error.response?.data?.message || "Error desconocido al actualizar el estado de la solicitud")
+
+      // console.log(error);
+      // return error
     }
   }
 )
@@ -290,8 +319,12 @@ export const autorizarSolicitud = createAsyncThunk(
       // console.log(response.data);
       return response.data;
     } catch (error) {
-      console.log(error);
-      return error
+      const { data } = error.response;
+      store.dispatch(showError(data.errorMessage || data.message || "Error desconocido al actualizar el estado de la solicitud"))
+      throw new Error(error.response?.data?.message || "Error desconocido al actualizar el estado de la solicitud")
+
+      // console.log(error);
+      // return error
     }
   }
 )

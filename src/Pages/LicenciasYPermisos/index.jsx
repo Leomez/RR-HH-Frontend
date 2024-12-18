@@ -16,6 +16,12 @@ export function LicenciasYPermisos() {
     const [marcador, setMarcador] = useState(dayjs());
     const [open, setOpen] = useState(false);
     const [loading, setLoading] = useState(false);
+    const [slotInfo, setSlotInfo] = useState({ desde: null, hasta: null, tipo: null });
+    // const [desde, setDesde] = useState(null);
+    // const [hasta, setHasta] = useState(null);
+    // const [tipo, setTipo] = useState(null);
+
+
     const dispatch = useDispatch();
     const empleadoId = useSelector(state => state.empleado.empleadoActual.id);
 
@@ -26,7 +32,7 @@ export function LicenciasYPermisos() {
     }, [dispatch, empleadoId]);  // Aseguro de que esto solo se ejecute cuando empleadoId cambie
 
     const ListaDeEventos = useSelector((state) => state.solicitudes.solicitudesXEmpleado);
-    
+
 
     // ListaDeEventos && console.log(ListaDeEventos);
 
@@ -55,39 +61,60 @@ export function LicenciasYPermisos() {
     }, []);
 
     const close = () => {
+        setSlotInfo({ desde: null, hasta: null, tipo: null });
+        // console.log(slotInfo);
         setOpen(false);
     }
-    const handlerRefresh = () => {        
-        window.location.reload();        
+    const handlerRefresh = () => {
+        window.location.reload();
     }
-    
-    console.log(ListaDeEventos);
-    // console.log(solicitudesXEmpleado);
+
+    const handleOnClickSlot = (info) => {
+        // console.log(info);
+        setSlotInfo({
+            desde: dayjs(info.start).format('DD-MM-YYYY'),
+            hasta: dayjs(info.end).format('DD-MM-YYYY') ,
+            tipo: info.action === 'select' ? 'Licencia' : null
+        })
+        // console.log(slotInfo);
+        setOpen(true);
+    }
+
+    // console.log(ListaDeEventos);
+
     return (
         <div>
             <Typography px={2} fontWeight={400} lineHeight={2} level="h4">LICENCIAS Y PERMISOS</Typography>
             <Divider />
-            <Box 
+            <Box
                 display={'flex'}
                 flexDirection={'row'}
-                sx={{'@media (max-width: 600px)': { // Punto de corte para pantallas pequeñas
-                    flexDirection: 'column-reverse',                
-                    alignItems: 'center',
-                }}}>
+                sx={{
+                    '@media (max-width: 600px)': { // Punto de corte para pantallas pequeñas
+                        flexDirection: 'column-reverse',
+                        alignItems: 'center',
+                    }
+                }}>
                 <Box sx={{
                     display: 'flex',
                     flexDirection: 'column',
                     padding: 1,
                     justifyContent: 'center',
-                    alignSelf: 'baseline',                    
+                    alignSelf: 'baseline',
                 }}>
                     <Button onClick={() => setOpen(true)} sx={{ margin: '1rem' }} variant='contained'> Solicitar </Button>
                     <Drawer anchor='right' open={open} onClose={() => setOpen(false)}>
                         {/* <Formulario close={close} reload={handlerRefresh} /> */}
-                        <FormularioContainer close={close} reload={handlerRefresh} />
+                        <FormularioContainer
+                            eventosYaSolicitados={ListaDeEventos}
+                            close={close}
+                            reload={handlerRefresh} 
+                            slotInfo={slotInfo}
+                            setSlotInfo={setSlotInfo}
+                        />
                     </Drawer>
                     <Divider />
-                    <Box id="calendarioChico" sx={{ padding: 1, width: '100%'}}>
+                    <Box id="calendarioChico" sx={{ padding: 1, width: '100%' }}>
                         <CalendarioChico
                             marcador={marcador}
                             feriados={feriados}
@@ -107,7 +134,7 @@ export function LicenciasYPermisos() {
                 </Box>
                 <Divider orientation="vertical" flexItem />
                 <Box id="calendarioGrande" sx={{ padding: 1, width: '100%', height: 'auto' }}>
-                    <CalendarioGrande eventos={ListaDeEventos} marcador={marcador} />
+                    <CalendarioGrande onClickSlot={handleOnClickSlot} eventos={ListaDeEventos} marcador={marcador} />
                 </Box>
             </Box>
         </div>

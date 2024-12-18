@@ -1,6 +1,6 @@
 import styles from './App.module.css'
 import { Box } from '@mui/material'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { Layout } from './Componentes/Layout/Layout'
 import { Footer } from './Componentes/Footer/Footer'
 import { AppRouter } from './Routes/AppRouter'
@@ -10,6 +10,9 @@ import { ErrorModal } from './Componentes/ErrorModal'
 
 function App() {
   const dispatch = useDispatch()
+  // const showErrorModal = useSelector(state => state.error)
+  // const errorMessage = useSelector(state => state.error.errorMessage)
+
   try {
     return (
       <>
