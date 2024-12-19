@@ -11,6 +11,7 @@ import supervisorReducer from "../Features/Supervisor/supervisorSlice";
 import errorReducer from "../Features/Error/errorSlice";
 import solicitudesReducer from "../Features/Solicitudes/solicitudesSlice";
 import asistenciaReducer from "../Features/Asistencia/asistenciaSlice";
+import licenciasReducer from "../Features/Licencias/LicenciasSlice";
 
 
 const appReducer =  combineReducers({
@@ -25,7 +26,8 @@ const appReducer =  combineReducers({
     supervisor: supervisorReducer,
     solicitudes: solicitudesReducer,
     error: errorReducer,
-    asistencia: asistenciaReducer
+    asistencia: asistenciaReducer,
+    licencias: licenciasReducer
 });
 
 const rootReducer = (state, action) => {

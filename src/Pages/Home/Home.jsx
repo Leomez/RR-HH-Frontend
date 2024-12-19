@@ -2,7 +2,7 @@ import React from 'react'
 import { Box, Skeleton, Card } from "@mui/material";
 import Grid from "@mui/material/Grid2"
 import s from "./Home.module.css";
-import Notificaciones from '../../Servicios/Mensajes/Notificaciones';
+import Notificaciones from '../../Servicios/Notificaciones/Notificaciones';
 import NotificacionDeMensajes from '../../Servicios/Mensajes/Mensajes';
 import AsistenciaPersonal from '../../Servicios/Asistencia/AsistenciaPersonal';
 import Timer from '../../Servicios/Asistencia/Temporizador';

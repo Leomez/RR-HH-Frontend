@@ -11,7 +11,7 @@ function NotificacionDeMensajes() {
             </Box>
             <Stack sx={{ flexGrow: 1, overflowY: "auto" }}>
                 <Box>
-                    <CustomNoRowsOverlay mensaje="No hay notificaciones" />
+                    <CustomNoRowsOverlay mensaje="Proximamente mansajes acá..." />
                 </Box>
             </Stack>
         </Card>

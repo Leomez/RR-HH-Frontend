@@ -16,7 +16,7 @@ const EventComponent = ({ event }) => {
   )
 }
 
-const CalendarioGrande = ({ marcador, eventos }) => {
+const CalendarioGrande = ({ marcador, eventos, onClickSlot }) => {
   // const { marcador, eventos } = props 
 
   const setEventos = eventos && eventos.map((evento) => {
@@ -63,7 +63,9 @@ const CalendarioGrande = ({ marcador, eventos }) => {
         }}
         culture='es'
         onNavigate={onNavigate}
-        onSelectEvent={event => setSelectedEvent(event)}        
+        onSelectEvent={event => setSelectedEvent(event)}  
+        onSelectSlot={slotInfo => onClickSlot(slotInfo)}
+        selectable={true}      
         components={{
           event: EventComponent
         }}
