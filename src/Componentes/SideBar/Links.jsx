@@ -21,13 +21,13 @@ const rutas = () => {
         icono: <HomeIcon sx={{ color: theme.palette.primary.main }} />,
         ruta: "/",
       },
-      {
-        nombreSeccion: "Mensajes",
-        icono: (
-          <PunchClockTwoToneIcon sx={{ color: theme.palette.primary.main }} />
-        ),
-        ruta: "mensajes",
-      },
+      // {
+      //   nombreSeccion: "Mensajes",
+      //   icono: (
+      //     <PunchClockTwoToneIcon sx={{ color: theme.palette.primary.main }} />
+      //   ),
+      //   ruta: "mensajes",
+      // },
       // {
       //   nombreSeccion: "Mis Recibos",
       //   icono: <RequestPageIcon sx={{ color: theme.palette.primary.main }} />,
@@ -75,13 +75,13 @@ const rutas = () => {
         icono: <EditCalendarIcon sx={{ color: theme.palette.primary.light }} />,
         ruta: "solicitudesAAutorizar",
       },
-      {
-        nombreSeccion: "Asignar tareas",
-        icono: (
-          <PunchClockTwoToneIcon sx={{ color: theme.palette.primary.main }} />
-        ),
-        ruta: "mensajes",
-      },      
+      // {
+      //   nombreSeccion: "Asignar tareas",
+      //   icono: (
+      //     <PunchClockTwoToneIcon sx={{ color: theme.palette.primary.main }} />
+      //   ),
+      //   ruta: "mensajes",
+      // },      
     ],
   };
 };
