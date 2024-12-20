@@ -6,6 +6,7 @@ import { showError } from "../Error/errorSlice";
 
 const initialState = {
     licenciasXEmpleado: [],
+    vacacionesDisponibles: 0,
     loading: false,
     error: null
 }
@@ -25,7 +26,18 @@ const licencasSlice = createSlice({
             .addCase(getLicenciasXEmpleado.rejected, (state, action) => {
                 state.loading = false;
                 state.error = action.payload;
-            });
+            })
+            .addCase(getVacacionesDisponibles.pending, (state, action) => {
+                state.loading = true;
+            })
+            .addCase(getVacacionesDisponibles.fulfilled, (state, action) => {
+                state.loading = false;
+                state.vacacionesDisponibles = action.payload;
+            })
+            .addCase(getVacacionesDisponibles.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.payload;
+            })
     }
 })
 
@@ -46,6 +58,25 @@ export const getLicenciasXEmpleado = createAsyncThunk(
             const { data } = error.response;
             store.dispatch(showError(data.errorMessage || data.message || "Error desconocido al traer las licencias"))
             throw new Error(error.response?.data?.message || "Error desconocido al traer las licencias")
+        }
+    }
+)
+
+export const getVacacionesDisponibles = createAsyncThunk(
+    "licencias/getVacacionesDisponibles",
+    async (id) => {
+        const token = store.getState().user.token;
+        try {
+            const vacaciones = await axios({
+                method: "GET",
+                url: `${URL_API}/licencias/diasVacacionesXEmpleado/${id}`,
+                headers: { "Authorization": `Bearer ${token}` },
+            })
+            return vacaciones.data.data
+        } catch (error) {
+            const { data } = error.response;
+            store.dispatch(showError(data.errorMessage || data.message || "Error desconocido al traer las vacaciones"))
+            throw new Error(error.response?.data?.message || "Error desconocido al traer las vacaciones")
         }
     }
 )
