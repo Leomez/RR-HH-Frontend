@@ -4,7 +4,7 @@ import { Box, Typography, Button, Divider, IconButton } from '@mui/material'
 import s from "./DiasDisponibles.module.css"
 import BeachAccessIcon from '@mui/icons-material/BeachAccess';
 import HealingIcon from '@mui/icons-material/Healing';
-import { getLicenciasXEmpleado } from '../../Redux/Features/Licencias/LicenciasSlice';
+import { getLicenciasXEmpleado, getVacacionesDisponibles } from '../../Redux/Features/Licencias/LicenciasSlice';
 import PopoverLicencias from './PopoverLicencias';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import { quitarGuionBajo } from '../../Utils/QuitarGuionBajo';
@@ -14,6 +14,7 @@ function DiasDisponibles() {
 
   const dispatch = useDispatch();
   const licencias = useSelector(state => state.licencias.licenciasXEmpleado)
+  const vacaciones = useSelector(state => state.licencias.vacacionesDisponibles)
   const userId = useSelector(state => state.user.empleadoId)
   const [anchorEl, setAnchorEl] = useState(null)
   const [licencia, setLicencia] = useState(null)
@@ -23,6 +24,7 @@ function DiasDisponibles() {
   useEffect(() => {
     if (licencias.length === 0) {
       dispatch(getLicenciasXEmpleado(userId));
+      dispatch(getVacacionesDisponibles(userId));
     }
   }, [dispatch, userId, licencias.length]);
 
@@ -30,7 +32,7 @@ function DiasDisponibles() {
     if (licencia) {
       console.log(licencia);
       console.log(licencias);
-      const selectedLicencia = licencias.find(lic => quitarGuionBajo(lic.tipo) === licencia.tipo );
+      const selectedLicencia = licencias.find(lic => quitarGuionBajo(lic.tipo) === licencia.tipo);
       console.log(selectedLicencia);
       setLicenciaInfo({
         tipo: selectedLicencia.tipo,
@@ -46,9 +48,7 @@ function DiasDisponibles() {
     }
   }, [licencia, licencias]);
 
-
-
-
+  console.log(vacaciones);
   const handlerClick = (event) => {
     setAnchorEl(event.currentTarget)
   }
@@ -61,8 +61,6 @@ function DiasDisponibles() {
   const id = open ? 'simple-popover' : undefined
 
 
-
-  const vac = 14
   const Icon = licenciaInfo ? licenciaInfo.icono : HealingIcon
   const color = (dias, color1, color2) => dias > 0 ? color1 : color2
 
@@ -71,12 +69,22 @@ function DiasDisponibles() {
 
       <Box className={s.box}>
         <Box>
-          <Typography variant='subtitle2'>Vacaciones</Typography>
-          <span className={`${s.boxSpan} ${color(vac, s.verde, s.gris)}`}>
+          <Typography
+            variant='subtitle2'>
+            Vacaciones
+          </Typography>
+          <span className={`${s.boxSpan} ${color(vacaciones, s.verde, s.gris)}`}>
             <BeachAccessIcon sx={{ pr: 1 }} />
-            <Typography variant='h4'>{vac}</Typography>
+            <Typography
+              variant='h4'>
+              {vacaciones}
+            </Typography>
           </span>
-          <Typography variant='subtitle1' className={color(vac, s.verde, s.gris)} >DIAS DISPONIBLES</Typography>
+          <Typography
+            variant='subtitle1'
+            className={color(vacaciones, s.verde, s.gris)} >
+            DIAS DISPONIBLES
+          </Typography>
         </Box>
       </Box>
 
@@ -86,16 +94,26 @@ function DiasDisponibles() {
         <PopoverLicencias open={open} handleClose={handleClose} licencias={licenciasArray} setLicencia={setLicencia} />
         <Box>
           <Box display='flex' flexDirection='row'>
-            <IconButton sx={{padding: 0}} aria-describedby={id} variant='' onClick={handlerClick} size='small' >
+            <IconButton sx={{ padding: 0 }} aria-describedby={id} variant='' onClick={handlerClick} size='small' >
               <ArrowDropDownIcon color='primary' />
             </IconButton>
-            <Typography variant='subtitle2'>{quitarGuionBajo(licenciaInfo.tipo)}</Typography>
+            <Typography
+              variant='subtitle2'>
+              {quitarGuionBajo(licenciaInfo.tipo)}
+            </Typography>
           </Box>
           <span className={`${s.boxSpan} ${color(licenciaInfo.dias_pendientes, s.verde, s.gris)}`}>
             <Icon sx={{ pr: 1 }} />
-            <Typography variant='h4'>{licenciaInfo.dias_pendientes}</Typography>
+            <Typography
+              variant='h4'>
+              {licenciaInfo.dias_pendientes}
+            </Typography>
           </span>
-          <Typography className={color(licenciaInfo.dias_pendientes, s.verde, s.gris)} variant='subtitle1'>DIAS DISPONIBLES</Typography>
+          <Typography
+            className={color(licenciaInfo.dias_pendientes, s.verde, s.gris)}
+            variant='subtitle1'>
+            DIAS DISPONIBLES
+          </Typography>
         </Box>
       </Box>
 
