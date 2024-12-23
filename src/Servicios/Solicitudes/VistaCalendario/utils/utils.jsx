@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { styled } from '@mui/material/styles';
 import { Tooltip, Typography, tooltipClasses } from '@mui/material';
-import styles from '../CalendarioGrande.module.css';
+import style from '../CalendarioGrande.module.css';
 import { estadoColors } from '../../../../Utils/randomColors';
 
 export const isNumeric = (str) => !isNaN(str) && !isNaN(parseFloat(str));
@@ -24,7 +24,7 @@ export const eventContent = ({ event }) => {
   return (
     <HtmlTooltip title={
       <React.Fragment>
-        <div className={styles.tooltipEvent}>
+        <div className={style.tooltipEvent}>
           <Typography variant="body1" component="div">
             <strong>Tipo:</strong> {isNumeric(event.type) ? 'Vacaciones' : event.type}
           </Typography>
@@ -34,14 +34,14 @@ export const eventContent = ({ event }) => {
         </div>
       </React.Fragment>
     }>
-      <div className={styles.eventContent}>
+      <div className={style.eventContent}>
         <span
-          className={styles.eventCircle}
+          className={style.eventCircle}
           style={{
             backgroundColor: estadoColors[event.estado.toLowerCase()],
           }}
         ></span>
-        <span className={styles.eventTitle}>{event.title}</span>
+        <span className={style.eventTitle}>{event.title}</span>
       </div>
     </HtmlTooltip>
   );
