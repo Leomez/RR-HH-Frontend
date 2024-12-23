@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { styled } from '@mui/material/styles';
 import { Tooltip, Typography, tooltipClasses } from '@mui/material';
-import styles from '../CalendarioGrande.module.css'
+import styles from '../CalendarioGrande.module.css';
 import { estadoColors } from '../../../../Utils/randomColors';
 
 export const isNumeric = (str) => !isNaN(str) && !isNaN(parseFloat(str));
