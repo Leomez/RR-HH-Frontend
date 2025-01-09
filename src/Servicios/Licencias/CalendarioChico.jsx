@@ -3,6 +3,8 @@ import { Box, Badge, Tooltip } from '@mui/material';
 import { DateCalendar, DayCalendarSkeleton, PickersDay } from '@mui/x-date-pickers';
 import dayjs from 'dayjs';
 import axios from 'axios';
+import { renderFeriadosBadge } from './utils/feriadosBadge';
+
 
 function CalendarioChico({ handler, marcador, anio, setAnio, feriados, loading }) { 
 
@@ -17,23 +19,23 @@ function CalendarioChico({ handler, marcador, anio, setAnio, feriados, loading }
   }
 
   //funcion para renderizar los dias feriados en el calendarioChico
-  const renderFeriadosBadge = (props) => {
-    const { day } = props;
-    const formattedDate = dayjs(day).format('YYYY-MM-DD');
-    const feriado = feriados.find((feriado) => feriado.fecha === formattedDate);
-    // console.log(feriado);
-    if (feriado) {
-      return (
-        <Tooltip title={feriado.nombre} arrow>
-          <Badge color="error" variant='dot' overlap="circular">
-            <PickersDay {...props}/>
-          </Badge>
-        </Tooltip>
-      );
-    } else {
-      return <PickersDay {...props} />;
-    }
-  };
+  // const renderFeriadosBadge = (props) => {
+  //   const { day } = props;
+  //   const formattedDate = dayjs(day).format('YYYY-MM-DD');
+  //   const feriado = feriados.find((feriado) => feriado.fecha === formattedDate);
+  //   // console.log(feriado);
+  //   if (feriado) {
+  //     return (
+  //       <Tooltip title={feriado.nombre} arrow>
+  //         <Badge color="error" variant='dot' overlap="circular">
+  //           <PickersDay {...props}/>
+  //         </Badge>
+  //       </Tooltip>
+  //     );
+  //   } else {
+  //     return <PickersDay {...props} />;
+  //   }
+  // };
 
 
   return (
@@ -45,7 +47,7 @@ function CalendarioChico({ handler, marcador, anio, setAnio, feriados, loading }
         loading={loading}
         renderLoading={() => <DayCalendarSkeleton />}
         slots={{
-          day: renderFeriadosBadge,
+          day: day => renderFeriadosBadge({day, feriados}),
         }}          
         onMonthChange={e=> handleCambioAnio(e)}
       />

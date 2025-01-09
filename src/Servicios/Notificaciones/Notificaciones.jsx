@@ -22,7 +22,7 @@ const Notificaciones = () => {
   }, [idEmpleado, userToken, dispatch]);
 
 
-  console.log(notificaciones);
+  // console.log(notificaciones);
 
   const handlerEliminar = (id) => {
     dispatch(deleteNotificacion({ id, token: userToken }));
@@ -30,9 +30,9 @@ const Notificaciones = () => {
   };
 
   const handlerVer = (id, tag) => {
-    console.log(id);
+    // console.log(id);
     dispatch(updateNotificacion({ id, token: userToken }));
-    navigate(rutas[tag]);   
+    navigate(rutas[tag]);
   };
 
 
@@ -41,7 +41,7 @@ const Notificaciones = () => {
       <Box display="flex" bgcolor="#1976d2" position="sticky" top="0" alignItems="center" p={1}>
         <Typography color="white" variant="h6">Notificaciones</Typography>
       </Box>
-      <Stack sx={{ flexGrow: 1, overflowY: "auto" }}>
+      <Stack sx={{ flexGrow: 1, overflowY: "scroll", gap: 2, padding: 2, height: "20rem" }}>
         {loading ? (
           <Skeleton variant="rectangular" width="100%" height="100%" />
         ) : notificaciones && notificaciones.length > 0 ? (
@@ -50,8 +50,11 @@ const Notificaciones = () => {
               key={index}
               p={2}
               sx={{
-                ":hover": { backgroundColor: "#eee" },
+                ":hover": { backgroundColor: "#eee", boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.2)" },
                 borderBottom: "1px solid #0000004f",
+                // borderLeft: "1px solid #0000004f",                
+                borderRadius: "7px",
+                boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.2)",
               }}
             >
               <Typography sx={{ fontSize: "1rem", fontWeight: 500 }} variant="subtitle2">
@@ -64,12 +67,12 @@ const Notificaciones = () => {
                 </Typography>
               </Box>
               <Box display="flex" justifyContent="space-between">
-              <Button onClick={() => handlerEliminar(n.id)} sx={{ marginTop: 2 }} color="error" variant="text">
-                Eliminar
-              </Button>
-              <Button onClick={() => handlerVer(n.id, n.tag)} sx={{ marginTop: 2 }} variant="text" color={`${n.estado === "pending" ? "info" : "success"}`}>
-              {n.estado === "pending" ? "Ver" : "Leído"}
-              </Button>
+                <Button onClick={() => handlerEliminar(n.id)} sx={{ marginTop: 2 }} color="error" variant="text">
+                  Eliminar
+                </Button>
+                <Button onClick={() => handlerVer(n.id, n.tag)} sx={{ marginTop: 2 }} variant="text" color={`${n.estado === "pending" ? "info" : "success"}`}>
+                  {n.estado === "pending" ? "Ver" : "Leído"}
+                </Button>
               </Box>
             </Box>
           ))

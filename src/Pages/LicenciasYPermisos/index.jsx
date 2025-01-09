@@ -69,6 +69,11 @@ export function LicenciasYPermisos() {
         window.location.reload();
     }
 
+    /**
+     * MANEJADOR DE EVENTOS DE CLICK EN SLOT.
+     * Abre el formulario de solicitud de licencias.
+     */
+    
     const handleOnClickSlot = (info) => {
         // console.log(info);
         setSlotInfo({
@@ -111,6 +116,7 @@ export function LicenciasYPermisos() {
                             reload={handlerRefresh} 
                             slotInfo={slotInfo}
                             setSlotInfo={setSlotInfo}
+                            feriados={feriados}
                         />
                     </Drawer>
                     <Divider />

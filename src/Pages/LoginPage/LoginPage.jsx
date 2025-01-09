@@ -45,7 +45,7 @@ function LoginPage() {
               <Typography>
                 <span style={{ display: "flex", alignItems: "center" }}>
                   <ErrorTwoToneIcon color="error" />
-                  {error.errorData && error.errorData.data && error.errorData.data}
+                  {error.errorData && error.errorData.data && error.errorData.data.error}
                   {console.log(error)}
                 </span>
               </Typography>

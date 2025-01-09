@@ -30,10 +30,10 @@ function DiasDisponibles() {
 
   useEffect(() => {
     if (licencia) {
-      console.log(licencia);
-      console.log(licencias);
+      // console.log(licencia);
+      // console.log(licencias);
       const selectedLicencia = licencias.find(lic => quitarGuionBajo(lic.tipo) === licencia.tipo);
-      console.log(selectedLicencia);
+      // console.log(selectedLicencia);
       setLicenciaInfo({
         tipo: selectedLicencia.tipo,
         dias_pendientes: selectedLicencia.dias_pendientes,
@@ -48,7 +48,7 @@ function DiasDisponibles() {
     }
   }, [licencia, licencias]);
 
-  console.log(vacaciones);
+  // console.log(vacaciones);
   const handlerClick = (event) => {
     setAnchorEl(event.currentTarget)
   }

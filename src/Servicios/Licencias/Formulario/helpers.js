@@ -8,12 +8,13 @@ import { loadFeriados } from '../utils/loadFeriados';
 export const fetchFeriados = async (anio, setFeriados) => {
   try {
     let response;
-    if (anio === 2025) {
-      const feriados2025 = await loadFeriados();
-      response = { data: feriados2025};
-    } else {
-      response = await axios.get(`https://api.argentinadatos.com/v1/feriados/${anio}`);      
-    }
+    response = await axios.get(`https://api.argentinadatos.com/v1/feriados/${anio}`);
+    // if (anio === 2025) {
+    //   const feriados2025 = await loadFeriados();
+    //   response = { data: feriados2025};
+    // } else {
+    //   response = await axios.get(`https://api.argentinadatos.com/v1/feriados/${anio}`);      
+    // }    
     setFeriados({
       feriados: response.data,
       soloFecha: response.data.map(feriado => feriado.fecha),
@@ -33,12 +34,14 @@ export const calcularDiasSolicitados = (fechaDesde, fechaHasta, feriados) => {
   const inicio = dayjs(fechaDesde, 'DD-MM-YYYY');
   const dias = dayjs(fechaHasta, 'DD-MM-YYYY').diff(inicio, 'day') + 1;
   let diasFeriados = 0;
+  // console.log(feriados);
 
   for (let date = inicio; date.isBefore(dayjs(fechaHasta, 'DD-MM-YYYY')) || date.isSame(dayjs(fechaHasta, 'DD-MM-YYYY')); date = date.add(1, 'day')) {
     if (date.day() === 0 || feriados.soloFecha.includes(date.format('YYYY-MM-DD'))) {
       diasFeriados++;
     }
   }  
+  console.log(dias);
   return dias - diasFeriados;
   // return dayjs(fechaHasta, 'DD-MM-YYYY').diff(inicio, 'day') + 1;
 };
@@ -46,9 +49,9 @@ export const calcularDiasSolicitados = (fechaDesde, fechaHasta, feriados) => {
 
 /**´´DESHABILITA LOS DIAS FERIADOS Y DOMINGOS´´**/
 export const shouldDisableDate = (date, feriados) => {
-  // console.log(date);
-  // const cont = 0;
-  if (date.day() === 0 || feriados.soloFecha.includes(date.format('YYYY-MM-DD'))) {
+  // console.log(feriados);
+  const noEsPuente = feriados.feriados.some(feriado => feriado.fecha === date.format('YYYY-MM-DD') && feriado.tipo !== 'puente');
+  if (date.day() === 0 || noEsPuente) {
     return true;
   }
   return false;
