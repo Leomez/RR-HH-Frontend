@@ -10,7 +10,7 @@ import Confirmacion from './Confirmacion';
 import { validarFechasLicencia, validateForm } from '../utils/validaciones';
 import { Error } from '../../../Componentes/Error'
 
-const FormularioContainer = ({ close, reload, eventosYaSolicitados, slotInfo, setSlotInfo }) => {
+const FormularioContainer = ({ close, reload, eventosYaSolicitados, slotInfo, setSlotInfo}) => {
   const dispatch = useDispatch();
   const tipoSolicitudes = useSelector((state) => state.solicitudes.tipoSolicitudes);
   // const errorSolicitudes = useSelector((state) => state.solicitudes.error);
@@ -34,6 +34,8 @@ const FormularioContainer = ({ close, reload, eventosYaSolicitados, slotInfo, se
     motivo: '',
     diasSolicitados: 0,
   };
+
+  console.log(eventosYaSolicitados, '<--- eventosYaSolicitados');
 
 
   const [formData, setFormData] = useState(initialState);
@@ -140,6 +142,7 @@ const FormularioContainer = ({ close, reload, eventosYaSolicitados, slotInfo, se
     if (formData.tipo === 'Licencia' && formData.fechaDesde && formData.fechaHasta) {
       const dias = calcularDiasSolicitados(formData.fechaDesde, formData.fechaHasta, feriados);
       console.log(dias);
+      console.log(formData);
       setFormData((prevFormData) => ({
         ...prevFormData,
         diasSolicitados: dias,
@@ -177,6 +180,14 @@ const FormularioContainer = ({ close, reload, eventosYaSolicitados, slotInfo, se
       fecha: dayjs().format('DD-MM-YYYY'),
     }));
   };
+
+  const handleChangeTipoSolicitud = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...initialState,
+      [name]: value,
+    }));
+  }
 
   const handleCancel = () => {
     setFormData(initialState);
@@ -226,6 +237,7 @@ const FormularioContainer = ({ close, reload, eventosYaSolicitados, slotInfo, se
         setFormData={setFormData}
         diasRestantes={diasRestantes}
         handleChange={handleChange}
+        handleChangeTipoSolicitud={handleChangeTipoSolicitud}
         permisos={permisos} // Pasamos permisos a FormularioVisual
         licencias={licencias} // Pasamos licencias a FormularioVisual
         shouldDisableDate={date => shouldDisableDate(date, feriados)}

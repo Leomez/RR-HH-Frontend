@@ -22,7 +22,7 @@ export const obtenerNotificaciones = createAsyncThunk(
         url: `${URL}/notificaciones/${id}`,
         headers: { "Authorization": "Bearer " + token }
       });
-      console.log(Array.isArray(resp.data.data) ? 'si, es array' : typeof(resp.data.data));
+      // console.log(Array.isArray(resp.data.data) ? 'si, es array' : typeof(resp.data.data));
       return resp.data.data;
     } catch (error) {
       if (error.response) {

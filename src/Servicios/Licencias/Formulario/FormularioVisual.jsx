@@ -8,6 +8,7 @@ import TimePickerSelectivo from './TimePickerSelectivo';
 import { quitarGuionBajo } from '../../../Utils/QuitarGuionBajo';
 import { fechaMax } from './helpers';
 import { Alerta } from './Alerta';
+import { renderFeriadosBadge } from '../utils/feriadosBadge';
 
 
 const FormularioVisual = ({
@@ -17,6 +18,7 @@ const FormularioVisual = ({
   permisos,
   licencias,
   handleChange,
+  handleChangeTipoSolicitud,
   shouldDisableDate,
   handleCambioAnio,
   handleSubmit,
@@ -42,7 +44,7 @@ const FormularioVisual = ({
             id="tipo-solicitud-select"
             name="tipo"
             value={formData.tipo}
-            onChange={handleChange}
+            onChange={handleChangeTipoSolicitud}
           >
             <MenuItem value="Licencia">Licencia</MenuItem>
             <MenuItem value="Permiso">Permiso</MenuItem>
@@ -74,20 +76,27 @@ const FormularioVisual = ({
               minDate={formData.fechaDesde !== '' ? dayjs(formData.fechaDesde, 'DD-MM-YYYY') : dayjs()}
               defaultValue={formData.fechaDesde !== '' ? dayjs(formData.fechaDesde, 'DD-MM-YYYY') : dayjs()}
               value={formData.fechaDesde !== '' ? dayjs(formData.fechaDesde, 'DD-MM-YYYY') : null}
+              onMonthChange={handleCambioAnio}
               shouldDisableDate={shouldDisableDate}
               name={'fechaDesde'}
               onChange={(newValue) => setFormData({ ...formData, fechaDesde: newValue.format('DD-MM-YYYY') })}
+              slots={{
+                day: (day) => renderFeriadosBadge({ day, feriados: feriados.feriados }),
+              }}
             />
             <DatePicker
-              label={'Hasta'}
+              label={'Hasta inclusive'}
               defaultValue={formData.fechaHasta !== '' ? dayjs(formData.fechaHasta, 'DD-MM-YYYY') : dayjs(formData.fechaDesde, 'DD-MM-YYYY')}
               loading={dayLoading}
               shouldDisableDate={shouldDisableDate}
               onMonthChange={handleCambioAnio}
               minDate={dayjs(formData.fechaDesde, 'DD-MM-YYYY')}
               maxDate={fechaMax(formData.fechaDesde, diasRestantes, feriados)}              
-              onChange={(newValue) => setFormData({ ...formData, fechaHasta: newValue.format('DD-MM-YYYY') })}
+              onChange={(newValue) => setFormData({ ...formData, fechaHasta: newValue.format('DD-MM-YYYY')})}
               slotProps={{ sx: { paddingBottom: '3rem' } }}
+              slots={{
+                day: (day) => renderFeriadosBadge({ day, feriados: feriados.feriados }),
+              }}
             />
             {errorFecha.estado && <Alerta errorFecha={errorFecha} severity={'error'} setOpen={setErrorFecha} />}
             {(formData.diasSolicitados > 0) && (
@@ -118,7 +127,13 @@ const FormularioVisual = ({
               label="Fecha del permiso"
               defaultValue={formData.fechaPermiso !== '' ? dayjs(formData.fechaPermiso, 'DD-MM-YYYY') : dayjs()}
               value={formData.fechaPermiso !== '' ? dayjs(formData.fechaPermiso, 'DD-MM-YYYY') : null}
+              minDate={formData.fechaDesde !== '' ? dayjs(formData.fechaDesde, 'DD-MM-YYYY') : dayjs()}
               onChange={(newValue) => setFormData({ ...formData, fechaPermiso: newValue.format('DD-MM-YYYY') })}
+              onMonthChange={handleCambioAnio}
+              shouldDisableDate={shouldDisableDate}
+              slots={{
+                day: (day) => renderFeriadosBadge({ day, feriados: feriados.feriados }),
+              }}
             />
             {formData.categoria === 'Compensar' ? (
               <Box sx={{ display: 'flex', alignItems: 'center' }}>
@@ -136,6 +151,12 @@ const FormularioVisual = ({
                 defaultValue={dayjs()}
                 onChange={(newValue) => setFormData({ ...formData, fechaCompensatoria: newValue.format('DD-MM-YYYY') })}
                 slotProps={{ sx: { paddingBottom: '3rem' } }}
+                minDate={formData.fechaDesde !== '' ? dayjs(formData.fechaDesde, 'DD-MM-YYYY') : dayjs()}
+                onMonthChange={handleCambioAnio}
+                shouldDisableDate={shouldDisableDate}
+                slots={{
+                  day: (day) => renderFeriadosBadge({ day, feriados: feriados.feriados }),
+                }}
                 disabled={!compensatorio}
               />
             )}

@@ -25,7 +25,7 @@ const CalendarioGrande = ({ marcador, eventos, onClickSlot }) => {
       title: (isNumeric(evento.nombre_tipo) ? "Vacaciones" : evento.nombre_tipo),
       start: dayjs(evento.fecha_desde ? evento.fecha_desde : evento.fecha_permiso, "DD/MM/YYYY").startOf('day').toDate(),
       end: dayjs(evento.fecha_hasta ? evento.fecha_hasta : evento.fecha_permiso, "DD/MM/YYYY").endOf('day').toDate(),
-      color: evento.estado === 'Aprobado' ? 'success.light' : evento.estado === 'Rechazado' ? 'Error.light' : evento.estado === 'En proceso' ? 'secondary.light' :  'info.light',
+      color: evento.estado === 'Aprobado' ? 'success.light' : evento.estado === 'Rechazado' ? 'error.light' : evento.estado === 'En proceso' ? 'secondary.light' :  'info.light',
       id: evento.id,
       estado: evento.estado
     }

@@ -45,7 +45,7 @@ export const getLicenciasXEmpleado = createAsyncThunk(
     "licencias/getLicenciasXEmpleado",
     async (id) => {
         const token = store.getState().user.token;
-        console.log(id);
+        // console.log(id);
         try {
             const licencias = await axios({
                 method: "GET",
