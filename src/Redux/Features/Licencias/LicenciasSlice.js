@@ -1,23 +1,67 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import store from "../../Store/store";
 import axios from "axios";
-import { URL_API } from "../constantes";
-import { showError } from "../Error/errorSlice";
+import { URL_API } from "../../../Config/constantes";
 
-const initialState = {
+const initialState = {    
     licenciasXEmpleado: [],
     vacacionesDisponibles: 0,
     loading: false,
     error: null
-}
-const licencasSlice = createSlice({
+};
+
+const getHeaders = (token) => ({
+    headers: { Authorization: `Bearer ${token}` },
+});
+
+export const getLicenciasXEmpleado = createAsyncThunk(
+    "licencias/getLicenciasXEmpleado",
+    async (id, { rejectWithValue }) => {
+        const token = store.getState().user.token;
+        try {
+            const { data } = await axios.get(`${URL_API}/licencias/licenciaXEmpleado/${id}`, getHeaders(token));
+            return data.data;
+        } catch (error) {
+            return rejectWithValue(error.response?.data?.message || "Error desconocido al traer las licencias");
+        }
+    }
+);
+
+export const getVacacionesDisponibles = createAsyncThunk(
+    "licencias/getVacacionesDisponibles",
+    async (id, { rejectWithValue }) => {
+        const token = store.getState().user.token;
+        try {
+            const { data } = await axios.get(`${URL_API}/licencias/diasVacacionesXEmpleado/${id}`, getHeaders(token));
+            return data.data;
+        } catch (error) {
+            return rejectWithValue(error.response?.data?.message || "Error desconocido al traer las vacaciones");
+        }
+    }
+);
+
+export const getTiposDeLicencia = createAsyncThunk(
+    "licencias/getTiposDeLicencia",
+    async (_, { rejectWithValue }) => {
+        const token = store.getState().user.token;
+        try {
+            const { data } = await axios.get(`${URL_API}/licencias/getTiposLicencias`, getHeaders(token));
+            return data.data;
+        } catch (error) {
+            return rejectWithValue(error.response?.data?.message || "Error desconocido al traer los tipos de licencia");
+        }
+    }
+);
+
+const licenciasSlice = createSlice({
     name: "licencias",
     initialState,
     reducers: {},
-    extraReducers: (constructor) => {
-        constructor
-            .addCase(getLicenciasXEmpleado.pending, (state, action) => {
+    extraReducers: (builder) => {
+        builder
+            .addCase(getLicenciasXEmpleado.pending, (state) => {
                 state.loading = true;
+                state.error = null;
             })
             .addCase(getLicenciasXEmpleado.fulfilled, (state, action) => {
                 state.loading = false;
@@ -27,8 +71,9 @@ const licencasSlice = createSlice({
                 state.loading = false;
                 state.error = action.payload;
             })
-            .addCase(getVacacionesDisponibles.pending, (state, action) => {
+            .addCase(getVacacionesDisponibles.pending, (state) => {
                 state.loading = true;
+                state.error = null;
             })
             .addCase(getVacacionesDisponibles.fulfilled, (state, action) => {
                 state.loading = false;
@@ -38,55 +83,19 @@ const licencasSlice = createSlice({
                 state.loading = false;
                 state.error = action.payload;
             })
-    }
-})
-
-export const getLicenciasXEmpleado = createAsyncThunk(
-    "licencias/getLicenciasXEmpleado",
-    async (id) => {
-        const token = store.getState().user.token;
-        // console.log(id);
-        try {
-            const licencias = await axios({
-                method: "GET",
-                url: `${URL_API}/licencias/licenciaXEmpleado/${id}`,
-                headers: { "Authorization": `Bearer ${token}` },                
+            .addCase(getTiposDeLicencia.pending, (state) => {
+                state.loading = true;
+                state.error = null;
             })
-            // console.log(licencias.data);            
-            return licencias.data.data
-        } catch (error) {
-            const { data } = error.response;
-            store.dispatch(showError(data.errorMessage || data.message || "Error desconocido al traer las licencias"))
-            throw new Error(error.response?.data?.message || "Error desconocido al traer las licencias")
-        }
-    }
-)
-
-export const getVacacionesDisponibles = createAsyncThunk(
-    "licencias/getVacacionesDisponibles",
-    async (id) => {
-        const token = store.getState().user.token;
-        try {
-            const vacaciones = await axios({
-                method: "GET",
-                url: `${URL_API}/licencias/diasVacacionesXEmpleado/${id}`,
-                headers: { "Authorization": `Bearer ${token}` },
+            .addCase(getTiposDeLicencia.fulfilled, (state, action) => {
+                state.loading = false;
             })
-            return vacaciones.data.data
-        } catch (error) {
-            const { data } = error.response;
-            store.dispatch(showError(data.errorMessage || data.message || "Error desconocido al traer las vacaciones"))
-            throw new Error(error.response?.data?.message || "Error desconocido al traer las vacaciones")
-        }
-    }
-)
+            .addCase(getTiposDeLicencia.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.payload;
+            });
+    },
+});
 
-
-
-
-
-
-
-
-export default licencasSlice.reducer;
+export default licenciasSlice.reducer;
 

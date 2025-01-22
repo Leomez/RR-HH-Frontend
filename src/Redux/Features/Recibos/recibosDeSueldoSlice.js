@@ -3,7 +3,7 @@ import { setFirma, clearFirma } from "../Firma/firmaSilce";
 import store from "../../Store/store";
 import axios from "axios";
 import { setLoading } from "../Loading/loadingSlice";
-import { URL_API } from "../constantes";
+import { URL_API } from "../../../Config/constantes";
 
 
 const URL = URL_API

@@ -7,7 +7,7 @@ import {
   Toolbar,
   Typography,
   Button,
-  IconButton,  
+  IconButton,
   Card,
   Modal,
 } from "@mui/material";
@@ -32,7 +32,7 @@ export function NavBar({ open, handleOpenMenu, drawerWidth }) {
   //     navigate('/', { replace: true })
   // }
   return (
-    <Box sx={{ flexGrow: 1 }}>
+    <Box>
       <AppBarWrapper position="fixed" open={open} drawerwidth={drawerWidth}>
         <Toolbar>
           {auth && (

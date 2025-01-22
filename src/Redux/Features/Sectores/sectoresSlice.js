@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import store from '../../Store/store';
 import axios from 'axios'
-import { URL_API } from "../constantes";
+import { URL_API } from "../../../Config/constantes";
 import { setLoading } from '../Loading/loadingSlice';
 import { showError } from '../Error/errorSlice';
 

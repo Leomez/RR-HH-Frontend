@@ -27,13 +27,13 @@ export const AppRouter = () => {
     }
   } 
   else {
-    elementToRender = <Navigate to="/login" replace />;
+    elementToRender = <Navigate to="/" replace />;
   }
   
   return (
     <Routes>
       <Route path="/*" element={elementToRender} />
-      {!autenticado && <Route path="/login" element={<LoginPage />} />}
+      {!autenticado && <Route path="/" element={<LoginPage />} />}
       <Route path="/registrarse" element={<Registrarse />} />
       <Route path="/*" element={<NotFound />} />
     </Routes>
