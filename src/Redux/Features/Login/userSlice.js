@@ -4,7 +4,7 @@ import { showError, hideError } from "../Error/errorSlice";
 import { empleadoActual } from "../Empleado/empleadoSlice";
 import axios from "axios";
 import store from "../../Store/store";
-import { URL_API } from "../constantes";
+import { URL_API } from "../../../Config/constantes";
 
 const URL = URL_API;
 

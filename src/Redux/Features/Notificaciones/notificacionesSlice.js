@@ -1,6 +1,6 @@
 import axios from "axios";
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { URL_API } from "../constantes";
+import { URL_API } from "../../../Config/constantes";
 
 const URL = URL_API;
 

@@ -4,7 +4,7 @@ import { Box, Typography, Button, Divider, IconButton } from '@mui/material'
 import s from "./DiasDisponibles.module.css"
 import BeachAccessIcon from '@mui/icons-material/BeachAccess';
 import HealingIcon from '@mui/icons-material/Healing';
-import { getLicenciasXEmpleado, getVacacionesDisponibles } from '../../Redux/Features/Licencias/LicenciasSlice';
+import { getLicenciasXEmpleado, getVacacionesDisponibles, getTiposDeLicencia } from '../../Redux/Features/Licencias/LicenciasSlice';
 import PopoverLicencias from './PopoverLicencias';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import { quitarGuionBajo } from '../../Utils/QuitarGuionBajo';
@@ -15,6 +15,7 @@ function DiasDisponibles() {
   const dispatch = useDispatch();
   const licencias = useSelector(state => state.licencias.licenciasXEmpleado)
   const vacaciones = useSelector(state => state.licencias.vacacionesDisponibles)
+  const tiposDeLicencia = useSelector(state => state.licencias.tiposDeLicencia)
   const userId = useSelector(state => state.user.empleadoId)
   const [anchorEl, setAnchorEl] = useState(null)
   const [licencia, setLicencia] = useState(null)
@@ -25,6 +26,7 @@ function DiasDisponibles() {
     if (licencias.length === 0) {
       dispatch(getLicenciasXEmpleado(userId));
       dispatch(getVacacionesDisponibles(userId));
+      dispatch(getTiposDeLicencia());
     }
   }, [dispatch, userId, licencias.length]);
 
@@ -35,7 +37,7 @@ function DiasDisponibles() {
       const selectedLicencia = licencias.find(lic => quitarGuionBajo(lic.tipo) === licencia.tipo);
       // console.log(selectedLicencia);
       setLicenciaInfo({
-        tipo: selectedLicencia.tipo,
+        tipo: selectedLicencia.tipo,        
         dias_pendientes: selectedLicencia.dias_pendientes,
         icono: licencia.icono
       });
@@ -47,6 +49,9 @@ function DiasDisponibles() {
       })
     }
   }, [licencia, licencias]);
+
+  console.log(licenciaInfo);
+  console.log(tiposDeLicencia)
 
   // console.log(vacaciones);
   const handlerClick = (event) => {
