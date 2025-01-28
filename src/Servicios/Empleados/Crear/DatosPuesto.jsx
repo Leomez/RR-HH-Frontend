@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { FormControl, Select, MenuItem, InputLabel, Stack, Button } from "@mui/material";
+import { FormControl, Select, MenuItem, InputLabel, Stack, Button, Menu } from "@mui/material";
 import FormContainer from "../../../Componentes/Containers/FormContainer";
 import { DatePicker } from "@mui/x-date-pickers";
 import dayjs from "dayjs";
@@ -48,6 +48,8 @@ export default function DatosPuestoForm({ inputs, handleChange }) {
             >
               <MenuItem value="Empleado">Empleado</MenuItem>
               <MenuItem value="Gerente">Gerente</MenuItem>
+              <MenuItem value="Jefe">Jefe</MenuItem>
+              <MenuItem value="Administrador">Administrador</MenuItem>
               <MenuItem value="Medico">Medico</MenuItem>
               <MenuItem value="Supervisor">Supervisor</MenuItem>
             </Select>

@@ -42,6 +42,54 @@ export const nuevoEmpleado = createAsyncThunk('empleado/nuevoEmpleado', async (d
     }
 })
 
+export const editarEmpleado = createAsyncThunk('empleado/editarEmpleado', async (data, { rejectWithValue }) => {
+    try {
+        const response = await axios({
+            method: 'put',
+            url: `${URL}/empleado/${data.id}`,
+            data: data,
+            headers: { "Authorization": "Bearer " + store.getState().user.token }
+        });
+        return response.data
+    } catch (error) {
+        if (error.response) {
+            const errorData = {
+                status: error.response.status,
+                data: error.response.data
+            }
+            store.dispatch(showError(errorData.data.errorMessage))
+            return rejectWithValue(errorData);
+        }
+        // const { data } = error.response;
+        // store.dispatch(showError(data.errorMessage))
+        // throw new Error(error.response?.data?.message || "Error desconocido al editar el empleado");
+    }
+})
+
+export const eliminarEmpleado = createAsyncThunk('empleado/eliminarEmpleado', async (id, { rejectWithValue }) => {
+    try {
+        const response = await axios({
+            method: 'delete',
+            url: `${URL}/empleado/`,
+            data: { id: id },
+            headers: { "Authorization": "Bearer " + store.getState().user.token }
+        });
+        return response.data
+    } catch (error) {
+        if (error.response) {
+            const errorData = {
+                status: error.response.status,
+                data: error.response.data
+            }
+            store.dispatch(showError(errorData.data.errorMessage))
+            return rejectWithValue(errorData);
+        }
+        // const { data } = error.response;
+        // store.dispatch(showError(data.errorMessage))
+        // throw new Error(error.response?.data?.message || "Error desconocido al eliminar el empleado");
+    }
+})
+
 export const fetchEmpleados = createAsyncThunk('empleado/fetchEmpleados', async (undefined, { rejectWithValue }) => {
     try {             
         const response = await axios({
