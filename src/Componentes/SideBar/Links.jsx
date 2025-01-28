@@ -21,6 +21,7 @@ const rutas = () => {
         icono: <HomeIcon sx={{ color: theme.palette.primary.main }} />,
         ruta: "/",
       },
+      // ****** Descomentar para habilitar en el sideBar la seccion que corresponda ******
       // {
       //   nombreSeccion: "Mensajes",
       //   icono: (
@@ -33,11 +34,11 @@ const rutas = () => {
       //   icono: <RequestPageIcon sx={{ color: theme.palette.primary.main }} />,
       //   ruta: "recibos",
       // },
-      {
-        nombreSeccion: "Mi Perfil",
-        icono: <FaceRetouchingNaturalIcon sx={{ color: theme.palette.primary.main }} />,
-        ruta: "perfil",
-      },
+      // {
+      //   nombreSeccion: "Mi Perfil",
+      //   icono: <FaceRetouchingNaturalIcon sx={{ color: theme.palette.primary.main }} />,
+      //   ruta: "perfil",
+      // },
       {
         nombreSeccion: "Licencias y Permisos",
         icono: <EventIcon sx={{ color: theme.palette.primary.main}} />,

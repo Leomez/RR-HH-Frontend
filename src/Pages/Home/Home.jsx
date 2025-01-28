@@ -16,10 +16,10 @@ function Home() {
         <Box sx={{ flexGrow: 1 }} >
             <Grid container spacing={2} >
                 {/* Contenedor Izquierdo */}
-                <Grid item size={{ xs: 12, md: 3 }} sx={{ display: 'flex', flexDirection: 'column' }}>
+                <Grid item size={{ xs: 12, md: 4, lg: 3 }} sx={{ display: 'flex', flexDirection: 'column' }}>
                     <Card sx={{ flexGrow: 1, borderTop: "#1976d2 3px solid", p: 2, display: 'flex', flexDirection: 'column' }}>
                         <Perfil />
-                        <Box sx={{ display: { xs: 'none', md: 'flex' }, flexDirection: 'column', flexGrow: 1 }}>
+                        <Box sx={{ display: { xs: 'flex', md: 'flex' }, flexDirection: {xs: 'row', md: 'column'}, flexGrow: 1 }}>
                             <DiasDisponibles />
                             {/* <AsistenciaPersonal /> */}
                             <Timer />
@@ -28,7 +28,7 @@ function Home() {
                 </Grid>
 
                 {/* Contenedor Derecho */}
-                <Grid item  size={{ xs: 12, md: 9 }} sx={{ display: 'flex', flexDirection: 'column' }}>
+                <Grid item  size={{ xs: 12, md: 8, lg: 9 }} sx={{ display: 'flex', flexDirection: 'column' }}>
                     <Box sx={{ flexGrow: 1, display: 'flex', flexDirection: 'column', gap: 2 }}>
                         <Notificaciones />
                         <NotificacionDeMensajes />
