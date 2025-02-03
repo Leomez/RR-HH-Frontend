@@ -1,9 +1,11 @@
-import { Box, TextField, Button, Typography, IconButton, InputAdornment } from "@mui/material";
+import { Box, TextField, Button, Typography, IconButton, InputAdornment, Backdrop } from "@mui/material";
 import { useSelector, useDispatch } from "react-redux";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { validarEmail, validarPassword } from "./Validaciones";
 import { registrarUser } from "../../Redux/Features/Login/userSlice";
 import { ModalDeRespuesta } from "./ModalDeRespuesta";
+
+import Loading from "../../Componentes/Loading";
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 
 const textFildStyle = {
@@ -13,6 +15,9 @@ const textFildStyle = {
 function Registrarse() {
     const dispatch = useDispatch();
     const nuevoUsuario = useSelector(state => state.user.nuevoUsuario);
+    const loading = useSelector(state => state.user.loading);
+    const showErrors = useSelector(state => state.user.error.showError);
+    const dataError = useSelector(state => state.user.error.errorData);
     const [open, setOpen] = useState(false);
     const [showPassword, setShowPassword] = useState({
         password: false,
@@ -31,6 +36,19 @@ function Registrarse() {
         confPassword: false
     });
 
+    const [respuesta, setRespeusta] = useState({})
+    useEffect(() => {
+        if (nuevoUsuario !== null) {
+            setRespeusta(nuevoUsuario);
+            setOpen(true);
+        }
+
+        if (showErrors) {
+            setRespeusta(dataError);
+            setOpen(true)
+        }
+    }, [nuevoUsuario, showErrors, dataError]);
+
     const handleInputChange = (event) => {
         const { name, value } = event.target;
         setInput((prevInput) => ({
@@ -46,7 +64,7 @@ function Registrarse() {
         }));
     };
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
         const emailValid = validarEmail(input.email);
         const passwordValid = validarPassword(input.password);
@@ -58,20 +76,23 @@ function Registrarse() {
         });
 
         if (emailValid && passwordValid && input.password === input.confPassword) {
-            dispatch(registrarUser(input));
+            await dispatch(registrarUser(input));
             setInput({
                 email: '',
                 password: '',
                 confPassword: ''
             });
-            setOpen(true);
+                        
         }
     };
 
     return (
         <>
             <Box position={'relative'} right='1rem'>
-                <Box textAlign={'center'} margin={'2rem'}>
+                <Backdrop open={loading} >
+                    <Box sx={{backgroundColor: 'beige'}}><Loading /></Box>
+                </Backdrop>
+                <Box sx={{ paddingTop: '2.5rem' }} textAlign={'center'} margin={'2rem'}>
                     <Typography variant="h4">
                         Registrarse
                     </Typography>
@@ -159,8 +180,8 @@ function Registrarse() {
                         </Box>
                     </Box>
                 </Box>
+                {open && <ModalDeRespuesta open={open} respuesta={respuesta} setOpen={setOpen} />}
             </Box>
-            {nuevoUsuario !== null && <ModalDeRespuesta open={open} />}
         </>
     );
 }

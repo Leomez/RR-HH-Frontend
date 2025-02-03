@@ -27,7 +27,7 @@ export const encargado = (supervisores, empleado, empleados) => {
   }
   
   const nombre = `${enc.nombre_empleado} ${enc.apellido_empleado}`;
-  console.log(nombre);
+  // console.log(nombre);
   return nombre;
 };
 
