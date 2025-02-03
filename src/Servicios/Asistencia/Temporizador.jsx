@@ -131,10 +131,10 @@ const Timer = () => {
           </Box>
         </Box>
       </Box>
-      <Box display="flex" justifyContent="center" pt={2} mt={2}>
-        <Typography variant='caption'>INICIO: {HoraEntrada ? HoraEntrada : '--:--'}</Typography>
-        <Typography variant='caption' style={{ marginLeft: 20 }}>FIN: {esActivo ? '--:--' : HoraFin}</Typography>
-        <Typography variant='caption' style={{ marginLeft: 20 }}>PAUSA: {estaEnPausa ? HoraPausa : '--:--'}</Typography>
+      <Box className={s.displayContainer}>
+        <Typography className={s.display} variant='caption'>INICIO: {HoraEntrada ? HoraEntrada : '--:--'}</Typography>
+        <Typography className={s.display} variant='caption' >FIN: {esActivo ? '--:--' : HoraFin}</Typography>
+        <Typography className={s.display} variant='caption' >PAUSA: {estaEnPausa ? HoraPausa : '--:--'}</Typography>
       </Box>
     </Box>
   );

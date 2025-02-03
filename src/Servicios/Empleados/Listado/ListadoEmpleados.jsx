@@ -11,12 +11,15 @@ import { Error } from '../../../Componentes/Error'
 import { fetchEmpleados } from "../../../Redux/Features/Empleado/empleadoSlice"
 import { getSupervisores } from '../../../Redux/Features/Supervisor/supervisorSlice'
 import { eliminarEmpleado } from '../../../Redux/Features/Empleado/empleadoSlice'
+import Confirmacion from '../../../Componentes/Confirmacion/Confirmacion'
 
 export default function ListadoEmpleados() {
   try {
     const dispatch = useDispatch()
   const [listado, setListado] = useState([])
-  const [loading, setLoading] = useState(true)
+  const [loading, setLoading] = useState()
+  const [confirmacion, setConfirmacion] = useState(false)
+  const [empleadoEliminado, setEmpleadoEliminado] = useState(null)
   const token = useSelector((state) => state.user.token)
   const empleados = useSelector(state => state.empleado.empleados)
   const loadingEmpleados = useSelector(state => state.empleado.loading)
@@ -44,16 +47,20 @@ export default function ListadoEmpleados() {
     }
   }, [loadingEmpleados]);
 
-  // if (empleados[0]) {
-  //   return <Error error={empleados[0]} />
-  // } 
-  const handleDelete = async (id) => {
+   
+  const handleDelete = async (empleado) => {
     setLoading(true); // Mostrar el estado de carga
-    await dispatch(eliminarEmpleado(id)); // Espera que la acción se complete
-    await dispatch(fetchEmpleados()); // Actualiza la lista de empleados
+    setEmpleadoEliminado(empleado);    
+    setConfirmacion(true)  
     setLoading(false); // Oculta el estado de carga
   };
- 
+
+  const handlerConfirm = async () => {
+    console.log(empleadoEliminado, 'empleadoEliminado');
+    await dispatch(eliminarEmpleado(empleadoEliminado.id)); // Espera que la acción se complete
+    await dispatch(fetchEmpleados()); // Actualiza la lista de empleados
+    setConfirmacion(false)     
+  }
 
   function suma(a,b) {
     return a + b
@@ -73,16 +80,14 @@ export default function ListadoEmpleados() {
     {field: 'col6', headerName: 'Acciones', width: 300, renderCell: (params) => (
       <>
         <Button size='small' sx={{width: '2rem', height: '2rem'}} variant='text' color='primary' onClick={() => console.log(params.row)}><DriveFileRenameOutlineIcon/></Button>
-        <Button size='small' variant='text' color='error' onClick={() => handleDelete(params.row.id)}><DeleteForeverIcon/></Button>
+        <Button size='small' variant='text' color='error' onClick={() => handleDelete(params.row)}><DeleteForeverIcon/></Button>
       </>
     )}
   ]
   const rows = /*!loadingEmpleados &&*/ listado && 
   /*empleados[0].name !== 'Error' &&*/ 
   listado.map(e => 
-    {
-      // console.log(e, 'empleado');
-      // console.log(encargado(supervisores, e, listado))
+    {      
     return {
         id: e.id,
         col1: `${e.nombre_empleado} ${e.apellido_empleado}`,
@@ -91,8 +96,7 @@ export default function ListadoEmpleados() {
         col4: sector(sectores, e.sector_id) /*'sector'*/,
         col5: supervisores && encargado(supervisores, e, empleados) /*'encargado'*/
       }
-  })
-    console.log(rows, 'rows');
+  })  
 
   return (
     <div>
@@ -104,6 +108,8 @@ export default function ListadoEmpleados() {
           columns={columns}
           columnVisibilityModel={{ id: false }}
         />
+        {confirmacion && <Confirmacion open={confirmacion} empleado={empleadoEliminado.col1} cancel={() => setConfirmacion(false)}  close={() => setConfirmacion(false)} confirm={handlerConfirm} />}
+
       </Box>
     </div>
   )

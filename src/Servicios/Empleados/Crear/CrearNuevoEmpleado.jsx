@@ -6,6 +6,8 @@ import DatosPuestoForm from "./DatosPuesto"
 import DireccionForm from "./DomicilioForm";
 import validateForm from "./ValidarDatosCargaDeEmpleado";
 import { nuevoEmpleado } from "../../../Redux/Features/Empleado/empleadoSlice";
+import validarDomicilio from "./validarDomicilio";
+
 
 export default function CrearNuevoEmpleado() {
   const inputVacios = {
@@ -27,6 +29,8 @@ export default function CrearNuevoEmpleado() {
       numero: "",
       ciudad: "",
       cod_postal: "",
+      piso: "",
+      depto: "",
     },
   };
   const [inputs, setInputs] = useState(inputVacios);
@@ -34,10 +38,6 @@ export default function CrearNuevoEmpleado() {
   const [alert, setAlert] = useState(false)
   const dispatch = useDispatch();
   const respuesta = useSelector(state => state.empleado.nuevoEmpleadoCreado)
-
-  // useEffect(() => {
-    
-  // })
 
   function handleChange(e) {
     setInputs({
@@ -59,8 +59,10 @@ export default function CrearNuevoEmpleado() {
     e.preventDefault();
     // console.log(inputs);
     const formErrors = validateForm(inputs);
+    formErrors.domicilio = validarDomicilio(inputs.domicilio);
     setErrores(formErrors);
-    if (Object.keys(formErrors).length === 0) {
+
+    if (Object.keys(formErrors).length === 1 && Object.keys(formErrors.domicilio).length === 0) {
       dispatch(nuevoEmpleado(inputs))
       setInputs(inputVacios);
       setAlert(true)
@@ -99,6 +101,7 @@ export default function CrearNuevoEmpleado() {
         <DireccionForm
           domicilio={inputs.domicilio}
           handleChange={handleDomicilioChange}
+          errores={errores.domicilio}
         />
 
         <DatosPuestoForm inputs={inputs} handleChange={handleChange} />

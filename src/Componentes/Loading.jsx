@@ -11,7 +11,7 @@ function Loading() {
             alignItems: 'center', 
             backgroundColor: 'transparent'
         }}>
-            <CircularProgress variant='solid' />
+            <CircularProgress variant='indeterminante' />
         </Card>
     )
 

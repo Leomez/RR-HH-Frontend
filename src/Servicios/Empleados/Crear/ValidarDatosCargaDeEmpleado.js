@@ -8,6 +8,7 @@ function validateForm(inputs) {
         errores[field] = `El campo ${field} es requerido.`      
       }
     }
+    
     // // Validar formato de fecha de nacimiento
     const fechaNacRegex = /^\d{4}-\d{2}-\d{2}$/;
     if (!fechaNacRegex.test(inputs.fecha_nac)) {
