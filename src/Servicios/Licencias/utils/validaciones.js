@@ -18,8 +18,8 @@ function validarFechasLicencia(nuevaFechaDesde, nuevaFechaHasta, solicitudesPrev
 
   // Verificar si las fechas se superponen
   for (const solicitud of solicitudesFiltradas) {
-      const fechaDesde = convertirFecha(solicitud.fecha_desde);
-      const fechaHasta = convertirFecha(solicitud.fecha_hasta);
+      const fechaDesde = solicitud.fecha_desde ? convertirFecha(solicitud.fecha_desde) : null;
+      const fechaHasta = solicitud.fecha_hasta ? convertirFecha(solicitud.fecha_hasta) : null;
       const fechaPermiso = solicitud.fecha_permiso ? convertirFecha(solicitud.fecha_permiso) : null;
       const fechaCompensatoria = solicitud.dia_compensatorio ? convertirFecha(solicitud.dia_compensatorio) : null;
 
@@ -43,6 +43,7 @@ function validarFechasLicencia(nuevaFechaDesde, nuevaFechaHasta, solicitudesPrev
  */
 function convertirFecha(fecha) {
   // Reemplazar "/" por "-" para manejar ambos formatos
+  console.log(fecha);
   const fechaNormalizada = fecha.replace(/\//g, '-');
   const [dia, mes, año] = fechaNormalizada.split('-');
   return new Date(`${año}-${mes}-${dia}`);
