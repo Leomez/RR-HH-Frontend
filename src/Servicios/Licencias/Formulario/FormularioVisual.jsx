@@ -126,9 +126,9 @@ const FormularioVisual = ({
             <DatePicker
               label="Fecha del permiso"
               defaultValue={formData.fechaPermiso !== '' ? dayjs(formData.fechaPermiso, 'DD-MM-YYYY') : dayjs()}
-              value={formData.fechaPermiso !== '' ? dayjs(formData.fechaPermiso, 'DD-MM-YYYY') : null}
+              value={formData.fechaPermiso !== '' ? dayjs(formData.fechaPermiso, 'DD-MM-YYYY') : dayjs()}
               minDate={formData.fechaDesde !== '' ? dayjs(formData.fechaDesde, 'DD-MM-YYYY') : dayjs()}
-              onChange={(newValue) => setFormData({ ...formData, fechaPermiso: newValue.format('DD-MM-YYYY') })}
+              onChange={(newValue) => setFormData({ ...formData, fechaPermiso: newValue ? newValue.format('DD-MM-YYYY') : dayjs().format('DD-MM-YYYY') })}
               onMonthChange={handleCambioAnio}
               shouldDisableDate={shouldDisableDate}
               slots={{

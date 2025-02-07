@@ -35,7 +35,7 @@ const FormularioContainer = ({ close, reload, eventosYaSolicitados, slotInfo, se
     diasSolicitados: 0,
   };
 
-  console.log(eventosYaSolicitados, '<--- eventosYaSolicitados');
+  // console.log(eventosYaSolicitados, '<--- eventosYaSolicitados');
 
 
   const [formData, setFormData] = useState(initialState);
@@ -158,6 +158,16 @@ const FormularioContainer = ({ close, reload, eventosYaSolicitados, slotInfo, se
       if (formData.tipo === 'Licencia') {
         if (!formData.fechaDesde || !formData.fechaHasta || !formData.diasSolicitados) return false;
       } else if (formData.tipo === 'Permiso') {
+        if (formData.categoria === 'Salir por un momento') {
+          if (!formData.fechaPermiso) {
+            setFormData((prev) => ({
+              ...prev,
+              fechaPermiso: dayjs().format('DD-MM-YYYY'),
+            }));
+          }
+          return formData.motivo.length > 0
+        }
+        // if (formData.categoria === 'Salir por un momento' && !formData.motivo) return false;
         if (!formData.fechaPermiso || !formData.motivo) return false;
       }
 
@@ -201,6 +211,7 @@ const FormularioContainer = ({ close, reload, eventosYaSolicitados, slotInfo, se
   };
 
   const handleConfirm = () => {
+    
     dispatch(createSolicitud(formData));
     dispatch(getSolicitudesXEmpleado(empleado.id));
     setFormData(initialState);
