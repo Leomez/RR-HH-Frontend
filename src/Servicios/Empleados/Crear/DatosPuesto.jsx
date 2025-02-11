@@ -52,7 +52,7 @@ export default function DatosPuestoForm({ inputs, handleChange }) {
               <MenuItem value="Administrador">Administrador</MenuItem>
               <MenuItem value="Medico">Medico</MenuItem>
               <MenuItem value="Supervisor">Supervisor</MenuItem>
-            </Select>
+            </Select>            
           </FormControl>
 
           <FormControl variant="standard" sx={{ width: { xs: "100%", md: "10rem" } }}>
@@ -86,6 +86,20 @@ export default function DatosPuestoForm({ inputs, handleChange }) {
                   </MenuItem>
                 )
               })}
+            </Select>
+          </FormControl>
+
+          <FormControl variant="standard" sx={{ width: { xs: "100%", md: "10rem" } }}>
+            <InputLabel>Turno</InputLabel>
+            <Select
+            // eslint-disable-next-line react/prop-types
+              value={inputs.turno}
+              name="turno"
+              onChange={handleChange}
+            >
+              <MenuItem value="Mañana">Mañana</MenuItem>
+              <MenuItem value="Tarde">Intermedio</MenuItem>
+              <MenuItem value="Noche">Tarde</MenuItem>
             </Select>
           </FormControl>
 

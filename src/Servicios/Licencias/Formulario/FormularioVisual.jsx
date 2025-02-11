@@ -73,7 +73,8 @@ const FormularioVisual = ({
             <DatePicker
               label={'Desde'}
               disablePast
-              minDate={formData.fechaDesde !== '' ? dayjs(formData.fechaDesde, 'DD-MM-YYYY') : dayjs()}
+              // minDate={formData.fechaDesde !== '' ? dayjs(formData.fechaDesde, 'DD-MM-YYYY') : dayjs()}
+              minDate={dayjs()}
               defaultValue={formData.fechaDesde !== '' ? dayjs(formData.fechaDesde, 'DD-MM-YYYY') : dayjs()}
               value={formData.fechaDesde !== '' ? dayjs(formData.fechaDesde, 'DD-MM-YYYY') : null}
               onMonthChange={handleCambioAnio}
