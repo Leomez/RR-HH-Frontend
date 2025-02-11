@@ -16,7 +16,7 @@ export function Footer() {
                     <a className={styles.ContactLinks} href="https://wa.me/+5491156592447"><WhatsAppIcon sx={{ color: green[500] }} /> <span>Comunicate por WhatsApp</span></a>
                 </Typography>
                 <Typography>
-                    <a className={styles.ContactLinks} href="mailto:alexia@centrodeojosquilmes.com.ar"> <EmailIcon /> <span>alexia@centrodeojosquilmes.com.ar</span> </a> 
+                    <a className={styles.ContactLinks} href="mailto:leoariel17@gmail.com"> <EmailIcon /> <span>leoariel17@gmail.com</span> </a> 
                 </Typography>
             </Box>
         </div>
