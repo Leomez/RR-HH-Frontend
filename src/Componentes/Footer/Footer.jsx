@@ -13,7 +13,7 @@ export function Footer() {
                     Centro de Ojos Quilmes. Recursos Humanos.
                 </Typography>
                 <Typography>
-                    <a className={styles.ContactLinks} href="https://wa.me/+5491160595123"><WhatsAppIcon sx={{ color: green[500] }} /> <span>Comunicate por WhatsApp</span></a>
+                    <a className={styles.ContactLinks} href="https://wa.me/+5491156592447"><WhatsAppIcon sx={{ color: green[500] }} /> <span>Comunicate por WhatsApp</span></a>
                 </Typography>
                 <Typography>
                     <a className={styles.ContactLinks} href="mailto:alexia@centrodeojosquilmes.com.ar"> <EmailIcon /> <span>alexia@centrodeojosquilmes.com.ar</span> </a> 

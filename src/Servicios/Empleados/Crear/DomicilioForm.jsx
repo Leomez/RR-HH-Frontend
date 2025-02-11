@@ -8,7 +8,7 @@ import FormContainer from "../../../Componentes/Containers/FormContainer";
 
 export default function DireccionForm({ domicilio, handleChange, errores }) {
 
-    
+    console.log(domicilio);
     return (
         <>
             <FormContainer titulo={'Domicilio'}>
@@ -17,9 +17,9 @@ export default function DireccionForm({ domicilio, handleChange, errores }) {
                         value={domicilio.calle}
                         name="calle"
                         label="Calle"
-                        color={errores.calle ? 'error' : 'success'}
-                        error={errores.calle ? true : false}
-                        helperText={errores.calle ? errores.calle : ''}
+                        color={errores?.calle ? 'error' : 'success'}
+                        error={errores?.calle ? true : false}
+                        helperText={errores?.calle ? errores.calle : ''}
                         variant="standard"
                         onChange={handleChange}
                         sx={{ width: { xs: '100%', md: '35rem' } }}
@@ -28,9 +28,9 @@ export default function DireccionForm({ domicilio, handleChange, errores }) {
                         value={domicilio.numero}
                         name="numero"
                         label="Número"
-                        color={errores.numero ? 'error' : 'success'}
-                        error={errores.numero ? true : false}
-                        helperText={errores.numero ? errores.numero : ''}
+                        color={errores?.numero ? 'error' : 'success'}
+                        error={errores?.numero ? true : false}
+                        helperText={errores?.numero ? errores.numero : ''}
                         variant="standard"
                         onChange={handleChange}
                         sx={{ width: { xs: '100%', md: '10rem' } }}
@@ -57,9 +57,9 @@ export default function DireccionForm({ domicilio, handleChange, errores }) {
                         value={domicilio.ciudad}
                         name="ciudad"
                         label="Ciudad"
-                        color={errores.ciudad ? 'error' : 'success'}
-                        error={errores.ciudad ? true : false}
-                        helperText={errores.ciudad ? errores.ciudad : ''}
+                        color={errores?.ciudad ? 'error' : 'success'}
+                        error={errores?.ciudad ? true : false}
+                        helperText={errores?.ciudad ? errores.ciudad : ''}
                         variant="standard"
                         onChange={handleChange}
                         sx={{ width: { xs: '100%', md: '35rem' } }}
@@ -68,9 +68,9 @@ export default function DireccionForm({ domicilio, handleChange, errores }) {
                         value={domicilio.cod_postal}
                         name="cod_postal"
                         label="Código Postal"
-                        color={errores.cod_postal ? 'error' : 'success'}
-                        error={errores.cod_postal ? true : false}
-                        helperText={errores.cod_postal ? errores.cod_postal : ''}
+                        color={errores?.cod_postal ? 'error' : 'success'}
+                        error={errores?.cod_postal ? true : false}
+                        helperText={errores?.cod_postal ? errores.cod_postal : ''}
                         variant="standard"
                         onChange={handleChange}
                         sx={{ width: { xs: '100%', md: '10rem' } }}
