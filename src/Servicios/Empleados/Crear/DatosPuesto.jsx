@@ -50,6 +50,7 @@ export default function DatosPuestoForm({ inputs, handleChange }) {
               <MenuItem value="Gerente">Gerente</MenuItem>
               <MenuItem value="Jefe">Jefe</MenuItem>
               <MenuItem value="Administrador">Administrador</MenuItem>
+              <MenuItem value="Encargado">Encargado</MenuItem>
               <MenuItem value="Medico">Medico</MenuItem>
               <MenuItem value="Supervisor">Supervisor</MenuItem>
             </Select>
@@ -66,6 +67,8 @@ export default function DatosPuestoForm({ inputs, handleChange }) {
               <MenuItem value="1°">1°</MenuItem>
               <MenuItem value="2°">2°</MenuItem>
               <MenuItem value="3°">3°</MenuItem>
+              <MenuItem value="4°">4°</MenuItem>
+              <MenuItem value="5°">5°</MenuItem>
               <MenuItem value="Fuera de Convenio">Fuera de convenio</MenuItem>
             </Select>
           </FormControl>
