@@ -29,7 +29,7 @@ export const loginUser = createAsyncThunk(
     'user/loginUser',
     async (user, { rejectWithValue }) => {
         const token = user?.token;
-        console.log(token, '<-- token');
+        console.log(token, '<-- token');        
         if (!token) {
             console.error('Token no disponible');
             // Maneja el caso donde el token no está disponible
@@ -39,7 +39,7 @@ export const loginUser = createAsyncThunk(
             const response = await axios({
                 url: `${URL}/login`,
                 method: "post",
-                headers: { "Authorization": `Bearer ${token}` },
+                headers: { "Authorization": `Bearer ${token}`, "Content-Type": "application/json" },
                 data: user
             });
             await store.dispatch(empleadoActual({ id: response.data.data.EmpleadoId, token: token }));
@@ -82,6 +82,7 @@ export const registrarUser = createAsyncThunk('user/registrarUser', async (user,
             success: response.data.success,
             message: response.data.message,
             nombreUsuario: response.data.data.usuario
+            
         };
     } catch (error) {
         if (error.response) {

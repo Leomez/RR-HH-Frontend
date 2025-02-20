@@ -13,7 +13,7 @@ import { getSupervisores } from '../../../Redux/Features/Supervisor/supervisorSl
 import { eliminarEmpleado } from '../../../Redux/Features/Empleado/empleadoSlice'
 import Confirmacion from '../../../Componentes/Confirmacion/Confirmacion'
 
-export default function ListadoEmpleados() {
+export default function ListadoEmpleados({verLegajo}) {
   try {
     const dispatch = useDispatch()
   const [listado, setListado] = useState([])
@@ -79,7 +79,7 @@ export default function ListadoEmpleados() {
     },
     {field: 'col6', headerName: 'Acciones', width: 300, renderCell: (params) => (
       <>
-        <Button size='small' sx={{width: '2rem', height: '2rem'}} variant='text' color='primary' onClick={() => console.log(params.row)}><DriveFileRenameOutlineIcon/></Button>
+        <Button size='small' sx={{width: '2rem', height: '2rem'}} variant='text' color='primary' onClick={() => verLegajo(params.row.id)}><DriveFileRenameOutlineIcon/></Button>
         <Button size='small' variant='text' color='error' onClick={() => handleDelete(params.row)}><DeleteForeverIcon/></Button>
       </>
     )}

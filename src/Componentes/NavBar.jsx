@@ -2,35 +2,34 @@
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import {
-  Box,
-  Toolbar,
-  Typography,
-  Button,
-  IconButton,
-  Card,
-  Modal,
-} from "@mui/material";
+import { Box, Toolbar, Typography, Button, IconButton, Card, Modal, } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import personal from "../assets/Personal.png";
-// import { logout } from "../Redux/Features/Login/loginSlice"
 import { AppBarWrapper } from "./SideBar/SideBarController";
-// import ModalCustom from "./Containers/Modal";
 import LoginForm from "../Servicios/Login/LoginForm";
 import Logout from "../Servicios/Login/Logout";
+import RecuperarContrasenia from "../Servicios/Login/recuperarContrasenia";
+// import ModalCustom from "./Containers/Modal";
+// import { logout } from "../Redux/Features/Login/loginSlice"
 
 export function NavBar({ open, handleOpenMenu, drawerWidth }) {
   // const dispatch = useDispatch()
   // const navigate = useNavigate()
   const auth = useSelector((state) => state.user.isAuth);
-  const [openModal, setOpenModal] = useState(false);
-  const handleModal = () => {
-    setOpenModal(!openModal);
+  const MODAL = {
+    open: false,
+    view: 'login',
+  }
+  const [modal, setModal] = useState(MODAL);
+
+  const handleModal = ({ open, opcion }) => {
+    if (open) {
+      setModal({ open: open, view: opcion });
+    } else {
+      setModal({ ...modal, open: false });
+    }
   };
-  // function handleLogout() {
-  //     dispatch(logout())
-  //     navigate('/', { replace: true })
-  // }
+  
   return (
     <Box>
       <AppBarWrapper position="fixed" open={open} drawerwidth={drawerWidth}>
@@ -61,7 +60,7 @@ export function NavBar({ open, handleOpenMenu, drawerWidth }) {
             <Logout onClose={handleOpenMenu} className={'logout'} />
           ) : (
             <Button
-              onClick={handleModal}
+              onClick={ () => handleModal({ open: true, opcion: 'login' })}
               sx={{
                 color: "#fff",
                 ":focus": { outline: "none" },
@@ -71,21 +70,12 @@ export function NavBar({ open, handleOpenMenu, drawerWidth }) {
               <Typography>INGRESAR</Typography>
             </Button>
           )}
-          <Modal open={openModal} onClose={handleModal}>
+          <Modal open={modal.open} onClose={() => handleModal({open:false, opcion: 'login'})}>
             <Box>
               <Card
-                sx={{
-                  padding: { xs: "10%", md: "5%" },
-                  width: { md: "30%" },
-                  maxWidth: "70%",
-                  margin: "auto",
-                  position: "relative",
-                }}
+                sx={{ padding: { xs: "10%", md: "5%" }, width: { md: "30%" }, maxWidth: "70%", margin: "auto", position: "relative" }}
               >
-                <Button
-                  color="error"
-                  variant="contained"
-                  onClick={handleModal}
+                <Button color="error" variant="contained" onClick={() => handleModal({ open: false, opcion: 'login' })}
                   sx={{
                     margin: "0.5rem 0.5rem 0 0",
                     padding: 0,
@@ -98,7 +88,12 @@ export function NavBar({ open, handleOpenMenu, drawerWidth }) {
                 >
                   X
                 </Button>
-                <LoginForm handleModal={handleModal} />
+                {
+                  modal.view === 'login' ?
+                  <LoginForm handleModal={handleModal} />
+                  :
+                  <RecuperarContrasenia handleModal={handleModal} />
+                }
               </Card>
             </Box>
           </Modal>
