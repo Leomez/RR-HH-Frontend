@@ -12,6 +12,8 @@ const initialState = {
     empleados: [],
     domicilios:[],
     empleadoActual: null,
+    verLegajo: false,
+    legajo: {},
     loading: true,
     error: null
 };
@@ -190,6 +192,14 @@ const empleadoSlice = createSlice({
     name: 'empleado',
     initialState,
     reducers: {
+        setVerLegajo: (state, action) => {            
+            state.verLegajo = true
+            state.legajo = state.empleados.find(empleado => empleado.id === action.payload)
+        },
+        ocultarLegajo: (state) => {
+            state.verLegajo = false
+            state.legajo = {}
+        },
         resetError: (state) => {
             state.error = null
         }
@@ -264,5 +274,5 @@ const empleadoSlice = createSlice({
     }
 })
 
-export const { resetError } = empleadoSlice.actions
+export const { resetError, setVerLegajo } = empleadoSlice.actions
 export default empleadoSlice.reducer

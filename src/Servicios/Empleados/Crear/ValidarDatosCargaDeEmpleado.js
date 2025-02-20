@@ -2,9 +2,9 @@
 function validateForm(inputs) {
     let errores = {};
     // Validar campos requeridos
-    const requiredFields = ["legajo", "dni", "nombre_empleado", "apellido_empleado", "fecha_nac", "correo", "telefono"];
+    const requiredFields = ["legajo", "dni", "nombre_empleado", "apellido_empleado", "fecha_nac", "correo", "telefono", "tel_alternativo"];
     for (let field of requiredFields) {
-      if (!inputs[field]) {
+      if (!inputs[field] || inputs[field] === "") {
         errores[field] = `El campo ${field} es requerido.`      
       }
     }

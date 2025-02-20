@@ -1,22 +1,25 @@
-import { useState, useEffect, useCallback} from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 import { getAuth, onIdTokenChanged } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
-import { Box, Button, TextField, Divider, Typography, Modal, IconButton, InputAdornment  } from '@mui/material';
+import { Box, Button, TextField, Divider, Typography, Modal, IconButton, InputAdornment } from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { FcGoogle } from 'react-icons/fc';
 import { loginUser, refreshUserToken, logoutUser } from '../../Redux/Features/Login/userSlice';
-
 import { loginConGoogle } from './loginConGoogle';
 import loginConUsuYCont from './loginConUsuarioYContrasenia';
 
-function LoginForm({ handleModal }) {
+// import { startCountdown } from './startCountdown';
+
+function LoginForm({ handleModal }) {  
+
   const [input, setInput] = useState({ usuario: '', password: '' });
   const [usuario, setUsuario] = useState({});
   const [authError, setAuthError] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [countDown, setCountDown] = useState(60);
   const [showPassword, setShowPassword] = useState({ password: false });
+  
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -68,6 +71,7 @@ function LoginForm({ handleModal }) {
     }
   };
 
+
   const handleTogglePasswordVisibility = (field) => {
     setShowPassword((prevShowPassword) => ({
       ...prevShowPassword,
@@ -94,7 +98,7 @@ function LoginForm({ handleModal }) {
 
     if (usuario.success) {
       dispatch(loginUser(usuario));
-      handleModal();
+      handleModal({ open: false });
       navigate('/', { replace: true });
     }
     setInput({ usuario: '', password: '' });
@@ -104,24 +108,25 @@ function LoginForm({ handleModal }) {
     const usuario = await loginConGoogle();
     dispatch(loginUser(usuario));
     navigate('/', { replace: true });
-    handleModal();
+    handleModal({ open: false });
   };
 
   const handleRegistrarse = (e) => {
     e.preventDefault();
     navigate('/registrarse', { replace: true });
-    handleModal();
+    handleModal({ open: false });
   };
+  
 
   return (
     <Box>
-      <Modal open={showModal} onClose={handleLogout}>
+      {/* <Modal open={showModal} onClose={handleLogout}>
         <Box sx={{ p: 2, backgroundColor: 'white', borderRadius: '8px', boxShadow: 24 }}>
           <Typography>Tu sesión expirará en {countDown} segundos</Typography>
           <Button onClick={handleRenovarSesion} variant="contained">Renovar sesión</Button>
           <Button onClick={handleLogout} variant="outlined">Cerrar sesión</Button>
         </Box>
-      </Modal>
+      </Modal> */}
       <Box component="form" onSubmit={handleFormSubmit} sx={{ mt: 2 }}>
         <TextField
           error={authError && (usuario.errorCode === "auth/user-not-found" || usuario.errorCode === "auth/invalid-email")}
@@ -158,6 +163,11 @@ function LoginForm({ handleModal }) {
             )
           }}
         />
+        
+        <Button sx={{ color: 'red', fontSize: '0.75rem', textAlign: 'center' }} onClick={() => handleModal({open: true, opcion: 'recuperar'})}>
+          ¿Olvidaste tu contraseña?
+        </Button>
+
         <Box sx={{ display: 'flex', padding: '1.5rem 0.5rem', justifyContent: 'space-between' }}>
           <Button sx={{ width: '9rem' }} type="submit" variant="contained" fullWidth>
             Iniciar sesión
@@ -200,7 +210,7 @@ function LoginForm({ handleModal }) {
             </Typography>
           </Button>
         </Box>
-      </Box>
+      </Box>      
     </Box>
   );
 }

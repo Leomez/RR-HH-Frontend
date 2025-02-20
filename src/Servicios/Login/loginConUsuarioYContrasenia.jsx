@@ -16,6 +16,8 @@ const loginConUsuYCont = async (input) => {
     const usuario = {
       success: true,
       data: response.providerData,
+      email: input.usuario,
+      password: input.password,
       uid: response.uid,
       token: idToken
 
@@ -29,15 +31,7 @@ const loginConUsuYCont = async (input) => {
     }
 
     console.log(errorLoguin);
-    return errorLoguin
-    // (
-    //   <Alert severity="error" sx={{ mb: 2 }}>
-    //     {
-    //       errorLoguin.errorCode === "auth/wrong-password" ? "Contraseña incorrecta" :
-    //         errorLoguin.errorCode === "auth/user-not-found" ? "Usuario no encontrado" :
-    //           "Error al logearse"}
-    //   </Alert>
-    // )
+    return errorLoguin    
   }
 }
 

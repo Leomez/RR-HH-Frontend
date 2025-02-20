@@ -6,6 +6,7 @@ import { DatePicker } from "@mui/x-date-pickers";
 import dayjs from "dayjs";
 import CrearSector from "../../Sector/CrearSector";
 import { fetchSectores } from "../../../Redux/Features/Sectores/sectoresSlice";
+import { Form } from "react-router-dom";
 
 
 // eslint-disable-next-line react/prop-types
@@ -89,6 +90,20 @@ export default function DatosPuestoForm({ inputs, handleChange }) {
                   </MenuItem>
                 )
               })}
+            </Select>
+          </FormControl>
+          
+          <FormControl variant="standard" sx={{ width: { xs: "100%", md: "10rem" } }}>
+            <InputLabel>Turno</InputLabel>
+            <Select 
+            // eslint-disable-next-line react/prop-types
+              value={inputs.turno}
+              name="turno"
+              onChange={handleChange}
+            >
+              <MenuItem value="Mañana">Mañana</MenuItem>
+              <MenuItem value="Tarde">Tarde</MenuItem>
+              <MenuItem value="Noche">Noche</MenuItem>
             </Select>
           </FormControl>
 

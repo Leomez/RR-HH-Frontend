@@ -104,6 +104,17 @@ export default function DatosEmpleadoForm({ inputs, handleChange, errores }) {
                         onChange={e => handleChange(e)}
                         sx={{ width: { xs: '100%', md: '10rem' } }}
                     />
+                    <TextField
+                        value={inputs.celular}
+                        name='tel_alternativo'
+                        label='Telefono Alternativo'
+                        variant={'standard'}
+                        color={errores.tel_alternativo ? 'error' : 'success'}
+                        error={errores.tel_alternativo ? true : false}
+                        helperText={errores.tel_alternativo ? 'Campo requerido' : ''}
+                        onChange={e => handleChange(e)}
+                        sx={{ width: { xs: '100%', md: '10rem' } }}
+                    />     
                 </Stack>
             </FormContainer>
         </>
