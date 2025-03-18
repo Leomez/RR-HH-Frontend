@@ -98,7 +98,8 @@ export const fetchEmpleados = createAsyncThunk('empleado/fetchEmpleados', async 
             url: `${URL}/empleado`,
             method: 'get',
             headers: { "Authorization": "Bearer " + store.getState().user.token }
-        });        
+        });       
+        console.log(response.data.data, '<--empleados'); 
         return response.data.data;
     } catch (error) { 
         if (error.response) {
@@ -274,5 +275,5 @@ const empleadoSlice = createSlice({
     }
 })
 
-export const { resetError, setVerLegajo } = empleadoSlice.actions
+export const { resetError, setVerLegajo, ocultarLegajo } = empleadoSlice.actions
 export default empleadoSlice.reducer

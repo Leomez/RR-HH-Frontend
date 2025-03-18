@@ -1,0 +1,107 @@
+.container {
+    padding: 1.25rem;
+    max-width: 140rem;
+    margin: auto;
+  }
+  
+  .header {
+    background-color: #1976d2;
+    padding: 2.5rem 1.25rem 1.25rem;
+    display: flex;
+    align-items: center;
+    position: relative;
+    border-radius: 0.5rem 0.5rem 0 0;
+  }
+  
+  .photo {
+    width: 7.5rem;
+    height: 7.5rem;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 0.25rem solid white;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    left: 1.25rem;
+  }
+  
+  .headerText {
+    margin-left: 10rem;
+    color: white;
+  }
+  
+  .nombreHeader {
+    font-weight: bold;
+  }
+  
+  .jobTitle {
+    font-style: italic;
+  }
+  
+  .content {
+    display: flex;
+    margin-top: 2.5rem;
+  }
+  
+  .sidebar {
+    background-color: #f4f4f4;
+    padding: 1.25rem;
+    border-radius: 0.5rem;
+  }
+  
+  .infoContainer {
+    background-color: white;
+    padding: 0.9375rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.1);
+  }
+  
+  .detailsCard {
+    background-color: white;
+    padding: 1.25rem;
+    margin-bottom: 0.9375rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.1);
+  }
+  
+  .sectionTitle {
+    font-weight: bold;
+    margin-bottom: 0.625rem;
+  }
+
+  @media screen and (min-width: 1441px) {
+    .container {
+      display: flex;
+      flex-direction: column;
+    }
+    .headerText{
+      margin-left: 11.25rem;
+    }
+    .content {
+      flex-direction: column !important;      
+    }    
+  }
+  
+  @media screen and (max-width: 768px) {
+      
+    .header {
+      flex-direction: column;
+      align-items: center;
+    }
+  
+    .photo {
+      position: relative;
+      top: 0;
+      left: 0;
+      border-radius: 0.5rem;      
+      transform: none;
+      margin-bottom: 1.25rem;
+
+    }
+  
+    .headerText {
+      text-align: center;
+      margin-left: 0;
+    }
+    
+  }

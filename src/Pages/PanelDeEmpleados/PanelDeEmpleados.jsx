@@ -6,7 +6,8 @@ import CrearNuevoEmpleado from "../../Servicios/Empleados/Crear/CrearNuevoEmplea
 import ListadoEmpleados from "../../Servicios/Empleados/Listado/ListadoEmpleados";
 import ListadoEmpleadosXs from "../../Servicios/Empleados/Listado/ListadoEmpleadosXs";
 import Legajo from "../../Servicios/Empleados/Legajo/Legajo";
-import { setVerLegajo } from "../../Redux/Features/Empleado/empleadoSlice";
+import { setVerLegajo, ocultarLegajo } from "../../Redux/Features/Empleado/empleadoSlice";
+
 
 
 export function Empleados() {
@@ -25,6 +26,10 @@ export function Empleados() {
     setLegajo(idEmpleado)
     dispatch(setVerLegajo(idEmpleado))
     setIndex(2)
+  }
+
+  function handlerOcultarLegajo() {
+    dispatch(ocultarLegajo())
   }
 
   useEffect(() => {
@@ -63,8 +68,7 @@ export function Empleados() {
           </Box>
         </CustomTabPanel>
         <CustomTabPanel value={index} index={2}>
-          <Box>
-            <Typography variant='h6'> LEGAJO </Typography>
+          <Box>            
             <Legajo legajo={legajo}/>
             {/* <Legajo/> */}
           </Box>
