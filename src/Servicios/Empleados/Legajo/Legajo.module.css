@@ -14,6 +14,8 @@
   }
   
   .photo {
+    align-items: center;
+    justify-items: center;
     width: 7.5rem;
     height: 7.5rem;
     border-radius: 50%;
@@ -33,7 +35,43 @@
   .nombreHeader {
     font-weight: bold;
   }
+
+  .editButtons {
+    display: flex;
+    margin-left: auto;
+    gap: 1.25rem;
+  }
   
+  .saveIconButton {
+    /* background-color: #2d87ee; */
+    color: white;
+    border: none;
+    padding: 0;    
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;  
+  }
+  .saveIconButton:hover {
+    background-color: #f4f4f4;
+    color: #2d87ee;
+  }
+
+  .cancelIconButton {
+    color: #d32f2f;
+    border: none;
+    padding: 0;    
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;  
+  }
+  .cancelIconButton:hover {
+    background-color: #f4f4f4;
+    color: #d32f2f;
+  }
   .jobTitle {
     font-style: italic;
   }

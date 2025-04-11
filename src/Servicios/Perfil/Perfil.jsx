@@ -16,10 +16,10 @@ export default function Perfil() {
     const dispatch = useDispatch();
     const usuarioActual = useSelector((state) => state.user);
     const empleado = useSelector((state) => state.empleado.empleadoActual);
-    const sector = useSelector((state) => state.sectores.sector);
+    // const sector = useSelector((state) => state.sectores.sector);
     const loading = useSelector((state) => state.user.loading)
     const [fechaHoy, setFechaHoy] = useState("");
-    const [nombreSector, setNombreSector] = useState(false);
+    // const [nombreSector, setNombreSector] = useState(false);
   
   
     
@@ -28,9 +28,9 @@ export default function Perfil() {
       // dispatch(fetchEmpleados(usuarioActual.token))      
     }, [empleado, usuarioActual]);
   
-    useEffect(() => {
-      setNombreSector(sector?.nombre_sector);
-    }, [sector])
+    // useEffect(() => {
+    //   setNombreSector(sector?.nombre_sector);
+    // }, [sector])
   
     useEffect(() => {
       const fechaActual = obtenerFechaHoy();
@@ -53,7 +53,7 @@ export default function Perfil() {
             <Avatar alt={usuarioActual.user} src={usuarioActual.foto} className={s.avatar} />
             <CardHeader
               title={usuarioActual.user}
-              subheader={nombreSector || <Skeleton variant="rectangular" sx={{ margin: 'auto' }} width={100} height={18} />}
+              subheader={empleado.Sector.nombre_sector || <Skeleton variant="rectangular" sx={{ margin: 'auto' }} width={100} height={18} />}
               sx={{ textAlign: "center" }}
             />
           </span>

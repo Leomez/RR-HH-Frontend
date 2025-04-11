@@ -10,7 +10,7 @@ const URL = URL_API
 const initialState = {
     nuevoEmpleadoCreado: {},
     empleados: [],
-    domicilios:[],
+    domicilios: [],
     empleadoActual: null,
     verLegajo: false,
     legajo: {},
@@ -45,14 +45,21 @@ export const nuevoEmpleado = createAsyncThunk('empleado/nuevoEmpleado', async (d
 })
 
 export const editarEmpleado = createAsyncThunk('empleado/editarEmpleado', async (data, { rejectWithValue }) => {
-    try {
+    try {         
         const response = await axios({
             method: 'put',
-            url: `${URL}/empleado/${data.id}`,
+            url: `${URL}/empleado/${data.get('id')}`,
             data: data,
-            headers: { "Authorization": "Bearer " + store.getState().user.token }
+            headers: { 
+                "Authorization": "Bearer " + store.getState().user.token,
+                "Content-Type": "multipart/form-data"
+            }
         });
         return response.data
+        // for (const pair of data.entries()) {
+        //     console.log(pair[0], pair[1]);
+        //   }
+
     } catch (error) {
         if (error.response) {
             const errorData = {
@@ -93,15 +100,15 @@ export const eliminarEmpleado = createAsyncThunk('empleado/eliminarEmpleado', as
 })
 
 export const fetchEmpleados = createAsyncThunk('empleado/fetchEmpleados', async (undefined, { rejectWithValue }) => {
-    try {             
+    try {
         const response = await axios({
             url: `${URL}/empleado`,
             method: 'get',
             headers: { "Authorization": "Bearer " + store.getState().user.token }
-        });       
-        console.log(response.data.data, '<--empleados'); 
+        });
+        console.log(response.data.data, '<--empleados');
         return response.data.data;
-    } catch (error) { 
+    } catch (error) {
         if (error.response) {
             const errorData = {
                 status: error.response.status,
@@ -110,7 +117,7 @@ export const fetchEmpleados = createAsyncThunk('empleado/fetchEmpleados', async 
             console.error('error al obtener los empleados: ', errorData)
             store.dispatch(showError(errorData.data))
             return rejectWithValue(errorData);
-        }     
+        }
         // const { data } = error.response;
         // store.dispatch(showError(data.errorMessage))
         // throw new Error(error.response?.data?.message || "Error desconocido al cargar los empleados");          
@@ -118,7 +125,7 @@ export const fetchEmpleados = createAsyncThunk('empleado/fetchEmpleados', async 
 })
 
 export const fetchDomicilios = createAsyncThunk('empleado/fetchDomicilios', async (undefined, { rejectWithValue }) => {
-    try {        
+    try {
         const response = await axios({
             url: `${URL}/domicilio`,
             method: 'get',
@@ -129,7 +136,7 @@ export const fetchDomicilios = createAsyncThunk('empleado/fetchDomicilios', asyn
         if (error.response) {
             const errorData = {
                 status: error.response.status,
-                data: error.response.data 
+                data: error.response.data
             }
             store.dispatch(errorData.data.errorMessage)
             return rejectWithValue(errorData)
@@ -137,13 +144,13 @@ export const fetchDomicilios = createAsyncThunk('empleado/fetchDomicilios', asyn
         // const { data } = error.response;
         // store.dispatch(showError(data.errorMessage))
         // throw new Error(error.response?.data?.message || "Error desconocido al cargar domicilios");                
-    }    
+    }
 })
 
-export const fetchEmpleadoById = createAsyncThunk('empleado/fetchEmpleadoById', async(id, {rejectWithValue}) => {
+export const fetchEmpleadoById = createAsyncThunk('empleado/fetchEmpleadoById', async (id, { rejectWithValue }) => {
     try {
         const response = await axios({
-            url:`${URL}/empleado/${id}`,
+            url: `${URL}/empleado/${id}`,
             method: 'get',
             headers: { "Authorization": "Bearer " + store.getState().user.token }
         });
@@ -163,10 +170,10 @@ export const fetchEmpleadoById = createAsyncThunk('empleado/fetchEmpleadoById', 
     }
 });
 var cont = 0
-export const empleadoActual = createAsyncThunk('empleado/empleadoActual', async({id, token}, {rejectWithValue}) => {
-    try {        
+export const empleadoActual = createAsyncThunk('empleado/empleadoActual', async ({ id, token }, { rejectWithValue }) => {
+    try {
         // cont++
-        console.log('solicitud de empleado actual...');        
+        console.log('solicitud de empleado actual...');
         const response = await axios({
             url: `${URL}/empleado/?id=${id}`,
             method: 'get',
@@ -193,7 +200,7 @@ const empleadoSlice = createSlice({
     name: 'empleado',
     initialState,
     reducers: {
-        setVerLegajo: (state, action) => {            
+        setVerLegajo: (state, action) => {
             state.verLegajo = true
             state.legajo = state.empleados.find(empleado => empleado.id === action.payload)
         },
@@ -207,71 +214,71 @@ const empleadoSlice = createSlice({
     },
     extraReducers: (constructor) => {
         constructor
-        .addCase(nuevoEmpleado.fulfilled, (state, action) => {
-            state.nuevoEmpleadoCreado = action.payload;
-            state.loading = false
-            state.error = null
-        })
-        .addCase(nuevoEmpleado.rejected, (state, action) => {
-            console.error("Error al crear un nuevo empleado:", action.error.message);
-            // state.nuevoEmpleadoCreado = { error: action.error.message };
-            state.error = action.payload
-            state.loading = false
-        })
-        .addCase(nuevoEmpleado.pending, (state) => {
-            state.loading = true
-        })
-        .addCase(fetchEmpleados.fulfilled, (state, action) => {
-            state.empleados = action.payload
-            state.loading = false
-            state.error = null
-        })
-        .addCase(fetchEmpleados.rejected, (state, action) => {
-            console.error("Error al obtener los empleados:", action.payload);
-            state.error = action.payload
-            state.loading = false
-        })
-        .addCase(fetchEmpleados.pending, (state) => {
-            state.loading = true
-        })
-        .addCase(fetchDomicilios.fulfilled, (state, action) => {
-            state.domicilios = action.payload
-            state.error = null
-            state.loading = false
-        })
-        .addCase(fetchDomicilios.rejected, (state, action) => {
-            console.error("Error al obtener los domicilios: ", action.error.message);
-            state.error = action.payload
-            state.loading = false
-        })
-        .addCase(fetchDomicilios.pending, (state) => {
-            state.loading = true
-        })
-        .addCase(fetchEmpleadoById.fulfilled, (state, action) => {
-            state.empleadoActual = action.payload;
-            state.error = null
-            state.loading = false
-        })
-        .addCase(fetchEmpleadoById.rejected, (state, action) => {
-            console.error("Error al obtener empleados por Id: ", action.error.message);
-            state.error = action.payload
-            state.loading = false
-        })
-        .addCase(fetchEmpleadoById.pending, (state) =>{
-            state.loading = true
-        })
-        .addCase(empleadoActual.fulfilled, (state, action) => {
-            state.empleadoActual = action.payload;
-            state.loading = false
-        })
-        .addCase(empleadoActual.rejected, (state, action) => {
-            console.error('Error al obtener el empleado actual: ', action.error.message);
-            state.error = action.payload
-            state.loading = false
-        })
-        .addCase(empleadoActual.pending, (state) => {
-            state.loading = true
-        })
+            .addCase(nuevoEmpleado.fulfilled, (state, action) => {
+                state.nuevoEmpleadoCreado = action.payload;
+                state.loading = false
+                state.error = null
+            })
+            .addCase(nuevoEmpleado.rejected, (state, action) => {
+                console.error("Error al crear un nuevo empleado:", action.error.message);
+                // state.nuevoEmpleadoCreado = { error: action.error.message };
+                state.error = action.payload
+                state.loading = false
+            })
+            .addCase(nuevoEmpleado.pending, (state) => {
+                state.loading = true
+            })
+            .addCase(fetchEmpleados.fulfilled, (state, action) => {
+                state.empleados = action.payload
+                state.loading = false
+                state.error = null
+            })
+            .addCase(fetchEmpleados.rejected, (state, action) => {
+                console.error("Error al obtener los empleados:", action.payload);
+                state.error = action.payload
+                state.loading = false
+            })
+            .addCase(fetchEmpleados.pending, (state) => {
+                state.loading = true
+            })
+            .addCase(fetchDomicilios.fulfilled, (state, action) => {
+                state.domicilios = action.payload
+                state.error = null
+                state.loading = false
+            })
+            .addCase(fetchDomicilios.rejected, (state, action) => {
+                console.error("Error al obtener los domicilios: ", action.error.message);
+                state.error = action.payload
+                state.loading = false
+            })
+            .addCase(fetchDomicilios.pending, (state) => {
+                state.loading = true
+            })
+            .addCase(fetchEmpleadoById.fulfilled, (state, action) => {
+                state.empleadoActual = action.payload;
+                state.error = null
+                state.loading = false
+            })
+            .addCase(fetchEmpleadoById.rejected, (state, action) => {
+                console.error("Error al obtener empleados por Id: ", action.error.message);
+                state.error = action.payload
+                state.loading = false
+            })
+            .addCase(fetchEmpleadoById.pending, (state) => {
+                state.loading = true
+            })
+            .addCase(empleadoActual.fulfilled, (state, action) => {
+                state.empleadoActual = action.payload;
+                state.loading = false
+            })
+            .addCase(empleadoActual.rejected, (state, action) => {
+                console.error('Error al obtener el empleado actual: ', action.error.message);
+                state.error = action.payload
+                state.loading = false
+            })
+            .addCase(empleadoActual.pending, (state) => {
+                state.loading = true
+            })
     }
 })
 

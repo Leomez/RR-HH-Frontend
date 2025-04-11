@@ -59,6 +59,7 @@ function RecibosGrid({ empleados, mesSeleccionado, setMesSeleccionado }) {
           recibo: file,
           id_empleado: empleadoId,
           periodo: mes,
+          tipo: 'reciboSueldo',
         },
       ]);
     }

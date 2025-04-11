@@ -79,7 +79,7 @@ export default function ListadoEmpleados({verLegajo}) {
     },
     {field: 'col6', headerName: 'Acciones', width: 300, renderCell: (params) => (
       <>
-        <Button size='small' sx={{width: '2rem', height: '2rem'}} variant='text' color='primary' onClick={() => verLegajo(params.row.id)}><DriveFileRenameOutlineIcon/></Button>
+        <Button size='small' sx={{width: '2rem', height: '2rem'}} variant='outlined' color='primary' onClick={() => verLegajo(params.row.id)}>VER</Button>
         <Button size='small' variant='text' color='error' onClick={() => handleDelete(params.row)}><DeleteForeverIcon/></Button>
       </>
     )}
